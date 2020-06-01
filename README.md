@@ -1,1 +1,0 @@
-# otcmarket_app
