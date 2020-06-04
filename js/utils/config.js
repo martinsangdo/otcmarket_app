@@ -4,5 +4,5 @@
  */
 
 export const setting = {
-  HOME_PAGE: 'https://listverse.com/wp-json/wp/v2/',
+  BACKEND_SERVER: 'https://backend.otcmarkets.com/otcapi/',
 };

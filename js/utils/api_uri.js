@@ -15,9 +15,14 @@ export const API_URI = {
 		MULTIPART_REQUEST_HEADER: {
 				'Content-Type': 'multipart/form-data'
 		},
-    //News
-		GET_NEWS_LIST: setting.HOME_PAGE + 'posts?per_page=20&_embed',
-    //Category
-    GET_CATEGORY_LIST: setting.HOME_PAGE + 'categories?per_page=100',
+    //Current Market
+    CURRENT_MARKET: {
+      SNAPSHOT: { //general info
+        URI: setting.BACKEND_SERVER + 'market-data/snapshot/current',
+        CACHE_TIME_KEY: 'CURRENT_MARKET_SNAPSHOT_CACHE_TIME_KEY',
+        CACHE_TIME_DURATION: 60*60*1000,  //60 mins in timestamp
+        CACHE_DATA_KEY: 'CURRENT_MARKET_SNAPSHOT_CACHE_DATA_KEY'
+      }
+    }
 
 };

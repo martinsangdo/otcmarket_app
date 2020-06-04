@@ -17,7 +17,8 @@ export const C_Const = {
 	ANDROID: 'ANDROID',
 	IOS: 'IOS',
 	SPLASH_TIMER: 1000,   //time to display splash screen
-	MAX_SPLASH_TIMER: 60000,   //maximum time to display splash screen
+  MAX_WAIT_RESPONSE: 12000, //12s, max time to wait response
+	MAX_SPLASH_TIMER: 30000,   //maximum time to display splash screen
 	DATE_FORMAT: 'DD-MMM',   //birthday format
 	NOTIFICATION_DATE_FORMAT: 'YYYY-MM-DD HH:mm:ss',
 	PAGE_LEN: 10, //default item number in one page, should large enough to load more item
@@ -31,11 +32,8 @@ export const C_Const = {
 	},
 	JSON_WEB_TOKEN: 'jwt',    //to verify request from this app
 	//store/Preference keys
-	SYNC_CACHE_CATEGORY_DURATION: 60 * 60 * 24 * 7,  //7 day
 	STORE_KEY: {
-		LASTEST_TIME_SYNC_CATEGORY: 'LASTEST_TIME_SYNC_CATEGORY',
 		USER_INFO: 'USER_INFO',   //include: user_id, jwt
-		FIREBASE_TOKEN: 'FIREBASE_TOKEN',
 		CATEGORY_LIST: 'CATEGORY_LIST'
 	},
 	ACTIVE_COLOR: '#008da9'

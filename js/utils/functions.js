@@ -8,6 +8,7 @@ import {setting} from "./config";
 import 'moment/locale/th';    //thailand
 import 'moment/locale/zh-cn';    //chinese
 import 'moment/locale/vi';    //vietnamese
+import store from 'react-native-simple-store';
 
 //
 exports.dlog = function(str){
@@ -225,45 +226,34 @@ exports.parse_level_data = function(original_data){
   }
   return result;
 };
-
-/*
-exports.parse_level_data = function(original_data){
-  // console.log(original_data);
-  if (original_data.length == 0){
-    return {};
-  }
-  var len = original_data.length;
-  var result = {};
-  var item;
-  //parse top level
-  for (var i=len-1; i>=0; i--){
-    item = original_data[i];
-    if (item.parent == 0){
-      //top level
-      result[item.id] = {
-        name: item.name.replace('&amp;', '&')
-      };
-      //remove that from original_data
-      original_data.splice(i, 1);
-    }
-  }
-  //parse level 1
-  len = original_data.length;
-  for (var i=len-1; i>=0; i--){
-    item = original_data[i];
-    //find his father
-    if (result[item.parent] != null){
-      if (result[item.parent].children == null){
-        result[item.parent].children = {};
-      }
-      result[item.parent].children[item.id] = {
-        name: item.name.replace('&amp;', '&')
-      };
-      //remove that from original_data
-      original_data.splice(i, 1);
-    }
-  }
-  //todo: parse more level
-  return result;
+exports.get_current_timestamp = function () {
+    return Moment().unix() * 1000;  //milliseconds
 };
-*/
+//get data from cache, if any
+exports.get_data_from_cache = function(cache_time_key, cache_duration, cache_data_key, callback){
+  store.get(cache_time_key).then(saved_time => {
+    if (saved_time!=null){
+      //saved last time
+      var current_timestamp = Moment().unix() * 1000;
+      if (current_timestamp - saved_time.t >= cache_duration){
+        //expired
+        callback(false, {});
+      } else {
+        //get data from cache
+        store.get(cache_data_key)
+        .then(saved_data => {
+          if (saved_data!=null){
+              //saved cache
+              callback(true, saved_data.d);
+            } else {
+              //no cache
+              callback(false, {});
+            }
+          });
+        }
+      } else {
+        //no cache
+        callback(false, {});
+		  }
+  });
+};
