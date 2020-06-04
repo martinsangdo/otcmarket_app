@@ -34,14 +34,19 @@ class Home extends BaseScreen {
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
 								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+									<Button
+										transparent
+										onPress={() => this.props.navigation.openDrawer()}
+									>
+										<Icon name="menu" style={styles.home_icon}/>
+									</Button>
 								</Left>
 								<Body style={styles.headerBody}>
 									<Text style={common_styles.bold}>Latest Articles</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<Button
-										transparent
-									>
+										transparent>
 										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
 									</Button>
 								</Right>

@@ -16,8 +16,8 @@ export default {
     position: "absolute",
     left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
     top: Platform.OS === "android" ? deviceHeight / 13 : deviceHeight / 12,
-    width: 210,
-    height: 75,
+    width: 160,
+    height: 160,
     resizeMode: "cover"
   },
   text: {
