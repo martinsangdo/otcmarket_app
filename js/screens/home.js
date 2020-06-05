@@ -31,8 +31,8 @@ class Home extends BaseScreen {
 			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			this._load_snaphot_market();
 			this._load_most_active();
-			// this._load_advancers();
-			// this._load_decliners();
+			this._load_advancers();
+			this._load_decliners();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -85,6 +85,64 @@ class Home extends BaseScreen {
 									me.setState({active_data: save_detail});
 									store.update(url, {d:save_detail});
 									store.update(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+								} else if (error){
+									//do nothing
+								}
+							});
+					});
+				}
+			});
+		}
+		//
+		_load_advancers(){
+			var me = this;
+			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION,
+				url, (has_cache_data, cache_data)=>{
+				if (!has_cache_data){
+					//parse cached data
+					me.setState({active_data: cache_data});
+				} else {
+					//get from server
+					me.setState({loading_indicator_state: true}, () => {
+						RequestData.sentGetRequest(url, (detail, error) => {
+								if (detail){
+									var save_detail = {
+										totalRecords: detail['totalRecords'],
+										records: detail['records']
+									};
+									me.setState({active_data: save_detail});
+									store.update(url, {d:save_detail});
+									store.update(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+								} else if (error){
+									//do nothing
+								}
+							});
+					});
+				}
+			});
+		}
+		//
+		_load_decliners(){
+			var me = this;
+			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION,
+				url, (has_cache_data, cache_data)=>{
+				if (!has_cache_data){
+					//parse cached data
+					me.setState({active_data: cache_data});
+				} else {
+					//get from server
+					me.setState({loading_indicator_state: true}, () => {
+						RequestData.sentGetRequest(url, (detail, error) => {
+								if (detail){
+									var save_detail = {
+										totalRecords: detail['totalRecords'],
+										records: detail['records']
+									};
+									me.setState({active_data: save_detail});
+									store.update(url, {d:save_detail});
+									store.update(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
 								} else if (error){
 									//do nothing
 								}
