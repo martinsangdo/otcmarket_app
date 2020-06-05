@@ -230,6 +230,7 @@ exports.get_current_timestamp = function () {
     return Moment().unix() * 1000;  //milliseconds
 };
 //get data from cache, if any
+//cache_data_key should be url
 exports.get_data_from_cache = function(cache_time_key, cache_duration, cache_data_key, callback){
   store.get(cache_time_key).then(saved_time => {
     if (saved_time!=null){

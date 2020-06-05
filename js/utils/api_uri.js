@@ -18,10 +18,9 @@ export const API_URI = {
     //Current Market
     CURRENT_MARKET: {
       SNAPSHOT: { //general info
-        URI: setting.BACKEND_SERVER + 'market-data/snapshot/current',
+        URI: setting.BACKEND_SERVER + 'market-data/snapshot/current?tierGroup=',
         CACHE_TIME_KEY: 'CURRENT_MARKET_SNAPSHOT_CACHE_TIME_KEY',
-        CACHE_TIME_DURATION: 60*60*1000,  //60 mins in timestamp
-        CACHE_DATA_KEY: 'CURRENT_MARKET_SNAPSHOT_CACHE_DATA_KEY'
+        CACHE_TIME_DURATION: 60*60*1000  //60 mins in timestamp
       }
     }
 

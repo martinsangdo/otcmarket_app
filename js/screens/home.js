@@ -16,6 +16,7 @@ class Home extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
+				tierGroup: 'ALL',	//all markets
 				loading_indicator_state: true,
 				snapshot_data: {}		//general info of market
 			};
@@ -24,46 +25,36 @@ class Home extends BaseScreen {
 		componentDidMount() {
 			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			this._load_snaphot_market();
-		}
-		//snapshot
-		_load_snaphot_market(){
-			var me = this;
-			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_DURATION,
-				API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_DATA_KEY, (has_cache_data, cache_data)=>{
-				if (has_cache_data){
-					//parse cached data
-					Utils.xlog('cache data', cache_data);
-				} else {
-					//get from server
-					me._fetch_snapshot_market();
-				}
-			});
-		}
-		//
-		_fetch_snapshot_market(){
-			var me = this;
-			this.setState({loading_indicator_state: true}, () => {
-				Utils.dlog('Begin get snapshot from server');
-				RequestData.sentGetRequest(API_URI.CURRENT_MARKET.SNAPSHOT.URI,
-					(detail, error) => {
-						Utils.xlog('detail', detail);
-						Utils.xlog('error', error);
-						if (detail){
-							me.setState({snapshot_data: detail});
-							store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_DATA_KEY, {d:detail});
-							store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
-						} else if (error){
-							//do nothing
-						}
-						me.setState({loading_indicator_state: false});
-					});
-			});
-			//timeout of waiting request
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
 				}
 			}, C_Const.MAX_WAIT_RESPONSE);
+		}
+		//general info
+		_load_snaphot_market(){
+			var me = this;
+			var url = API_URI.CURRENT_MARKET.SNAPSHOT.URI + this.state.tierGroup;
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_DURATION,
+				url, (has_cache_data, cache_data)=>{
+				if (has_cache_data){
+					//parse cached data
+					me.setState({snapshot_data: cache_data});
+				} else {
+					//get from server
+					me.setState({loading_indicator_state: true}, () => {
+						RequestData.sentGetRequest(url, (detail, error) => {
+								if (detail){
+									me.setState({snapshot_data: detail});
+									store.update(url, {d:detail});
+									store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+								} else if (error){
+									//do nothing
+								}
+							});
+					});
+				}
+			});
 		}
 	 //==========
 		render() {
