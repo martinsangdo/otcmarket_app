@@ -16,15 +16,23 @@ class Home extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-				tierGroup: 'ALL',	//all markets
+				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				loading_indicator_state: true,
-				snapshot_data: {}		//general info of market
+				snapshot_data: {},		//general info of market
+				active_data: {},
+				advancers_data: [],
+				decliners_data: [],
+				sortOn: 'dollarVolume',	//dollarVolume, volume, tradeCount
+				priceMin: '1'	//1, 0.05, 0
 			};
 		}
 		//
 		componentDidMount() {
 			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			this._load_snaphot_market();
+			this._load_most_active();
+			// this._load_advancers();
+			// this._load_decliners();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -48,6 +56,35 @@ class Home extends BaseScreen {
 									me.setState({snapshot_data: detail});
 									store.update(url, {d:detail});
 									store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+								} else if (error){
+									//do nothing
+								}
+							});
+					});
+				}
+			});
+		}
+		//Most active
+		_load_most_active(){
+			var me = this;
+			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION,
+				url, (has_cache_data, cache_data)=>{
+				if (!has_cache_data){
+					//parse cached data
+					me.setState({active_data: cache_data});
+				} else {
+					//get from server
+					me.setState({loading_indicator_state: true}, () => {
+						RequestData.sentGetRequest(url, (detail, error) => {
+								if (detail){
+									var save_detail = {
+										totalRecords: detail['totalRecords'],
+										records: detail['records']
+									};
+									me.setState({active_data: save_detail});
+									store.update(url, {d:save_detail});
+									store.update(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
 								} else if (error){
 									//do nothing
 								}
