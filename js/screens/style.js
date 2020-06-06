@@ -45,5 +45,10 @@ export default {
   home_thumb: {width:100,height:100},
   home_item_row: {flex: 1, flexDirection: 'row', textAlign: 'flex-start'},
   home_item_left: {flex:0.4, backgroundColor:'#f0f', width:120, textAlign: 'flex-start', marginRight:10, textTransform: 'uppercase'},
-  home_item_body: {textAlign: 'flex-start'}
+  home_item_body: {textAlign: 'flex-start'},
+  td_stock_price_item: {width:'25%'},
+  td_stock_price_item_first: {width: '15%'},
+  list_item: {padding:5},
+  stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'}
+
 };

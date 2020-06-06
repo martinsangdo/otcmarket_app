@@ -49,6 +49,7 @@ export default {
 				backgroundColor: "#fff"    //white
 		},
 		//header
+    flex_row: {flexDirection: 'row'},
 		header: {},
 		headerBg: {
 				backgroundColor: '#0097de'
@@ -72,8 +73,8 @@ export default {
 		font_10: {
 				fontSize: 10
 		},
-		font_13: {
-				fontSize: 13
+		font_15: {
+				fontSize: 15
 		},
 		font_20: {
 				fontSize: 20
@@ -90,13 +91,14 @@ export default {
 		//color in Home page
 		grayColor: {color: '#ccc'},
 		darkGrayColor: {
-			color: '#777'
+			color: '#999'
 		},
 		blackColor: {color: '#000'},
 		//
 		whiteColor: {
 				color: '#fff'
 		},
+    redColor: {color:'#f00'},
     orangeColor: {color: '#008da9'},
 		lightBlackBg: {
 				backgroundColor: '#444'
@@ -113,13 +115,16 @@ export default {
 		float_center: {alignSelf: 'center'},
 		align_items_center: {alignItems: 'center'},
 		justifyCenter: {justifyContent: "center", textAlign: 'center'},
+    text_align_right: {alignItems:'flex-end'},
 		//margin
 		margin_5: {margin: 5},
 		margin_10: {margin: 10},
+    margin_15: {margin: 15},
 		margin_20: {margin: 20},
 		margin_l_10: {marginLeft: 10},
 		margin_l_20: {marginLeft: 20},
-		margin_r_10: {marginRight: 10},
+		margin_r_5: {marginRight: 5},
+    margin_r_10: {marginRight: 10},
 		margin_t_0: {marginTop: 0},
 		margin_t_5: {marginTop: 5},
 		margin_t_10: {marginTop: 10},
@@ -132,7 +137,6 @@ export default {
 		margin_b_50: {marginBottom: 50},
 		margin_b_100: {marginBottom: 100},
 		margin_b_200: {marginBottom: 200},
-
 		//
 		padding_5: {padding: 5},
 		padding_10: {padding: 10},
@@ -166,11 +170,16 @@ export default {
 				backgroundColor: '#0097de'
 		},
 		//
-		border_b: {
-				borderBottomColor: '#ccc',
-				borderBottomWidth: 2
+		border_b_active: {
+				borderBottomColor: '#008da9',
+				borderBottomWidth: 4
 		},
+    border_b_tab:{
+      borderBottomColor: '#008da9',
+      borderBottomWidth: 1
+    },
 		arrow_color: {color: '#444'},
 		load_more: {marginBottom: 10},
-		text_input: {width: '100%', fontSize: 18}
+		text_input: {width: '100%', fontSize: 18},
+    fetch_row: {flexDirection: 'row', justifyContent: 'space-between'}
 };

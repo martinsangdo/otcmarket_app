@@ -12,6 +12,12 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 
+const oo_icon = require("../../img/OO_icon.jpg");
+const pc_icon = require("../../img/PC_icon.jpg");
+const pn_icon = require("../../img/PN_icon.jpg");
+const qb_icon = require("../../img/QB_icon.jpg");
+const qx_icon = require("../../img/QX_icon.jpg");
+
 class Home extends BaseScreen {
 		constructor(props) {
 			super(props);
@@ -20,8 +26,8 @@ class Home extends BaseScreen {
 				loading_indicator_state: true,
 				snapshot_data: {},		//general info of market
 				active_data: {},
-				advancers_data: [],
-				decliners_data: [],
+				advancers_data: {},
+				decliners_data: {},
 				sortOn: 'dollarVolume',	//dollarVolume, volume, tradeCount
 				priceMin: '1'	//1, 0.05, 0
 			};
@@ -39,6 +45,43 @@ class Home extends BaseScreen {
 				}
 			}, C_Const.MAX_WAIT_RESPONSE);
 		}
+		//
+		_get_symbol_icon(tierCode){
+			switch (tierCode) {
+				case 'OO':
+					return oo_icon;
+					break;
+					case 'PC':
+						return pc_icon;
+						break;
+						case 'PN':
+							return pn_icon;
+							break;
+							case 'QB':
+								return qb_icon;
+								break;
+								case 'QX':
+									return qx_icon;
+									break;
+				default:
+					return stop_icon;
+			}
+		}
+		//
+		_keyExtractor = (item) => item.symbol;
+		//render the list. MUST use "item" as param
+		_renderItem = ({item}) => (
+				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol}>
+					<View style={[common_styles.margin_r_5]}>
+						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
+					</View>
+					<View style={[styles.td_stock_price_item_first]}>
+						<Text>{item.symbol}</Text></View>
+					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
+					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
+					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
+				</View>
+		);
 		//general info
 		_load_snaphot_market(){
 			var me = this;
@@ -101,7 +144,7 @@ class Home extends BaseScreen {
 				url, (has_cache_data, cache_data)=>{
 				if (!has_cache_data){
 					//parse cached data
-					me.setState({active_data: cache_data});
+					me.setState({advancers_data: cache_data});
 				} else {
 					//get from server
 					me.setState({loading_indicator_state: true}, () => {
@@ -111,7 +154,7 @@ class Home extends BaseScreen {
 										totalRecords: detail['totalRecords'],
 										records: detail['records']
 									};
-									me.setState({active_data: save_detail});
+									me.setState({advancers_data: save_detail});
 									store.update(url, {d:save_detail});
 									store.update(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
 								} else if (error){
@@ -130,7 +173,7 @@ class Home extends BaseScreen {
 				url, (has_cache_data, cache_data)=>{
 				if (!has_cache_data){
 					//parse cached data
-					me.setState({active_data: cache_data});
+					me.setState({decliners_data: cache_data});
 				} else {
 					//get from server
 					me.setState({loading_indicator_state: true}, () => {
@@ -140,7 +183,7 @@ class Home extends BaseScreen {
 										totalRecords: detail['totalRecords'],
 										records: detail['records']
 									};
-									me.setState({active_data: save_detail});
+									me.setState({decliners_data: save_detail});
 									store.update(url, {d:save_detail});
 									store.update(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
 								} else if (error){
@@ -150,6 +193,10 @@ class Home extends BaseScreen {
 					});
 				}
 			});
+		}
+		//
+		_change_sortOn(newSortOn){
+			this.setState({sortOn: newSortOn});
 		}
 	 //==========
 		render() {
@@ -161,7 +208,7 @@ class Home extends BaseScreen {
 										transparent
 										onPress={() => this.props.navigation.openDrawer()}
 									>
-										<Icon name="menu" style={styles.home_icon}/>
+										<Icon name="menu" style={common_styles.greenColor}/>
 									</Button>
 								</Left>
 								<Body style={styles.headerBody}>
@@ -175,10 +222,34 @@ class Home extends BaseScreen {
 								</Right>
 							</Header>
 							{/* END header */}
-
-			        <View style={{flex:1}}>
-			          <Text>abc</Text>
+							<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>MOST ACTIVE</Text></View>
+							<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+								<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
+			          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active, {flex: 1, flexDirection: 'row',alignSelf: 'stretch'}]}><Text style={[common_styles.blackColor, this.state.sortOn=='dollarVolume'&&common_styles.bold]}>$ Volume</Text></View>
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => this._change_sortOn('volume')}>
+									<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn=='volume'&&common_styles.bold]}>Share Volume</Text></View>
+								</TouchableOpacity>
+								<TouchableOpacity onPress={() => this._change_sortOn('tradeCount')}>
+									<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn=='tradeCount'&&common_styles.bold]}>Trades</Text></View>
+								</TouchableOpacity>
 			        </View>
+							<View style={[common_styles.fetch_row, common_styles.padding_5]}>
+								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+								<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+							</View>
+							<View style={{flex:1}}>
+								<FlatList
+											data={this.state.active_data['records']}
+											renderItem={this._renderItem}
+											refreshing={false}
+											onEndReachedThreshold={0.5}
+											keyExtractor={this._keyExtractor}
+											initialNumToRender={10}
+										/>
+							</View>
 
 						</Container>
 				);

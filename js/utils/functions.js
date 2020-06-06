@@ -128,7 +128,24 @@ exports.isEmpty = function(str){
 exports.format_currency_thousand = function(number){
   return number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 };
-
+exports.shorten_big_num = function(number){
+  if (number != null && number != ''){
+    if (number >= 1000000000){
+      return (number / 1000000000).toFixed(2) + 'B';
+    } else if (number >= 1000000){
+      return (number / 1000000).toFixed(2) + 'M';
+    } if (number >= 1000){
+      return (number / 1000).toFixed(2) + 'K';
+    }
+  }
+  return number;
+};
+//format number to float
+exports.number_to_float = function(number){
+  if (number != null && number != '')
+    return number.toFixed(2);
+  return '';
+};
 exports.makeApplink = function (file_src) {
     return setting.SERVER_URL + file_src;
 };
