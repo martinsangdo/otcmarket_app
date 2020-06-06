@@ -122,24 +122,23 @@ class Home extends BaseScreen {
 					me.setState({snapshot_data: cache_data});
 				} else {
 					//get from server
-					me.setState({loading_indicator_state: true}, () => {
-						RequestData.sentGetRequest(url, (detail, error) => {
-								if (detail){
-									me.setState({snapshot_data: detail});
-									store.update(url, {d:detail});
-									store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
-								} else if (error){
-									//do nothing
-								}
-							});
-					});
+          RequestData.sentGetRequest(url, (detail, error) => {
+              if (detail){
+                me.setState({snapshot_data: detail});
+                store.update(url, {d:detail});
+                store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              } else if (error){
+                //do nothing
+              }
+            });
 				}
 			});
 		}
 		//Most active
 		_load_most_active(){
 			var me = this;
-			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup +
+          '&sortOn=' + this.state.sortOn+'&page=1&pageSize=10';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -170,7 +169,8 @@ class Home extends BaseScreen {
 		//
 		_load_advancers(){
 			var me = this;
-			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup + '&priceMin=' + this.state.advancer_priceMin;
+			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup +
+        '&priceMin=' + this.state.advancer_priceMin+'&page=1&pageSize=10';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -201,7 +201,8 @@ class Home extends BaseScreen {
 		//
 		_load_decliners(){
 			var me = this;
-			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup + '&priceMin=' + this.state.decliner_priceMin;
+			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup +
+        '&priceMin=' + this.state.decliner_priceMin+'&page=1&pageSize=10';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -248,8 +249,14 @@ class Home extends BaseScreen {
 			});
 		}
 		//
-		_open_more_page(part){
-			//
+		_open_more_page(active_part){
+      this.props.navigation.navigate('CurrentMarket', {
+				active_part: active_part,
+        tierGroup: this.state.tierGroup,
+        sortOn: this.state.sortOn,
+        advancer_priceMin: this.state.advancer_priceMin,
+        decliner_priceMin: this.state.decliner_priceMin
+			});
 		}
 	 //==========
 		render() {
@@ -352,7 +359,7 @@ class Home extends BaseScreen {
 											/>
 								</View>
 								<View style={common_styles.view_align_center}>
-									<TouchableOpacity onPress={() => this._open_more_page('MOST_ACTIVE')}>
+									<TouchableOpacity onPress={() => this._open_more_page('MOST ACTIVE')}>
 										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
 									</TouchableOpacity>
 								</View>

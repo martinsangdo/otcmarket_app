@@ -24,15 +24,15 @@ export const API_URI = {
         CACHE_TIME_DURATION: 60*60*1000  //60 mins in timestamp
       },
 			MOST_ACTIVE: {
-        URI: setting.BACKEND_SERVER + 'market-data/active/current?page=1&pageSize=10&',
+        URI: setting.BACKEND_SERVER + 'market-data/active/current?',
         CACHE_TIME_KEY: 'CURRENT_MARKET_MOST_ACTIVE_CACHE_TIME_KEY'
       },
 			ADVANCERS: {
-        URI: setting.BACKEND_SERVER + 'market-data/advancers/current?page=1&pageSize=10&',
+        URI: setting.BACKEND_SERVER + 'market-data/advancers/current?',
         CACHE_TIME_KEY: 'CURRENT_MARKET_ADVANCERS_CACHE_TIME_KEY'
       },
 			DECLINERS: {
-        URI: setting.BACKEND_SERVER + 'market-data/decliners/current?page=1&pageSize=10&',
+        URI: setting.BACKEND_SERVER + 'market-data/decliners/current?',
         CACHE_TIME_KEY: 'CURRENT_MARKET_DECLINERS_CACHE_TIME_KEY'
       }
     }

@@ -8,11 +8,15 @@ import {  createStackNavigator } from "react-navigation-stack";
 import SideBar from "./screens/sidebar";
 
 import Home from "./screens/home";
+import CurrentMarket from "./screens/current_market";
+
 import Splash from "./screens/splash";
 
 const Drawer = createDrawerNavigator(
   {
-    Home: { screen: Home }
+    Home: { screen: Home },
+    CurrentMarket: { screen: CurrentMarket }
+
   },
   {
     initialRouteName: "Home",

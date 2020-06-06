@@ -21,7 +21,7 @@ export const C_Const = {
 	MAX_SPLASH_TIMER: 30000,   //maximum time to display splash screen
 	DATE_FORMAT: 'DD-MMM',   //birthday format
 	NOTIFICATION_DATE_FORMAT: 'YYYY-MM-DD HH:mm:ss',
-	PAGE_LEN: 10, //default item number in one page, should large enough to load more item
+	PAGE_LEN: 25, //default item number in one page, should large enough to load more item
 	EMPTY_DATETIME: '0000-00-00 00:00:00',
 	EMPTY_DATE: '0000-00-00',
 	//message keys get from server API

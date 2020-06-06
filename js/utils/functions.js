@@ -146,7 +146,7 @@ exports.shorten_big_num = function(number){
 //format number to float
 exports.number_to_float = function(number){
   if (number != null && number != '')
-    return number.toFixed(2);
+    return number.toFixed(4);
   return '';
 };
 exports.makeApplink = function (file_src) {
