@@ -134,6 +134,7 @@ export default {
 		margin_b_0: {marginBottom: 0},
 		margin_b_10: {marginBottom: 10},
 		margin_b_20: {marginBottom: 20},
+    margin_b_30: {marginBottom: 30},
 		margin_b_50: {marginBottom: 50},
 		margin_b_100: {marginBottom: 100},
 		margin_b_200: {marginBottom: 200},

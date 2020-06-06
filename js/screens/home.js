@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, View, TouchableOpacity, FlatList} from "react-native";
+import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon} from "native-base";
 
@@ -17,6 +17,8 @@ const pc_icon = require("../../img/PC_icon.jpg");
 const pn_icon = require("../../img/PN_icon.jpg");
 const qb_icon = require("../../img/QB_icon.jpg");
 const qx_icon = require("../../img/QX_icon.jpg");
+const em_icon = require("../../img/EM_icon.jpg");
+const pl_icon = require("../../img/PL_icon.jpg");
 
 class Home extends BaseScreen {
 		constructor(props) {
@@ -29,12 +31,16 @@ class Home extends BaseScreen {
 				advancers_data: {},
 				decliners_data: {},
 				sortOn: 'dollarVolume',	//dollarVolume, volume, tradeCount
-				priceMin: '1'	//1, 0.05, 0
+				advancer_priceMin: 1,	//1, 0.05, 0
+				decliner_priceMin: 1	//1, 0.05, 0
 			};
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
+			console.ignoredYellowBox = ['Remote debugger','VirtualizedLists should never be nested'];   //don't show warning in app when debugging
+			YellowBox.ignoreWarnings([
+			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+			]);
 			this._load_snaphot_market();
 			this._load_most_active();
 			this._load_advancers();
@@ -63,8 +69,14 @@ class Home extends BaseScreen {
 								case 'QX':
 									return qx_icon;
 									break;
+									case 'EM':
+										return em_icon;
+										break;
+										case 'PL':
+											return pl_icon;
+											break;
 				default:
-					return stop_icon;
+					return pn_icon;
 			}
 		}
 		//
@@ -113,11 +125,13 @@ class Home extends BaseScreen {
 			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
-				if (!has_cache_data){
+				if (has_cache_data){
 					//parse cached data
+					Utils.xlog('cached active data', cache_data);
 					me.setState({active_data: cache_data});
 				} else {
 					//get from server
+					Utils.xlog('get active data from server', url);
 					me.setState({loading_indicator_state: true}, () => {
 						RequestData.sentGetRequest(url, (detail, error) => {
 								if (detail){
@@ -139,14 +153,16 @@ class Home extends BaseScreen {
 		//
 		_load_advancers(){
 			var me = this;
-			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup + '&priceMin=' + this.state.advancer_priceMin;
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
-				if (!has_cache_data){
+				if (has_cache_data){
 					//parse cached data
+					Utils.xlog('cached advancers data', cache_data);
 					me.setState({advancers_data: cache_data});
 				} else {
 					//get from server
+					Utils.xlog('get advancers data from server', url);
 					me.setState({loading_indicator_state: true}, () => {
 						RequestData.sentGetRequest(url, (detail, error) => {
 								if (detail){
@@ -168,14 +184,16 @@ class Home extends BaseScreen {
 		//
 		_load_decliners(){
 			var me = this;
-			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup + '&sortOn=' + this.state.sortOn;
+			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup + '&priceMin=' + this.state.decliner_priceMin;
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
-				if (!has_cache_data){
+				if (has_cache_data){
 					//parse cached data
+					Utils.xlog('cached decliner data', cache_data);
 					me.setState({decliners_data: cache_data});
 				} else {
 					//get from server
+					Utils.xlog('get decliner data from server', url);
 					me.setState({loading_indicator_state: true}, () => {
 						RequestData.sentGetRequest(url, (detail, error) => {
 								if (detail){
@@ -196,7 +214,25 @@ class Home extends BaseScreen {
 		}
 		//
 		_change_sortOn(newSortOn){
-			this.setState({sortOn: newSortOn});
+			this.setState({sortOn: newSortOn}, ()=>{
+				this._load_most_active();
+			});
+		}
+		//
+		_change_advancers_priceMin(newPriceMin){
+			this.setState({advancer_priceMin: newPriceMin}, ()=>{
+				this._load_advancers();
+			});
+		}
+		//
+		_change_decliners_priceMin(newPriceMin){
+			this.setState({decliner_priceMin: newPriceMin}, ()=>{
+				this._load_decliners();
+			});
+		}
+		//
+		_open_more_page(part){
+			//
 		}
 	 //==========
 		render() {
@@ -212,7 +248,7 @@ class Home extends BaseScreen {
 									</Button>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={common_styles.bold}>Market Update</Text>
+									<Text style={[common_styles.bold, common_styles.default_font_color]}>Market Update</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<Button
@@ -222,35 +258,111 @@ class Home extends BaseScreen {
 								</Right>
 							</Header>
 							{/* END header */}
-							<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>MOST ACTIVE</Text></View>
-							<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
-								<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
-			          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active, {flex: 1, flexDirection: 'row',alignSelf: 'stretch'}]}><Text style={[common_styles.blackColor, this.state.sortOn=='dollarVolume'&&common_styles.bold]}>$ Volume</Text></View>
-								</TouchableOpacity>
-								<TouchableOpacity onPress={() => this._change_sortOn('volume')}>
-									<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn=='volume'&&common_styles.bold]}>Share Volume</Text></View>
-								</TouchableOpacity>
-								<TouchableOpacity onPress={() => this._change_sortOn('tradeCount')}>
-									<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn=='tradeCount'&&common_styles.bold]}>Trades</Text></View>
-								</TouchableOpacity>
-			        </View>
-							<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-								<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-								<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
-							</View>
-							<View style={{flex:1}}>
-								<FlatList
-											data={this.state.active_data['records']}
-											renderItem={this._renderItem}
-											refreshing={false}
-											onEndReachedThreshold={0.5}
-											keyExtractor={this._keyExtractor}
-											initialNumToRender={10}
-										/>
-							</View>
-
+							{/* Most active */}
+							<Content>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>MOST ACTIVE</Text></View>
+								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+									<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
+				          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>$ Volume</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_sortOn('volume')}>
+										<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>Share Volume</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_sortOn('tradeCount')}>
+										<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0&&common_styles.bold]}>Trades</Text></View>
+									</TouchableOpacity>
+				        </View>
+								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.active_data['records']}
+												renderItem={this._renderItem}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractor}
+												initialNumToRender={10}
+											/>
+								</View>
+								<View style={common_styles.view_align_center}>
+									<TouchableOpacity onPress={() => this._open_more_page('MOST_ACTIVE')}>
+										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+									</TouchableOpacity>
+								</View>
+								{/* Advancers */}
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>ADVANCERS</Text></View>
+								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+									<TouchableOpacity onPress={() => this._change_advancers_priceMin(1)}>
+				          	<View style={[common_styles.padding_5, this.state.advancer_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0.05)}>
+										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0)}>
+										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0&&common_styles.bold]}>All</Text></View>
+									</TouchableOpacity>
+				        </View>
+								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.advancers_data['records']}
+												renderItem={this._renderItem}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractor}
+												initialNumToRender={10}
+											/>
+								</View>
+								<View style={common_styles.view_align_center}>
+									<TouchableOpacity onPress={() => this._open_more_page('ADVANCERS')}>
+										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+									</TouchableOpacity>
+								</View>
+								{/* Decliners */}
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>DECLINERS</Text></View>
+								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+									<TouchableOpacity onPress={() => this._change_decliners_priceMin(1)}>
+				          	<View style={[common_styles.padding_5, this.state.decliner_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0.05)}>
+										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0)}>
+										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0&&common_styles.bold]}>All</Text></View>
+									</TouchableOpacity>
+				        </View>
+								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.decliners_data['records']}
+												renderItem={this._renderItem}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractor}
+												initialNumToRender={10}
+											/>
+								</View>
+								<View style={common_styles.view_align_center}>
+									<TouchableOpacity onPress={() => this._open_more_page('DECLINERS')}>
+										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+									</TouchableOpacity>
+								</View>
+								<View style={common_styles.margin_b_30} />
+							</Content>
 						</Container>
 				);
 		}
