@@ -236,10 +236,6 @@ class CurrentMarket extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.active_part}</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
-									<Button
-										transparent>
-										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
-									</Button>
 								</Right>
 							</Header>
 							{/* END header */}
@@ -288,6 +284,9 @@ class CurrentMarket extends BaseScreen {
 				              </Body>
 				            </CardItem>
 				          </Card>
+								</View>
+                <View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>Tap stock symbol to view detail</Text>
 								</View>
 								{/* detail */}
 								<View style={common_styles.margin_b_10} />

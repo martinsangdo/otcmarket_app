@@ -76,7 +76,12 @@ class BaseScreen extends Component {
 						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
 					</View>
 					<View style={[styles.td_stock_price_item_first]}>
-						<Text>{item.symbol}</Text></View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('StockDetail', {symbol: item.symbol})}
+            >
+  						<Text>{item.symbol}</Text>
+            </TouchableOpacity>
+          </View>
 					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
 					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
 					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>

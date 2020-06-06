@@ -17,17 +17,44 @@ const drawerCover = require("../../../img/menu_bg.jpg");
 const drawerImage = require("../../../img/logo_splash.jpg");
 const datas = [
   {
-    name: "Anatomy",
-    route: "Anatomy",
-    icon: "phone-portrait",
-    bg: "#C5F442"
+    name: "Market Update",
+    route: "Home",
+    icon: 'home'
   },
   {
-    name: "Header",
-    route: "Header",
-    icon: "arrow-up",
-    bg: "#477EEA",
-    types: "11"
+    name: "Stock Directory",
+    route: "Home",
+    icon: "ios-search"
+  },
+  {
+    name: "News & Reports",
+    route: "Home",
+    icon: "md-paper"
+  },
+  {
+    name: "Compliance Statistic",
+    route: "Home",
+    icon: "ios-stats"
+  },
+  {
+    name: "Corporate Actions",
+    route: "Home",
+    icon: "md-brush"
+  },
+  {
+    name: "Broker Dealer Data",
+    route: "Home",
+    icon: "ios-journal"
+  },
+  {
+    name: "Terms of Service",
+    route: "Home",
+    icon: "ios-quote"
+  },
+  {
+    name: "Contact",
+    route: "Home",
+    icon: "md-mail"
   }
 ];
 

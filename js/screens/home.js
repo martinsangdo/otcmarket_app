@@ -87,7 +87,7 @@ class Home extends BaseScreen {
 		_load_most_active(){
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup +
-          '&sortOn=' + this.state.sortOn+'&page=1&pageSize=10';
+          '&sortOn=' + this.state.sortOn+'&page=1&pageSize=15';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -119,7 +119,7 @@ class Home extends BaseScreen {
 		_load_advancers(){
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup +
-        '&priceMin=' + this.state.advancer_priceMin+'&page=1&pageSize=10';
+        '&priceMin=' + this.state.advancer_priceMin+'&page=1&pageSize=15';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -151,7 +151,7 @@ class Home extends BaseScreen {
 		_load_decliners(){
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup +
-        '&priceMin=' + this.state.decliner_priceMin+'&page=1&pageSize=10';
+        '&priceMin=' + this.state.decliner_priceMin+'&page=1&pageSize=15';
 			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
@@ -213,21 +213,22 @@ class Home extends BaseScreen {
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
 								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
-									<Button
-										transparent
+									<TouchableOpacity
 										onPress={() => this.props.navigation.openDrawer()}
 									>
 										<Icon name="menu" style={common_styles.greenColor}/>
-									</Button>
+									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Market Update</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
-									<Button
-										transparent>
+									<TouchableOpacity style={common_styles.margin_r_20}>
 										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
-									</Button>
+									</TouchableOpacity>
+                  <TouchableOpacity>
+										<Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.greenColor]}/>
+									</TouchableOpacity>
 								</Right>
 							</Header>
 							{/* END header */}
@@ -276,6 +277,9 @@ class Home extends BaseScreen {
 				              </Body>
 				            </CardItem>
 				          </Card>
+								</View>
+                <View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>Tap stock symbol to view detail</Text>
 								</View>
 								{/* Most active */}
 								<View style={common_styles.margin_b_10} />

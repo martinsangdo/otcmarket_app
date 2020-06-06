@@ -125,6 +125,7 @@ export default {
 		margin_l_20: {marginLeft: 20},
 		margin_r_5: {marginRight: 5},
     margin_r_10: {marginRight: 10},
+		margin_r_20: {marginRight: 20},
 		margin_t_0: {marginTop: 0},
 		margin_t_5: {marginTop: 5},
 		margin_t_10: {marginTop: 10},
