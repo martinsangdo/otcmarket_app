@@ -50,6 +50,7 @@ export default {
 		},
 		//header
     flex_row: {flexDirection: 'row'},
+		flex_column: {flexDirection: 'column'},
 		header: {},
 		headerBg: {
 				backgroundColor: '#0097de'

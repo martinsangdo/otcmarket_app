@@ -73,8 +73,16 @@ class Home extends BaseScreen {
 					//get from server
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
-                me.setState({snapshot_data: detail});
-                store.update(url, {d:detail});
+                var save_detail = {
+                  dollarVolume: Utils.format_currency_thousand(detail['dollarVolume']),
+                  shareVolume: Utils.format_currency_thousand(detail['shareVolume']),
+                  trades: Utils.format_currency_thousand(detail['trades']),
+                  advancers: Utils.format_currency_thousand(detail['advancers']),
+                  decliners: Utils.format_currency_thousand(detail['decliners'])
+                };
+
+                me.setState({snapshot_data: save_detail});
+                store.update(url, {d:save_detail});
                 store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
               } else if (error){
                 //do nothing
@@ -254,26 +262,32 @@ class Home extends BaseScreen {
 									<Card>
 				            <CardItem>
 				              <Body>
-												<View style={[common_styles.flex_row, common_styles.padding_5]}>
-													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text></View>
-													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['dollarVolume'])}</Text></View>
-												</View>
-												<View style={[common_styles.flex_row, common_styles.padding_5]}>
-													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text></View>
-													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['shareVolume'])}</Text></View>
-												</View>
-												<View style={[common_styles.flex_row, common_styles.padding_5]}>
-													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>TRADES</Text></View>
-													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['trades'])}</Text></View>
-												</View>
-												<View style={[common_styles.flex_row, common_styles.padding_5]}>
-													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>ADVANCERS</Text></View>
-													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['advancers'])}</Text></View>
-												</View>
-												<View style={[common_styles.flex_row, common_styles.padding_5]}>
-													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>DECLINERS</Text></View>
-													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['decliners'])}</Text></View>
-												</View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text>
+                            <Text>{this.state.snapshot_data['dollarVolume']}</Text>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text>
+                            <Text>{this.state.snapshot_data['shareVolume']}</Text>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>TRADES</Text>
+                            <Text>{this.state.snapshot_data['trades']}</Text>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>ADVANCERS</Text>
+                            <Text>{this.state.snapshot_data['advancers']}</Text>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>DECLINERS</Text>
+                            <Text>{this.state.snapshot_data['decliners']}</Text>
+                          </View>
+                        </View>
 				              </Body>
 				            </CardItem>
 				          </Card>

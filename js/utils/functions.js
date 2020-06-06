@@ -124,6 +124,12 @@ exports.parseInt = function(str){
 exports.isEmpty = function(str){
   return str == null || str == '';
 };
+//
+exports.getNullableString = function(str){
+  if (str == null || str === undefined)
+    return '';
+  return str;
+};
 //format currency to thousand style
 exports.format_currency_thousand = function(number){
   if (number != null && number !== undefined && number !=''){
