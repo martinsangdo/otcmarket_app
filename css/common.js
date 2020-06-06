@@ -146,8 +146,10 @@ export default {
 		padding_h_5: {paddingHorizontal: 5},
 		padding_r_10: {paddingRight: 10},
 		//width
-		width_200: {width: 300},
+		width_200: {width: 200},
 		width_300: {width: 300},
+    width_30p: {width: '30%'},
+    width_50p: {width: '50%'},
 		flex_10p: {flex: 0.1},
 		flex_20p: {flex: 0.2},
 		flex_40p: {flex: 0.4},

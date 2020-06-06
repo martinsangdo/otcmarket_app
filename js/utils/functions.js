@@ -126,7 +126,10 @@ exports.isEmpty = function(str){
 };
 //format currency to thousand style
 exports.format_currency_thousand = function(number){
-  return number.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  if (number != null && number !== undefined && number !=''){
+    return (''+number).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  }
+  return number;
 };
 exports.shorten_big_num = function(number){
   if (number != null && number != ''){

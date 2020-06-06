@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 
-import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon} from "native-base";
+import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
+  CardItem} from "native-base";
 
 import BaseScreen from "../base/BaseScreen.js";
 import common_styles from "../../css/common";
@@ -258,8 +259,38 @@ class Home extends BaseScreen {
 								</Right>
 							</Header>
 							{/* END header */}
-							{/* Most active */}
 							<Content>
+								{/* Snap shot */}
+								<View style={common_styles.margin_10}>
+									<Card>
+				            <CardItem>
+				              <Body>
+												<View style={[common_styles.flex_row, common_styles.padding_5]}>
+													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text></View>
+													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['dollarVolume'])}</Text></View>
+												</View>
+												<View style={[common_styles.flex_row, common_styles.padding_5]}>
+													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text></View>
+													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['shareVolume'])}</Text></View>
+												</View>
+												<View style={[common_styles.flex_row, common_styles.padding_5]}>
+													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>TRADES</Text></View>
+													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['trades'])}</Text></View>
+												</View>
+												<View style={[common_styles.flex_row, common_styles.padding_5]}>
+													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>ADVANCERS</Text></View>
+													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['advancers'])}</Text></View>
+												</View>
+												<View style={[common_styles.flex_row, common_styles.padding_5]}>
+													<View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor]}>DECLINERS</Text></View>
+													<View style={common_styles.width_50p}><Text>{Utils.format_currency_thousand(this.state.snapshot_data['decliners'])}</Text></View>
+												</View>
+				              </Body>
+				            </CardItem>
+				          </Card>
+								</View>
+								{/* Most active */}
+								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>MOST ACTIVE</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
@@ -294,6 +325,7 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 								</View>
 								{/* Advancers */}
+								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>ADVANCERS</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_advancers_priceMin(1)}>
@@ -328,6 +360,7 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 								</View>
 								{/* Decliners */}
+								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>DECLINERS</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_decliners_priceMin(1)}>
