@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
-  CardItem} from "native-base";
+  CardItem, Picker} from "native-base";
 
 import BaseScreen from "../base/BaseScreen.js";
 import common_styles from "../../css/common";
@@ -20,6 +20,8 @@ const qb_icon = require("../../img/QB_icon.jpg");
 const qx_icon = require("../../img/QX_icon.jpg");
 const em_icon = require("../../img/EM_icon.jpg");
 const pl_icon = require("../../img/PL_icon.jpg");
+
+const Item = Picker.Item;
 
 class Home extends BaseScreen {
 		constructor(props) {
@@ -52,6 +54,20 @@ class Home extends BaseScreen {
 				}
 			}, C_Const.MAX_WAIT_RESPONSE);
 		}
+		//
+		onChangeMarket(newMarket) {
+	    this.setState({tierGroup: newMarket}, ()=>{
+				this._load_snaphot_market();
+				this._load_most_active();
+				this._load_advancers();
+				this._load_decliners();
+				setTimeout(() => {
+					if (this.state.loading_indicator_state){
+						this.setState({loading_indicator_state: false});  //stop loading
+					}
+				}, C_Const.MAX_WAIT_RESPONSE);
+			});
+	  }
 		//
 		_get_symbol_icon(tierCode){
 			switch (tierCode) {
@@ -261,6 +277,22 @@ class Home extends BaseScreen {
 							{/* END header */}
 							<Content>
 								{/* Snap shot */}
+								<View>
+								<Picker
+									mode="dropdown"
+									iosHeader="Select Market"
+									iosIcon={<Icon name="ios-arrow-down" />}
+									style={{ width: undefined }}
+									selectedValue={this.state.tierGroup}
+									onValueChange={this.onChangeMarket.bind(this)}
+								>
+									<Item label="All Markets" value="ALL" />
+									<Item label="OTCQX" value="QX" />
+									<Item label="OTCQB" value="DQ" />
+									<Item label="Pink" value="PS" />
+									<Item label="Grey" value="OO" />
+								</Picker>
+								</View>
 								<View style={common_styles.margin_10}>
 									<Card>
 				            <CardItem>
