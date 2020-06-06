@@ -13,14 +13,6 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 
-const oo_icon = require("../../img/OO_icon.jpg");
-const pc_icon = require("../../img/PC_icon.jpg");
-const pn_icon = require("../../img/PN_icon.jpg");
-const qb_icon = require("../../img/QB_icon.jpg");
-const qx_icon = require("../../img/QX_icon.jpg");
-const em_icon = require("../../img/EM_icon.jpg");
-const pl_icon = require("../../img/PL_icon.jpg");
-
 const Item = Picker.Item;
 
 class Home extends BaseScreen {
@@ -40,7 +32,7 @@ class Home extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger','VirtualizedLists should never be nested'];   //don't show warning in app when debugging
+			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			YellowBox.ignoreWarnings([
 			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
 			]);
@@ -68,49 +60,6 @@ class Home extends BaseScreen {
 				}, C_Const.MAX_WAIT_RESPONSE);
 			});
 	  }
-		//
-		_get_symbol_icon(tierCode){
-			switch (tierCode) {
-				case 'OO':
-					return oo_icon;
-					break;
-					case 'PC':
-						return pc_icon;
-						break;
-						case 'PN':
-							return pn_icon;
-							break;
-							case 'QB':
-								return qb_icon;
-								break;
-								case 'QX':
-									return qx_icon;
-									break;
-									case 'EM':
-										return em_icon;
-										break;
-										case 'PL':
-											return pl_icon;
-											break;
-				default:
-					return pn_icon;
-			}
-		}
-		//
-		_keyExtractor = (item) => item.symbol;
-		//render the list. MUST use "item" as param
-		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol}>
-					<View style={[common_styles.margin_r_5]}>
-						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
-					</View>
-					<View style={[styles.td_stock_price_item_first]}>
-						<Text>{item.symbol}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
-				</View>
-		);
 		//general info
 		_load_snaphot_market(){
 			var me = this;

@@ -16,7 +16,7 @@ export default {
     height: '100%'
   },
   splash_logo: {
-    width: 300, height: 80, resizeMode: 'contain'
+    width: 300, height: 300, resizeMode: 'contain'
   },
 	left_row: {flex:1, flexDirection: 'row'},
 	list_item: {margin:10},
@@ -47,7 +47,7 @@ export default {
   home_item_left: {flex:0.4, backgroundColor:'#f0f', width:120, textAlign: 'flex-start', marginRight:10, textTransform: 'uppercase'},
   home_item_body: {textAlign: 'flex-start'},
   td_stock_price_item: {width:'25%'},
-  td_stock_price_item_first: {width: '15%'},
+  td_stock_price_item_first: {width: '17%'},
   list_item: {padding:5},
   stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'}
 

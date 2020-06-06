@@ -13,14 +13,6 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 
-const oo_icon = require("../../img/OO_icon.jpg");
-const pc_icon = require("../../img/PC_icon.jpg");
-const pn_icon = require("../../img/PN_icon.jpg");
-const qb_icon = require("../../img/QB_icon.jpg");
-const qx_icon = require("../../img/QX_icon.jpg");
-const em_icon = require("../../img/EM_icon.jpg");
-const pl_icon = require("../../img/PL_icon.jpg");
-
 const Item = Picker.Item;
 
 class CurrentMarket extends BaseScreen {
@@ -41,7 +33,7 @@ class CurrentMarket extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger','VirtualizedLists should never be nested'];   //don't show warning in app when debugging
+			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			YellowBox.ignoreWarnings([
 			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
 			]);
@@ -91,7 +83,7 @@ class CurrentMarket extends BaseScreen {
 		}
 		//
 		onChangeMarket(newMarket) {
-	    this.setState({tierGroup: newMarket}, ()=>{
+	    this.setState({tierGroup: newMarket, current_page:0, data_list:{}}, ()=>{
 				this._load_snaphot_market();
 				this._open_more_data();
 				setTimeout(() => {
@@ -101,49 +93,6 @@ class CurrentMarket extends BaseScreen {
 				}, C_Const.MAX_WAIT_RESPONSE);
 			});
 	  }
-		//
-		_get_symbol_icon(tierCode){
-			switch (tierCode) {
-				case 'OO':
-					return oo_icon;
-					break;
-					case 'PC':
-						return pc_icon;
-						break;
-						case 'PN':
-							return pn_icon;
-							break;
-							case 'QB':
-								return qb_icon;
-								break;
-								case 'QX':
-									return qx_icon;
-									break;
-									case 'EM':
-										return em_icon;
-										break;
-										case 'PL':
-											return pl_icon;
-											break;
-				default:
-					return pn_icon;
-			}
-		}
-		//
-		_keyExtractor = (item) => item.symbol;
-		//render the list. MUST use "item" as param
-		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol}>
-					<View style={[common_styles.margin_r_5]}>
-						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
-					</View>
-					<View style={[styles.td_stock_price_item_first]}>
-						<Text>{item.symbol}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
-				</View>
-		);
 		//general info
 		_load_snaphot_market(){
 			var me = this;
@@ -181,7 +130,7 @@ class CurrentMarket extends BaseScreen {
 					} else {
 						current_data['records'].push(...cache_data['records']);
 						current_data['totalRecords'] = cache_data['totalRecords'];
-						me.setState({data_list:current_data});		//append & save back
+						me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length });		//append & save back
 					}
 				} else {
 					//get from server
@@ -200,7 +149,7 @@ class CurrentMarket extends BaseScreen {
 									} else {
 										current_data['records'].push(...detail['records']);
 										current_data['totalRecords'] = detail['totalRecords'];
-										me.setState({data_list:current_data});		//append & save back
+										me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length});		//append & save back
 									}
 									store.update(url, {d:save_detail});
 									store.update(cache_time_key, {t: Utils.get_current_timestamp()});
@@ -215,20 +164,29 @@ class CurrentMarket extends BaseScreen {
 		}
 		//
 		_change_sortOn(newSortOn){
-			this.setState({sortOn: newSortOn}, ()=>{
-				this._load_most_active();
+      var me = this;
+			this.setState({sortOn: newSortOn, current_page:1, data_list:{}}, ()=>{
+        var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
+          '&sortOn=' + newSortOn+'&page=1&pageSize='+C_Const.PAGE_LEN;
+        this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION);
 			});
 		}
 		//
 		_change_advancers_priceMin(newPriceMin){
-			this.setState({advancer_priceMin: newPriceMin}, ()=>{
-				this._load_advancers();
+      var me = this;
+			this.setState({advancer_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
+        var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
+          '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
+        this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION);
 			});
 		}
 		//
 		_change_decliners_priceMin(newPriceMin){
-			this.setState({decliner_priceMin: newPriceMin}, ()=>{
-				this._load_decliners();
+      var me = this;
+			this.setState({decliner_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
+        var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
+          '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
+        this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION);
 			});
 		}
 		//next page
@@ -256,10 +214,6 @@ class CurrentMarket extends BaseScreen {
 								break;
 				}
 			});
-		}
-		//
-		_on_go_back = () => {
-			this.props.navigation.goBack();
 		}
 	 //==========
 		render() {
@@ -337,12 +291,52 @@ class CurrentMarket extends BaseScreen {
 								</View>
 								{/* detail */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
-								</View>
+                {this.state.active_part=='MOST ACTIVE' &&
+                  <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+  									<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
+  				          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>$ Volume</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_sortOn('volume')}>
+  										<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>Share Volume</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_sortOn('tradeCount')}>
+  										<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0&&common_styles.bold]}>Trades</Text></View>
+  									</TouchableOpacity>
+  				        </View>
+                }
+                {this.state.active_part=='ADVANCERS' &&
+                  <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+  									<TouchableOpacity onPress={() => this._change_advancers_priceMin(1)}>
+  				          	<View style={[common_styles.padding_5, this.state.advancer_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0.05)}>
+  										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0)}>
+  										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0&&common_styles.bold]}>All</Text></View>
+  									</TouchableOpacity>
+  				        </View>
+                }
+                {this.state.active_part=='DECLINERS' &&
+                  <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+  									<TouchableOpacity onPress={() => this._change_decliners_priceMin(1)}>
+  				          	<View style={[common_styles.padding_5, this.state.decliner_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0.05)}>
+  										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+  									</TouchableOpacity>
+  									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0)}>
+  										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0&&common_styles.bold]}>All</Text></View>
+  									</TouchableOpacity>
+  				        </View>
+                }
+                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+                  <View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+                  <View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+                  <View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+                  <View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+                </View>
+
 								<View>
 									<FlatList
 												data={this.state.data_list['records']}
