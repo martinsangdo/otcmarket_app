@@ -43,7 +43,8 @@ export const API_URI = {
 				REAL_TIME_LEVEL_2: setting.BACKEND_SERVER + 'stock/level2/<symbol>?symbol=<symbol>',
 				TRADE_DATA: setting.BACKEND_SERVER + 'stock/trade/data/<symbol>?symbol=<symbol>&page=1&pageSize=10',
 				SHORT_INTEREST: setting.BACKEND_SERVER + 'stock/short-sale/<symbol>?symbol=<symbol>&page=1&pageSize=10'
-			}
+			},
+      OVERVIEW: setting.BACKEND_SERVER + 'company/profile/full/<symbol>?symbol=<symbol>'
 		}
 
 };

@@ -99,7 +99,7 @@ class StockDetailQuote extends BaseScreen {
             var trade_data = [];
             for (var i=0; i<records.length; i++){
               trade_data.push({
-                eventTimestamp: records[i]['eventTimestamp'],
+                eventTimestamp: records[i]['eventTimestamp']+'',
                 tradeDate: records[i]['tradeDate'],
                 tradeTime: records[i]['tradeTime'],
                 lastPrice: records[i]['lastPrice'],
@@ -122,7 +122,7 @@ class StockDetailQuote extends BaseScreen {
             var short_interest = [];
             for (var i=0; i<records.length; i++){
               short_interest.push({
-                positionDate: records[i]['positionDate'],
+                positionDate: records[i]['positionDate']+'',
                 shortInterest: Utils.format_currency_thousand(records[i]['shortInterest']),
                 pctChgVolume: records[i]['pctChgVolume'],
                 avgDailyVolume: Utils.format_currency_thousand(records[i]['avgDailyVolume']),
@@ -180,7 +180,27 @@ class StockDetailQuote extends BaseScreen {
         case 'quote':
           this.props.navigation.navigate('StockDetailQuote', {symbol: this.state.symbol});
           break;
-
+          case 'overview':
+            this.props.navigation.navigate('StockDetailOverview', {symbol: this.state.symbol});
+            break;
+            case 'company_profile':
+              this.props.navigation.navigate('StockDetailProfile', {symbol: this.state.symbol});
+              break;
+              case 'security_details':
+                this.props.navigation.navigate('StockDetailSecurity', {symbol: this.state.symbol});
+                break;
+                case 'news':
+                  this.props.navigation.navigate('StockDetailNews', {symbol: this.state.symbol});
+                  break;
+                  case 'financials':
+                    this.props.navigation.navigate('StockDetailFinancial', {symbol: this.state.symbol});
+                    break;
+                    case 'disclosure':
+                      this.props.navigation.navigate('StockDetailDisclosure', {symbol: this.state.symbol});
+                      break;
+                      case 'research':
+                        this.props.navigation.navigate('StockDetailResearch', {symbol: this.state.symbol});
+                        break;
       }
     }
     //real time level 2
@@ -253,32 +273,29 @@ class StockDetailQuote extends BaseScreen {
 								<Body style={styles.headerBody}>
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
 								</Body>
-								<Right style={[common_styles.headerRight, {flex:0.15}]}>
+								<Right style={[common_styles.headerRight, {flex:0.2}]}>
                   <TouchableOpacity>
-                    <Icon name="md-bookmark" style={[common_styles.header_icon]}/>
+                    <Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
                   </TouchableOpacity>
+                  <Picker
+                    mode="dropdown"
+                    iosHeader="Select Info"
+                    iosIcon={<Icon name="ios-arrow-down" />}
+                    selectedValue={this.state.current_detail_part}
+                    onValueChange={(newval)=>{this.onChangePart(newval)}}
+                  >
+                    <Item label="Quote" value="quote" />
+                    <Item label="Overview" value="overview" />
+                    <Item label="Company Profile" value="company_profile" />
+                    <Item label="Security Details" value="security_details" />
+                    <Item label="News" value="news" />
+                    <Item label="Financials" value="financials" />
+                    <Item label="Disclosure" value="disclosure" />
+                    <Item label="Research" value="research" />
+                  </Picker>
 								</Right>
 							</Header>
 							{/* END header */}
-              <View>
-                <Picker
-                  mode="dropdown"
-                  iosHeader="Select Info"
-                  iosIcon={<Icon name="ios-arrow-down" />}
-                  style={{ width: undefined }}
-                  selectedValue={this.state.current_detail_part}
-                  onValueChange={(newval)=>{this.onChangePart(newval)}}
-                >
-                  <Item label="Quote" value="quote" />
-                  <Item label="Overview" value="overview" />
-                  <Item label="Company Profile" value="company_profile" />
-                  <Item label="Security Details" value="security_details" />
-                  <Item label="News" value="news" />
-                  <Item label="Financials" value="financials" />
-                  <Item label="Disclosure" value="disclosure" />
-                  <Item label="Research" value="research" />
-                </Picker>
-              </View>
               <Content>
                 {/* general data */}
                 <View style={common_styles.margin_10}>
@@ -416,6 +433,7 @@ class StockDetailQuote extends BaseScreen {
 												initialNumToRender={10}
 											/>
 								</View>
+                <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>
 				);
