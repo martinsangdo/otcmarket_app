@@ -4,7 +4,7 @@ import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
   CardItem, Picker} from "native-base";
 
-import StockDetailBaseScreen from "./StockDetailBaseScreen.js";
+import BaseScreen from "../../base/BaseScreen.js";
 import common_styles from "../../../css/common";
 import styles from "./../style";    //CSS defined here
 import {API_URI} from '../../utils/api_uri';
@@ -15,16 +15,21 @@ import store from 'react-native-simple-store';
 
 const Item = Picker.Item;
 
-class StockDetailQuote extends StockDetailBaseScreen {
+class StockDetailQuote extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
+        symbol:'',  //current stock
+        current_detail_part: 'quote',
+        current_quote: 'bid',
         quote_data:{
           general: {},
           real_time_level_2: {},
           trade: {},
           short_interest: {}
-        }
+        },
+        bid_quote:[],
+        ask_quote:[]
 			};
 		}
 		//
@@ -34,6 +39,7 @@ class StockDetailQuote extends StockDetailBaseScreen {
       }, ()=>{
         this._load_quote();
 			});
+      //todo: check bookmark
 			//
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
@@ -73,18 +79,79 @@ class StockDetailQuote extends StockDetailBaseScreen {
             market_cap: Utils.format_currency_thousand(detail['marketCap']),
             shares_out: Utils.format_currency_thousand(detail['sharesOutstanding'])
           };
-          Utils.dlog(save_detail);
           me.setState({quote_data: {...me.state.quote_data, general: save_detail}});
         } else if (error){
           //do nothing
         }
       });
       //Real time level 2
-
+      var urlQuote = API_URI.STOCK_DETAIL.QUOTE.REAL_TIME_LEVEL_2.replace('<symbol>', this.state.symbol);
+      RequestData.sentGetRequest(urlQuote, (detail, error) => {
+        if (detail){
+          var bid_data = detail['montageBuyList'];
+          if (bid_data != null){
+            var bid_quote = [];
+            for (var i=0; i<bid_data.length; i++){
+              bid_quote.push({
+                priceDisplay: bid_data[i]['priceDisplay'],
+                mmIdDisplay: bid_data[i]['mmIdDisplay'],
+                mmId: bid_data[i]['mmId'],
+                sizeDisplay: bid_data[i]['sizeDisplay'],
+                transTimeDisplay: bid_data[i]['transTimeDisplay']
+              });
+            }
+            me.setState({bid_quote: bid_quote});
+          }
+            //
+            var ask_data = detail['montageSellList'];
+            if (ask_data != null){
+              var ask_quote = [];
+              for (var i=0; i<ask_data.length; i++){
+                ask_quote.push({
+                  priceDisplay: ask_data[i]['priceDisplay'],
+                  mmIdDisplay: ask_data[i]['mmIdDisplay'],
+                  mmId: ask_data[i]['mmId'],
+                  sizeDisplay: ask_data[i]['sizeDisplay'],
+                  transTimeDisplay: ask_data[i]['transTimeDisplay']
+                });
+              }
+              me.setState({ask_quote: ask_quote});
+          }
+        } else if (error){
+          //do nothing
+        }
+      });
       //Trade data
 
       //Short interest
     }
+    //when user wants to see another part of stock detail
+    onChangePart = (new_part) => {
+      //move to new page
+      switch (new_part) {
+        case 'quote':
+          this.props.navigation.navigate('StockDetailQuote', {symbol: this.state.symbol});
+          break;
+
+      }
+    }
+    //real time level 2
+    _change_quote(new_quote){
+      this.setState({current_quote: new_quote});
+    }
+    //
+		_keyExtractorQuote = (item) => item.mmId;
+		//render the list. MUST use "item" as param
+		_renderItemQuote = ({item}) => (
+      <View style={[styles.list_item, common_styles.fetch_row]} key={item.mmId}>
+					<View style={[styles.td_stock_price_item]}>
+            <Text>{item.mmId}</Text>
+          </View>
+					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right]}>{item.priceDisplay}</Text></View>
+					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.sizeDisplay}</Text></View>
+          <View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.transTimeDisplay}</Text></View>
+				</View>
+		);
 	 //==========
 		render() {
 				return (
@@ -106,9 +173,31 @@ class StockDetailQuote extends StockDetailBaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
+                  <TouchableOpacity>
+                    <Icon name="md-bookmark" style={[common_styles.header_icon]}/>
+                  </TouchableOpacity>
 								</Right>
 							</Header>
 							{/* END header */}
+              <View>
+                <Picker
+                  mode="dropdown"
+                  iosHeader="Select Info"
+                  iosIcon={<Icon name="ios-arrow-down" />}
+                  style={{ width: undefined }}
+                  selectedValue={this.state.current_detail_part}
+                  onValueChange={(newval)=>{this.onChangePart(newval)}}
+                >
+                  <Item label="Quote" value="quote" />
+                  <Item label="Overview" value="overview" />
+                  <Item label="Company Profile" value="company_profile" />
+                  <Item label="Security Details" value="security_details" />
+                  <Item label="News" value="news" />
+                  <Item label="Financials" value="financials" />
+                  <Item label="Disclosure" value="disclosure" />
+                  <Item label="Research" value="research" />
+                </Picker>
+              </View>
               <Content>
                 <View style={common_styles.margin_10}>
                   <Card>
@@ -178,7 +267,32 @@ class StockDetailQuote extends StockDetailBaseScreen {
                     </CardItem>
                   </Card>
                 </View>
-
+                <View style={common_styles.margin_b_10} />
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>REAL-TIME LEVEL 2 QUOTE</Text></View>
+                <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
+									<TouchableOpacity onPress={() => this._change_quote('bid')}>
+				          	<View style={[common_styles.padding_5, common_styles.margin_r_20, this.state.current_quote=='bid'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>BID</Text></View>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={() => this._change_quote('ask')}>
+										<View style={[common_styles.padding_5, this.state.current_quote=='ask'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>ASK</Text></View>
+									</TouchableOpacity>
+				        </View>
+                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>MPID</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SIZE</Text></View>
+									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIME</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.current_quote=='bid'?this.state.bid_quote:this.state.ask_quote}
+												renderItem={this._renderItemQuote}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractorQuote}
+												initialNumToRender={10}
+											/>
+								</View>
               </Content>
 						</Container>
 				);

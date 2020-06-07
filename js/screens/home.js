@@ -19,6 +19,7 @@ class Home extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
+        loading_indicator_state: false,
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				snapshot_data: {},		//general info of market
 				active_data: {},
@@ -43,17 +44,19 @@ class Home extends BaseScreen {
 		}
 		//
 		onChangeMarket(newMarket) {
-	    this.setState({tierGroup: newMarket}, ()=>{
-				this._load_snaphot_market();
-				this._load_most_active();
-				this._load_advancers();
-				this._load_decliners();
-				setTimeout(() => {
-					if (this.state.loading_indicator_state){
-						this.setState({loading_indicator_state: false});  //stop loading
-					}
-				}, C_Const.MAX_WAIT_RESPONSE);
-			});
+      if (newMarket != this.state.tierGroup){
+        this.setState({tierGroup: newMarket}, ()=>{
+  				this._load_snaphot_market();
+  				this._load_most_active();
+  				this._load_advancers();
+  				this._load_decliners();
+  				setTimeout(() => {
+  					if (this.state.loading_indicator_state){
+  						this.setState({loading_indicator_state: false});  //stop loading
+  					}
+  				}, C_Const.MAX_WAIT_RESPONSE);
+  			});
+      }
 	  }
 		//general info
 		_load_snaphot_market(){
@@ -238,20 +241,20 @@ class Home extends BaseScreen {
 							<Content>
 								{/* Snap shot */}
 								<View>
-								<Picker
-									mode="dropdown"
-									iosHeader="Select Market"
-									iosIcon={<Icon name="ios-arrow-down" />}
-									style={{ width: undefined }}
-									selectedValue={this.state.tierGroup}
-									onValueChange={this.onChangeMarket.bind(this)}
-								>
-									<Item label="All Markets" value="ALL" />
-									<Item label="OTCQX" value="QX" />
-									<Item label="OTCQB" value="DQ" />
-									<Item label="Pink" value="PS" />
-									<Item label="Grey" value="OO" />
-								</Picker>
+  								<Picker
+  									mode="dropdown"
+  									iosHeader="Select Market"
+  									iosIcon={<Icon name="ios-arrow-down" />}
+  									style={{ width: undefined }}
+  									selectedValue={this.state.tierGroup}
+  									onValueChange={this.onChangeMarket.bind(this)}
+  								>
+  									<Item label="All Markets" value="ALL" />
+  									<Item label="OTCQX" value="QX" />
+  									<Item label="OTCQB" value="DQ" />
+  									<Item label="Pink" value="PS" />
+  									<Item label="Grey" value="OO" />
+  								</Picker>
 								</View>
 								<View style={common_styles.margin_10}>
 									<Card>

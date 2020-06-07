@@ -18,9 +18,6 @@ const pl_icon = require("../../img/PL_icon.jpg");
 class BaseScreen extends Component {
     constructor(props) {
   		super(props);
-  		this.state = {
-        loading_indicator_state: false
-  		};
   	}
     componentDidMount() {
 			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
@@ -76,6 +73,7 @@ class BaseScreen extends Component {
     //
 		_keyExtractor = (item) => item.symbol;
 		//render the list. MUST use "item" as param
+    //used to show list of stocks (Home, current_market)
 		_renderItem = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol}>
 					<View style={[common_styles.margin_r_5]}>

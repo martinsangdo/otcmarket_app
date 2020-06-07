@@ -19,6 +19,7 @@ class CurrentMarket extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
+        loading_indicator_state: false,
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				snapshot_data: {},		//general info of market
 				data_list: {},
@@ -78,15 +79,17 @@ class CurrentMarket extends BaseScreen {
 		}
 		//
 		onChangeMarket(newMarket) {
-	    this.setState({tierGroup: newMarket, current_page:0, data_list:{}}, ()=>{
-				this._load_snaphot_market();
-				this._open_more_data();
-				setTimeout(() => {
-					if (this.state.loading_indicator_state){
-						this.setState({loading_indicator_state: false});  //stop loading
-					}
-				}, C_Const.MAX_WAIT_RESPONSE);
-			});
+      if (newMarket != this.state.tierGroup){
+  	    this.setState({tierGroup: newMarket, current_page:0, data_list:{}}, ()=>{
+  				this._load_snaphot_market();
+  				this._open_more_data();
+  				setTimeout(() => {
+  					if (this.state.loading_indicator_state){
+  						this.setState({loading_indicator_state: false});  //stop loading
+  					}
+  				}, C_Const.MAX_WAIT_RESPONSE);
+  			});
+      }
 	  }
 		//general info
     _load_snaphot_market(){
