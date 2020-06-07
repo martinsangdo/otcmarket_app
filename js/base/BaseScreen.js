@@ -19,9 +19,15 @@ class BaseScreen extends Component {
     constructor(props) {
   		super(props);
   		this.state = {
-
+        loading_indicator_state: false
   		};
   	}
+    componentDidMount() {
+			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
+			YellowBox.ignoreWarnings([
+			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+			]);
+    }
     //navigate to another screen
     _navigateTo = (routeName: string) => {
       const resetAction = StackActions.reset({
@@ -77,7 +83,7 @@ class BaseScreen extends Component {
 					</View>
 					<View style={[styles.td_stock_price_item_first]}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('StockDetail', {symbol: item.symbol})}
+              onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
   						<Text>{item.symbol}</Text>
             </TouchableOpacity>

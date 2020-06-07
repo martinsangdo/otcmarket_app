@@ -4,23 +4,21 @@ import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
   CardItem, Picker} from "native-base";
 
-import BaseScreen from "../base/BaseScreen.js";
-import common_styles from "../../css/common";
-import styles from "./style";    //CSS defined here
-import {API_URI} from '../utils/api_uri';
-import Utils from "../utils/functions";
-import {C_Const} from '../utils/constant';
-import RequestData from '../utils/https/RequestData';
+import StockDetailBaseScreen from "./StockDetailBaseScreen.js";
+import common_styles from "../../../css/common";
+import styles from "./../style";    //CSS defined here
+import {API_URI} from '../../utils/api_uri';
+import Utils from "../../utils/functions";
+import {C_Const} from '../../utils/constant';
+import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 
 const Item = Picker.Item;
 
-class StockDetail extends BaseScreen {
+class StockDetailQuote extends StockDetailBaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-				loading_indicator_state: false,
-				symbol:'',
         quote_data:{
           general: {},
           real_time_level_2: {},
@@ -31,10 +29,6 @@ class StockDetail extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
-			YellowBox.ignoreWarnings([
-			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-			]);
       this.setState({
         symbol:this.props.navigation.state.params.symbol
       }, ()=>{
@@ -191,4 +185,4 @@ class StockDetail extends BaseScreen {
 		}
 }
 
-export default StockDetail;
+export default StockDetailQuote;

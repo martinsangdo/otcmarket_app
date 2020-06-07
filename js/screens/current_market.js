@@ -20,7 +20,6 @@ class CurrentMarket extends BaseScreen {
 			super(props);
 			this.state = {
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
-				loading_indicator_state: false,
 				snapshot_data: {},		//general info of market
 				data_list: {},
 				sortOn: 'dollarVolume',	//dollarVolume, volume, tradeCount
@@ -33,10 +32,6 @@ class CurrentMarket extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
-			YellowBox.ignoreWarnings([
-			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-			]);
       this.setState({
         active_part:this.props.navigation.state.params.active_part,
 				tierGroup:this.props.navigation.state.params.tierGroup,

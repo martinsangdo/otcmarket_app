@@ -9,7 +9,7 @@ import SideBar from "./screens/sidebar";
 
 import Home from "./screens/home";
 import CurrentMarket from "./screens/current_market";
-import StockDetail from "./screens/stock_detail";
+import StockDetailQuote from "./screens/stock_detail/stock_detail_quote";
 
 import Splash from "./screens/splash";
 
@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     CurrentMarket: { screen: CurrentMarket },
-    StockDetail: { screen: StockDetail }
+    StockDetailQuote: { screen: StockDetailQuote }
 
   },
   {

@@ -20,7 +20,6 @@ class Home extends BaseScreen {
 			super(props);
 			this.state = {
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
-				loading_indicator_state: true,
 				snapshot_data: {},		//general info of market
 				active_data: {},
 				advancers_data: {},
@@ -32,10 +31,6 @@ class Home extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
-			YellowBox.ignoreWarnings([
-			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-			]);
 			this._load_snaphot_market();
 			this._load_most_active();
 			this._load_advancers();
