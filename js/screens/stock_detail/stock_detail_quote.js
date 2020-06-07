@@ -12,6 +12,7 @@ import Utils from "../../utils/functions";
 import {C_Const} from '../../utils/constant';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Item = Picker.Item;
 
@@ -19,6 +20,7 @@ class StockDetailQuote extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
+        loading_indicator_state: false,
         symbol:'',  //current stock
         current_detail_part: 'quote',
         current_quote: 'bid',
@@ -180,27 +182,24 @@ class StockDetailQuote extends BaseScreen {
         case 'quote':
           this.props.navigation.navigate('StockDetailQuote', {symbol: this.state.symbol});
           break;
-          case 'overview':
-            this.props.navigation.navigate('StockDetailOverview', {symbol: this.state.symbol});
+          case 'company_profile':
+            this.props.navigation.navigate('StockDetailProfile', {symbol: this.state.symbol});
             break;
-            case 'company_profile':
-              this.props.navigation.navigate('StockDetailProfile', {symbol: this.state.symbol});
+            case 'security_details':
+              this.props.navigation.navigate('StockDetailSecurity', {symbol: this.state.symbol});
               break;
-              case 'security_details':
-                this.props.navigation.navigate('StockDetailSecurity', {symbol: this.state.symbol});
+              case 'news':
+                this.props.navigation.navigate('StockDetailNews', {symbol: this.state.symbol});
                 break;
-                case 'news':
-                  this.props.navigation.navigate('StockDetailNews', {symbol: this.state.symbol});
+                case 'financials':
+                  this.props.navigation.navigate('StockDetailFinancial', {symbol: this.state.symbol});
                   break;
-                  case 'financials':
-                    this.props.navigation.navigate('StockDetailFinancial', {symbol: this.state.symbol});
+                  case 'disclosure':
+                    this.props.navigation.navigate('StockDetailDisclosure', {symbol: this.state.symbol});
                     break;
-                    case 'disclosure':
-                      this.props.navigation.navigate('StockDetailDisclosure', {symbol: this.state.symbol});
+                    case 'research':
+                      this.props.navigation.navigate('StockDetailResearch', {symbol: this.state.symbol});
                       break;
-                      case 'research':
-                        this.props.navigation.navigate('StockDetailResearch', {symbol: this.state.symbol});
-                        break;
       }
     }
     //real time level 2
@@ -258,7 +257,12 @@ class StockDetailQuote extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.openDrawer()}
+                  >
+                    <Icon name="menu" style={common_styles.greenColor}/>
+                  </TouchableOpacity>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -273,19 +277,18 @@ class StockDetailQuote extends BaseScreen {
 								<Body style={styles.headerBody}>
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
 								</Body>
-								<Right style={[common_styles.headerRight, {flex:0.2}]}>
+								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity>
                     <Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
                   </TouchableOpacity>
                   <Picker
                     mode="dropdown"
                     iosHeader="Select Info"
-                    iosIcon={<Icon name="ios-arrow-down" />}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9' }}/>}
                     selectedValue={this.state.current_detail_part}
                     onValueChange={(newval)=>{this.onChangePart(newval)}}
                   >
                     <Item label="Quote" value="quote" />
-                    <Item label="Overview" value="overview" />
                     <Item label="Company Profile" value="company_profile" />
                     <Item label="Security Details" value="security_details" />
                     <Item label="News" value="news" />
@@ -297,6 +300,7 @@ class StockDetailQuote extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 {/* general data */}
                 <View style={common_styles.margin_10}>
                   <Card>

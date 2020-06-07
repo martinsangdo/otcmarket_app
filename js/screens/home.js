@@ -12,6 +12,7 @@ import Utils from "../utils/functions";
 import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Item = Picker.Item;
 
@@ -239,6 +240,7 @@ class Home extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
 								{/* Snap shot */}
 								<View>
   								<Picker
