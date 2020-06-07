@@ -22,14 +22,11 @@ class StockDetailQuote extends BaseScreen {
         symbol:'',  //current stock
         current_detail_part: 'quote',
         current_quote: 'bid',
-        quote_data:{
-          general: {},
-          real_time_level_2: {},
-          trade: {},
-          short_interest: {}
-        },
+        general: {},
         bid_quote:[],
-        ask_quote:[]
+        ask_quote:[],
+        trade_data: [],
+        short_interest: []
 			};
 		}
 		//
@@ -53,7 +50,16 @@ class StockDetailQuote extends BaseScreen {
 			var newPropParams = this.props.navigation.state.params;
 			//check if any param is updated, load data again
       if (prevPropParams.getParam('symbol') != newPropParams['symbol']){
-        this.setState({symbol: newPropParams['symbol']}, ()=>{
+        this.setState({
+          symbol: newPropParams['symbol'],
+          current_detail_part: 'quote',
+          current_quote: 'bid',
+          general: {},
+          bid_quote:[],
+          ask_quote:[],
+          trade_data: [],
+          short_interest: []
+        }, ()=>{
           this._load_quote();
         });
       }
@@ -71,7 +77,7 @@ class StockDetailQuote extends BaseScreen {
             volume: Utils.format_currency_thousand(detail['volume']),
             dividend: Utils.getNullableString(detail['dividend']),
             prev_close: detail['previousClose'],
-            wk_range: detail['annualLow'] + ' - ' + detail['annualHigh'],
+            wk_range: Utils.getNullableString(detail['annualLow']) + ' - ' + Utils.getNullableString(detail['annualHigh']),
             average_vol: Utils.format_currency_thousand(Math.round(detail['thirtyDaysAvgVol'])),
             net_dividend: Utils.getNullableString(detail['yield']),
             best_bid: detail['bidPrice'] + ' x ' + detail['bidSize'],
@@ -79,7 +85,52 @@ class StockDetailQuote extends BaseScreen {
             market_cap: Utils.format_currency_thousand(detail['marketCap']),
             shares_out: Utils.format_currency_thousand(detail['sharesOutstanding'])
           };
-          me.setState({quote_data: {...me.state.quote_data, general: save_detail}});
+          me.setState({general: save_detail});
+        } else if (error){
+          //do nothing
+        }
+      });
+      //Trade data
+      var urlTrade = API_URI.STOCK_DETAIL.QUOTE.TRADE_DATA.replace('<symbol>', this.state.symbol);
+      RequestData.sentGetRequest(urlTrade, (detail, error) => {
+        if (detail){
+          var records = detail['records'];
+          if (records != null){
+            var trade_data = [];
+            for (var i=0; i<records.length; i++){
+              trade_data.push({
+                eventTimestamp: records[i]['eventTimestamp'],
+                tradeDate: records[i]['tradeDate'],
+                tradeTime: records[i]['tradeTime'],
+                lastPrice: records[i]['lastPrice'],
+                lastVolume: Utils.format_currency_thousand(records[i]['lastVolume']),
+                tradeDirection: records[i]['tradeDirection']
+              });
+            }
+            me.setState({trade_data: trade_data});
+          }
+        } else if (error){
+          //do nothing
+        }
+      });
+      //Short interest
+      var urlShortInterest = API_URI.STOCK_DETAIL.QUOTE.SHORT_INTEREST.replace('<symbol>', this.state.symbol);
+      RequestData.sentGetRequest(urlShortInterest, (detail, error) => {
+        if (detail){
+          var records = detail['records'];
+          if (records != null){
+            var short_interest = [];
+            for (var i=0; i<records.length; i++){
+              short_interest.push({
+                positionDate: records[i]['positionDate'],
+                shortInterest: Utils.format_currency_thousand(records[i]['shortInterest']),
+                pctChgVolume: records[i]['pctChgVolume'],
+                avgDailyVolume: Utils.format_currency_thousand(records[i]['avgDailyVolume']),
+                positionDateDisplay: Utils.formatDate(records[i]['positionDate']),
+              });
+            }
+            me.setState({short_interest: short_interest});
+          }
         } else if (error){
           //do nothing
         }
@@ -121,9 +172,6 @@ class StockDetailQuote extends BaseScreen {
           //do nothing
         }
       });
-      //Trade data
-
-      //Short interest
     }
     //when user wants to see another part of stock detail
     onChangePart = (new_part) => {
@@ -150,6 +198,39 @@ class StockDetailQuote extends BaseScreen {
 					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right]}>{item.priceDisplay}</Text></View>
 					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.sizeDisplay}</Text></View>
           <View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.transTimeDisplay}</Text></View>
+				</View>
+		);
+    //
+		_keyExtractorTradeData = (item) => item.eventTimestamp;
+		//render the list. MUST use "item" as param
+		_renderItemTradeData = ({item}) => (
+      <View style={[styles.list_item, common_styles.fetch_row]} key={item.eventTimestamp}>
+					<View style={[common_styles.width_25p]}><Text>{item.tradeDate}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.tradeTime}</Text></View>
+					<View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.lastPrice}</Text></View>
+          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.lastVolume}</Text></View>
+          <View>
+            {item.tradeDirection == 'Down' &&
+              <Icon name="md-arrow-dropdown" style={common_styles.redColor}/>
+            }
+            {item.tradeDirection == 'Up' &&
+              <Icon name="md-arrow-dropup"/>
+            }
+            {item.tradeDirection != 'Down' && item.tradeDirection != 'Up' &&
+              <Icon name="md-remove"/>
+            }
+          </View>
+				</View>
+		);
+    //
+		_keyExtractorShortInterest = (item) => item.positionDate;
+		//render the list. MUST use "item" as param
+		_renderItemShortInterest = ({item}) => (
+      <View style={[styles.list_item, common_styles.fetch_row]} key={item.positionDate}>
+					<View style={[common_styles.width_25p]}><Text>{item.positionDateDisplay}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.shortInterest}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.pctChgVolume}</Text></View>
+          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.avgDailyVolume}</Text></View>
 				</View>
 		);
 	 //==========
@@ -199,6 +280,7 @@ class StockDetailQuote extends BaseScreen {
                 </Picker>
               </View>
               <Content>
+                {/* general data */}
                 <View style={common_styles.margin_10}>
                   <Card>
                     <CardItem>
@@ -206,61 +288,61 @@ class StockDetailQuote extends BaseScreen {
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>OPEN</Text>
-                            <Text>{this.state.quote_data['general']['open']}</Text>
+                            <Text>{this.state.general['open']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>DAILY RANGE</Text>
-                            <Text>{this.state.quote_data['general']['daily_range']}</Text>
+                            <Text>{this.state.general['daily_range']}</Text>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>VOLUME</Text>
-                            <Text>{this.state.quote_data['general']['volume']}</Text>
+                            <Text>{this.state.general['volume']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>DEVIDEND</Text>
-                            <Text>{this.state.quote_data['general']['dividend']}</Text>
+                            <Text>{this.state.general['dividend']}</Text>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>PREV CLOSE</Text>
-                            <Text>{this.state.quote_data['general']['prev_close']}</Text>
+                            <Text>{this.state.general['prev_close']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>52WK RANGE</Text>
-                            <Text>{this.state.quote_data['general']['wk_range']}</Text>
+                            <Text>{this.state.general['wk_range']}</Text>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>AVERAGE VOL (30D)</Text>
-                            <Text>{this.state.quote_data['general']['average_vol']}</Text>
+                            <Text>{this.state.general['average_vol']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>NET DIVIDENT YIELD</Text>
-                            <Text>{this.state.quote_data['general']['net_dividend']}</Text>
+                            <Text>{this.state.general['net_dividend']}</Text>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>BEST BID</Text>
-                            <Text>{this.state.quote_data['general']['best_bid']}</Text>
+                            <Text>{this.state.general['best_bid']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>BEST ASK</Text>
-                            <Text>{this.state.quote_data['general']['best_ask']}</Text>
+                            <Text>{this.state.general['best_ask']}</Text>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>MARKET CAP</Text>
-                            <Text>{this.state.quote_data['general']['market_cap']}</Text>
+                            <Text>{this.state.general['market_cap']}</Text>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
                             <Text style={[common_styles.darkGrayColor]}>SHARES OUT</Text>
-                            <Text>{this.state.quote_data['general']['shares_out']}</Text>
+                            <Text>{this.state.general['shares_out']}</Text>
                           </View>
                         </View>
                       </Body>
@@ -268,6 +350,47 @@ class StockDetailQuote extends BaseScreen {
                   </Card>
                 </View>
                 <View style={common_styles.margin_b_10} />
+                {/* Trade data */}
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>TRADE DATA</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
+                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIMESTAMP</Text></View>
+									<View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOLUME</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.trade_data}
+												renderItem={this._renderItemTradeData}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractorTradeData}
+												initialNumToRender={10}
+											/>
+								</View>
+                <View style={common_styles.margin_b_20} />
+                {/* Short Interest */}
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>SHORT INTEREST</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
+                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHORT INTEREST</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>AVG. DAILY SHARE VOL</Text></View>
+								</View>
+								<View>
+									<FlatList
+												data={this.state.short_interest}
+												renderItem={this._renderItemShortInterest}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractorShortInterest}
+												initialNumToRender={10}
+											/>
+								</View>
+                <View style={common_styles.margin_b_20} />
+                {/* real time level 2 data */}
 								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>REAL-TIME LEVEL 2 QUOTE</Text></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_quote('bid')}>

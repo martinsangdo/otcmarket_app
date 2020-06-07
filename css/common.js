@@ -151,6 +151,8 @@ export default {
 		//width
 		width_200: {width: 200},
 		width_300: {width: 300},
+		width_20p: {width: '20%'},
+		width_25p: {width: '25%'},
     width_30p: {width: '30%'},
     width_50p: {width: '50%'},
 		flex_10p: {flex: 0.1},

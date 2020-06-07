@@ -20,6 +20,7 @@ export const C_Const = {
   MAX_WAIT_RESPONSE: 12000, //12s, max time to wait response
 	MAX_SPLASH_TIMER: 30000,   //maximum time to display splash screen
 	DATE_FORMAT: 'DD-MMM',   //birthday format
+	DATE_US: 'YYYY-MM-DD',
 	NOTIFICATION_DATE_FORMAT: 'YYYY-MM-DD HH:mm:ss',
 	PAGE_LEN: 25, //default item number in one page, should large enough to load more item
 	EMPTY_DATETIME: '0000-00-00 00:00:00',

@@ -80,26 +80,10 @@ exports.my_fetch = function(url, method, body){
         console.error(error);
     });
 };
-//fetch with progress
-// https://github.com/g6ling/React-Native-Tips/tree/master/How_to_upload_photo%2Cfile_in%20react-native
-// exports.my_futch = function(url, opts={}, onProgress) => {
-//     console.log(url, opts)
-//     return new Promise( (res, rej)=>{
-//         var xhr = new XMLHttpRequest();
-//         xhr.open(opts.method || 'get', url);
-//         for (var k in opts.headers||{})
-//             xhr.setRequestHeader(k, opts.headers[k]);
-//         xhr.onload = e => res(e.target);
-//         xhr.onerror = rej;
-//         if (xhr.upload && onProgress)
-//             xhr.upload.onprogress = onProgress; // event.loaded / event.total * 100 ; //event.lengthComputable
-//         xhr.send(opts.body);
-//     });
-// };
 //
 exports.formatDate = function(date){
   Moment.locale('en');
-  return Moment(date).format(C_Const.DATE_FORMAT);
+  return Moment(date).format(C_Const.DATE_US);
 };
 //https://momentjs.com/docs/#/customization/
 exports.formatCourseDate = function(lang_key, date){
