@@ -71,6 +71,7 @@ export default {
 		bold: {
 				fontWeight: 'bold'
 		},
+    underline: {textDecorationLine: 'underline'},
 		font_10: {
 				fontSize: 10
 		},
@@ -186,8 +187,13 @@ export default {
       borderBottomColor: '#008da9',
       borderBottomWidth: 1
     },
+    border_b_gray:{
+      borderBottomColor: '#ccc',
+      borderBottomWidth: 1
+    },
 		arrow_color: {color: '#444'},
 		load_more: {marginBottom: 10},
 		text_input: {width: '100%', fontSize: 18},
-    fetch_row: {flexDirection: 'row', justifyContent: 'space-between'}
+    fetch_row: {flexDirection: 'row', justifyContent: 'space-between'},
+    heading_1: {fontWeight: 'bold', fontSize: 20, color:'#008da9'}
 };

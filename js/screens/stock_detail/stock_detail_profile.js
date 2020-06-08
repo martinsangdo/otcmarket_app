@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
+import {Image, View, TouchableOpacity, FlatList, YellowBox, Linking} from "react-native";
 
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
   CardItem, Picker} from "native-base";
@@ -10,6 +10,8 @@ import styles from "./../style";    //CSS defined here
 import {API_URI} from '../../utils/api_uri';
 import Utils from "../../utils/functions";
 import {C_Const} from '../../utils/constant';
+import {setting} from '../../utils/config.js';
+
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -68,7 +70,9 @@ class StockDetailProfile extends BaseScreen {
             securities_className: detail['securities'][0]['className'],//Sponsored ADR (1 ADS : 0.125 Ordinary)
             tierGroup: detail['tierGroup'], //QX
             tierStartDate: Utils.formatDate(detail['tierStartDate']),
-            tierDisplayName: detail['tierDisplayName'],
+            tierDisplayName: detail['securities'][0]['tierDisplayName'],
+            authorizedShares: Utils.format_currency_thousand(detail['securities'][0]['outstandingShares']),
+            authorizedSharesAsOfDate: Utils.formatDate(detail['securities'][0]['outstandingSharesAsOfDate']),
             isProfileVerified: detail['isProfileVerified'],
             profileVerifiedAsOfDate: Utils.formatDate(detail['profileVerifiedAsOfDate']),
             hasLogo: detail['hasLogo'],
@@ -76,10 +80,11 @@ class StockDetailProfile extends BaseScreen {
             businessDesc: detail['businessDesc'],
             address1: detail['address1'],
             city: detail['city'],
+            zip: detail['zip'],
             country: detail['country'],
             website: detail['website'],
             phone: detail['phone'],
-            fax: detail['fax'],
+            email: detail['email'],
             twitter: detail['twitter'],
             estimatedMarketCap: Utils.format_currency_thousand(detail['estimatedMarketCap']),
             estimatedMarketCapAsOfDate: Utils.formatDate(detail['estimatedMarketCapAsOfDate']),
@@ -87,9 +92,10 @@ class StockDetailProfile extends BaseScreen {
             reportingStandard: detail['reportingStandard'],
             auditedStatusDisplay: detail['auditedStatusDisplay'],
             //report
-            hasLatestFiling: detail['hasLatestFiling'],
-            latestFilingType: detail['latestFilingType'],
+            hasLatestFiling: Utils.getNullableString(detail['hasLatestFiling']),
+            latestFilingType: Utils.getNullableString(detail['latestFilingType']),
             latestFilingDate: Utils.formatDate(detail['latestFilingDate']),
+            latestFilingUrl: Utils.getNullableString(detail['latestFilingUrl']),
             cik: detail['cik'],
             fiscalYearEnd: detail['fiscalYearEnd'],
             officers: detail['officers'],
@@ -100,8 +106,8 @@ class StockDetailProfile extends BaseScreen {
             primarySicCode: detail['primarySicCode'],
             countryOfIncorporationName: detail['countryOfIncorporationName'],
             yearOfIncorporation: detail['yearOfIncorporation'],
-            numberOfEmployees: detail['numberOfEmployees'],
-            numberOfEmployeesAsOf: detail['numberOfEmployeesAsOf'],
+            numberOfEmployees: Utils.format_currency_thousand(detail['numberOfEmployees']),
+            numberOfEmployeesAsOf: Utils.formatDate(detail['numberOfEmployeesAsOf']),
             isShell: detail['isShell']
           };
           Utils.xlog('full detail', save_detail);
@@ -138,7 +144,36 @@ class StockDetailProfile extends BaseScreen {
                       break;
       }
     }
+    //
+		_keyExtractorOfficers = (item) => item.name + item.title;
+		//render the list. MUST use "item" as param
+		_renderOfficers = ({item}) => (
+      <View style={[common_styles.margin_b_10]}>
+        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</Text>
+        <Text>{item.title}</Text>
+      </View>
+		);
+    //
+		_keyExtractorAuditors = (item) => item.name + item.id;
+		//render the list. MUST use "item" as param
+		_renderAuditors = ({item}) => (
+      <View style={[common_styles.margin_b_10]}>
+        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.typeName}</Text>
+        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</Text>
+        <Text style={[common_styles.margin_b_10]}>{item.address1}</Text>
+        <Text style={[common_styles.margin_b_10]}>{item.city + ' ' +item.zip}</Text>
+        <Text>{item.country}</Text>
+      </View>
+		);
+    //==========
 		render() {
+      let company_notes = [];
+      if (this.state.general['notes']){
+        company_notes = this.state.general['notes'].map(function(item){
+          return <View key={Math.random()}><Text> {item} </Text></View>;
+        });
+      }
+
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
@@ -169,8 +204,8 @@ class StockDetailProfile extends BaseScreen {
                     onValueChange={(newval)=>{this.onChangePart(newval)}}
                   >
                     <Item label="Quote" value="quote" />
-                    <Item label="Company Profile" value="company_profile" />
-                    <Item label="Security Details" value="security_details" />
+                    <Item label="Profile" value="company_profile" />
+                    <Item label="Security" value="security_details" />
                     <Item label="News" value="news" />
                     <Item label="Financials" value="financials" />
                     <Item label="Disclosure" value="disclosure" />
@@ -179,10 +214,205 @@ class StockDetailProfile extends BaseScreen {
 								</Right>
 							</Header>
 							{/* END header */}
-              <Content>
+              <Content style={common_styles.padding_10}>
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 {/* general data */}
-
+                <View style={common_styles.margin_b_10} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>{this.state.general['name']}</Text></View>
+                <View style={common_styles.margin_b_10}><Text>{this.state.general['tierDisplayName']}</Text></View>
+                <View style={common_styles.margin_b_20}><Text>Member since {this.state.general['tierStartDate']}</Text></View>
+                {this.state.general['isProfileVerified'] &&
+                  <View style={common_styles.margin_b_20}><Text>Verified Profile {this.state.general['profileVerifiedAsOfDate']}</Text></View>
+                }
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>DESCRIPTION</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                <View><Text>{this.state.general['businessDesc']}</Text></View>
+                {this.state.general['hasLogo'] && !Utils.isEmpty(this.state.general['companyLogoUrl']) &&
+                  <Image source={{uri: setting.BACKEND_SERVER_URI + this.state.general['companyLogoUrl']}} style={{width:72, height:40}}/>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['address1']) &&
+                    <View style={common_styles.margin_b_10}><Text>{this.state.general['address1']}</Text></View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['city']) &&
+                    <View style={common_styles.margin_b_10}><Text>{this.state.general['city']}</Text></View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['country']) &&
+                    <View style={common_styles.margin_b_10}><Text>{this.state.general['country']}</Text></View>
+                }
+                <View style={[common_styles.margin_b_10, common_styles.border_b_gray]} />
+                {
+                  !Utils.isEmpty(this.state.general['website']) &&
+                  <View style={common_styles.margin_b_10}>
+                    <TouchableOpacity onPress={()=>Linking.openURL(this.state.general['website'])}>
+                      <Text>{this.state.general['website']}</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['phone']) &&
+                  <View style={common_styles.margin_b_10}>
+                    <TouchableOpacity onPress={()=>Linking.openURL('tel:'+this.state.general['phone'])}>
+                      <Text>{this.state.general['phone']} {this.state.general['zip']}</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['email']) &&
+                  <View style={common_styles.margin_b_10}>
+                    <TouchableOpacity onPress={()=>Linking.openURL('mailto:'+this.state.general['email'])}>
+                      <Text>{this.state.general['email']}</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+                <View style={[common_styles.margin_b_10, common_styles.border_b_gray]} />
+                {
+                  !Utils.isEmpty(this.state.general['twitter']) &&
+                  <View style={common_styles.margin_b_10}>
+                    <TouchableOpacity onPress={()=>Linking.openURL(this.state.general['twitter'])}>
+                        <Icon name="logo-twitter" style={common_styles.default_font_color}/>
+                    </TouchableOpacity>
+                  </View>
+                }
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITY DETAILS</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {
+                  !Utils.isEmpty(this.state.general['estimatedMarketCap']) &&
+                  <View>
+                    <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>Market Cap</Text></View>
+                    <View style={[common_styles.margin_b_10, common_styles.flex_row]}>
+                      <View style={[common_styles.width_50p]}><Text>{this.state.general['estimatedMarketCap']}</Text></View>
+                      <View style={[common_styles.width_50p]}><Text>{this.state.general['estimatedMarketCapAsOfDate']}</Text></View>
+                    </View>
+                  </View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['authorizedShares']) &&
+                  <View>
+                    <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>Shares Out</Text></View>
+                    <View style={[common_styles.margin_b_10, common_styles.flex_row]}>
+                      <View style={[common_styles.width_50p]}><Text>{this.state.general['authorizedShares']}</Text></View>
+                      <View style={[common_styles.width_50p]}><Text>{this.state.general['authorizedSharesAsOfDate']}</Text></View>
+                    </View>
+                  </View>
+                }
+                {
+                  !Utils.isEmpty(this.state.general['estimatedMarketCap']) && !Utils.isEmpty(this.state.general['authorizedShares']) &&
+                  <View style={common_styles.view_align_center}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('StockDetailSecurity', {symbol: this.state.symbol})}>
+                      <Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>FINANCIAL REPORTING</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {!Utils.isEmpty(this.state.general['reportingStandard']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Reporting Status</Text>
+                    <Text>{this.state.general['reportingStandard']}</Text>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['auditedStatusDisplay']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Audited Financials</Text>
+                    <Text>{this.state.general['auditedStatusDisplay']}</Text>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['latestFilingUrl']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Latest Report</Text>
+                    <TouchableOpacity onPress={()=>Linking.openURL(setting.BACKEND_SERVER_URI + this.state.general['latestFilingUrl'])}>
+                      <Text style={common_styles.underline}>{this.state.general['latestFilingDate'] + ' ' + this.state.general['latestFilingType']}</Text>
+                    </TouchableOpacity>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['cik']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>CIK</Text>
+                    <Text>{this.state.general['cik']}</Text>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['fiscalYearEnd']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Fiscal Year End</Text>
+                    <Text>{this.state.general['fiscalYearEnd']}</Text>
+                  </View>
+                }
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>OFFICERS</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {
+                  this.state.general['officers'] != null && this.state.general['officers'].length > 0 &&
+                  <FlatList
+												data={this.state.general['officers']}
+												renderItem={this._renderOfficers}
+												refreshing={false}
+												keyExtractor={this._keyExtractorOfficers}
+											/>
+                }
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>DIRECTORS</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {
+                  this.state.general['premierDirectorList'] != null && this.state.general['premierDirectorList'].length > 0 &&
+                  <FlatList
+												data={this.state.general['premierDirectorList']}
+												renderItem={this._renderOfficers}
+												refreshing={false}
+												keyExtractor={this._keyExtractorOfficers}
+											/>
+                }
+                {
+                  this.state.general['standardDirectorList'] != null && this.state.general['standardDirectorList'].length > 0 &&
+                  <FlatList
+												data={this.state.general['standardDirectorList']}
+												renderItem={this._renderOfficers}
+												refreshing={false}
+												keyExtractor={this._keyExtractorOfficers}
+											/>
+                }
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SERVICE PROVIDERS</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                <FlatList
+                      data={this.state.general['auditors']}
+                      renderItem={this._renderAuditors}
+                      refreshing={false}
+                      keyExtractor={this._keyExtractorAuditors}
+                />
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>PROFILE DATA</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {!Utils.isEmpty(this.state.general['primarySicCode']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>SIC - Industry Classification</Text>
+                    <Text>{this.state.general['primarySicCode']}</Text>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['countryOfIncorporationName']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Incorporated In</Text>
+                    <Text>{this.state.general['countryOfIncorporationName'] + ', ' + this.state.general['yearOfIncorporation']}</Text>
+                  </View>
+                }
+                {!Utils.isEmpty(this.state.general['numberOfEmployees']) &&
+                  <View style={[common_styles.margin_b_10]}>
+                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Employees</Text>
+                    <Text>{this.state.general['numberOfEmployees']} as of {this.state.general['numberOfEmployeesAsOf']}</Text>
+                  </View>
+                }
+                <View style={[common_styles.margin_b_10]}>
+                  <Text style={[common_styles.margin_b_10, common_styles.bold]}>Shell</Text>
+                  <Text>{this.state.general['isShell']?'Yes':'No'}</Text>
+                </View>
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>NOTES</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {company_notes}
                 <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>

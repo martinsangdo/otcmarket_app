@@ -22,7 +22,7 @@ class BaseScreen extends Component {
     componentDidMount() {
 			console.ignoredYellowBox = ['Remote debugger'];   //don't show warning in app when debugging
 			YellowBox.ignoreWarnings([
-			  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+			  'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead.', // TODO: Remove when fixed
 			]);
     }
     //navigate to another screen

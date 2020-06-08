@@ -101,7 +101,7 @@ class StockDetailQuote extends BaseScreen {
             var trade_data = [];
             for (var i=0; i<records.length; i++){
               trade_data.push({
-                eventTimestamp: records[i]['eventTimestamp']+'',
+                eventTimestamp: records[i]['eventTimestamp']+Math.random()+'',
                 tradeDate: records[i]['tradeDate'],
                 tradeTime: records[i]['tradeTime'],
                 lastPrice: records[i]['lastPrice'],
@@ -284,13 +284,13 @@ class StockDetailQuote extends BaseScreen {
                   <Picker
                     mode="dropdown"
                     iosHeader="Select Info"
-                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9' }}/>}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
                     selectedValue={this.state.current_detail_part}
                     onValueChange={(newval)=>{this.onChangePart(newval)}}
                   >
                     <Item label="Quote" value="quote" />
-                    <Item label="Company Profile" value="company_profile" />
-                    <Item label="Security Details" value="security_details" />
+                    <Item label="Profile" value="company_profile" />
+                    <Item label="Security" value="security_details" />
                     <Item label="News" value="news" />
                     <Item label="Financials" value="financials" />
                     <Item label="Disclosure" value="disclosure" />
@@ -372,7 +372,7 @@ class StockDetailQuote extends BaseScreen {
                 </View>
                 <View style={common_styles.margin_b_10} />
                 {/* Trade data */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>TRADE DATA</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>TRADE DATA</Text></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
 									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
@@ -392,7 +392,7 @@ class StockDetailQuote extends BaseScreen {
 								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* Short Interest */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>SHORT INTEREST</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SHORT INTEREST</Text></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
 									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
@@ -412,7 +412,7 @@ class StockDetailQuote extends BaseScreen {
 								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* real time level 2 data */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>REAL-TIME LEVEL 2 QUOTE</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>REAL-TIME LEVEL 2 QUOTE</Text></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_quote('bid')}>
 				          	<View style={[common_styles.padding_5, common_styles.margin_r_20, this.state.current_quote=='bid'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>BID</Text></View>

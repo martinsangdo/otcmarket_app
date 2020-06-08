@@ -297,7 +297,7 @@ class Home extends BaseScreen {
 								</View>
 								{/* Most active */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>MOST ACTIVE</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>MOST ACTIVE</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
 				          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>$ Volume</Text></View>
@@ -332,7 +332,7 @@ class Home extends BaseScreen {
 								</View>
 								{/* Advancers */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>ADVANCERS</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>ADVANCERS</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_advancers_priceMin(1)}>
 				          	<View style={[common_styles.padding_5, this.state.advancer_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
@@ -367,7 +367,7 @@ class Home extends BaseScreen {
 								</View>
 								{/* Decliners */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.bold, common_styles.font_20]}>DECLINERS</Text></View>
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>DECLINERS</Text></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_decliners_priceMin(1)}>
 				          	<View style={[common_styles.padding_5, this.state.decliner_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
