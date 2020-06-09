@@ -108,7 +108,8 @@ class StockDetailProfile extends BaseScreen {
             yearOfIncorporation: detail['yearOfIncorporation'],
             numberOfEmployees: Utils.format_currency_thousand(detail['numberOfEmployees']),
             numberOfEmployeesAsOf: Utils.formatDate(detail['numberOfEmployeesAsOf']),
-            isShell: detail['isShell']
+            isShell: detail['isShell'],
+            security_notes: detail['securities'][0]['notes']
           };
           // Utils.xlog('full detail', save_detail);
           me.setState({general: save_detail});
@@ -167,10 +168,19 @@ class StockDetailProfile extends BaseScreen {
 		);
     //==========
 		render() {
-      let company_notes = [];
-      if (this.state.general['notes']){
-        company_notes = this.state.general['notes'].map(function(item){
-          return <View key={Math.random()}><Text> {item} </Text></View>;
+      let display_company_notes = [];
+      let company_notes = this.state.general['notes'];
+      if (company_notes !== undefined && company_notes != null){
+        display_company_notes = company_notes.map(function(item){
+          return <View key={Math.random()}><Text style={[common_styles.margin_b_10]}> {item} </Text></View>;
+        });
+      }
+      let display_securities_notes = [];
+      let securities_notes = this.state.general['security_notes'];
+      console.log(securities_notes !== undefined);
+      if (securities_notes !== undefined && securities_notes != null){
+        display_securities_notes = securities_notes.map(function(item){
+          return <View key={Math.random()}><Text style={[common_styles.margin_b_10]}>{item}</Text></View>;
         });
       }
 
@@ -412,7 +422,11 @@ class StockDetailProfile extends BaseScreen {
                 <View style={[common_styles.margin_b_20]} />
                 <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>NOTES</Text></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
-                {company_notes}
+                {display_company_notes}
+                <View style={[common_styles.margin_b_20]} />
+                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITIES NOTES</Text></View>
+                <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
+                {display_securities_notes}
                 <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>
