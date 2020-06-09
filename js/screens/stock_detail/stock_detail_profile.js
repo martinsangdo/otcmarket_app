@@ -110,7 +110,7 @@ class StockDetailProfile extends BaseScreen {
             numberOfEmployeesAsOf: Utils.formatDate(detail['numberOfEmployeesAsOf']),
             isShell: detail['isShell']
           };
-          Utils.xlog('full detail', save_detail);
+          // Utils.xlog('full detail', save_detail);
           me.setState({general: save_detail});
         } else if (error){
           //do nothing

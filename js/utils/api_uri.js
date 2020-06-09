@@ -44,7 +44,11 @@ export const API_URI = {
 				TRADE_DATA: setting.BACKEND_SERVER + 'stock/trade/data/<symbol>?symbol=<symbol>&page=1&pageSize=10',
 				SHORT_INTEREST: setting.BACKEND_SERVER + 'stock/short-sale/<symbol>?symbol=<symbol>&page=1&pageSize=10'
 			},
-      PROFILE: setting.BACKEND_SERVER + 'company/profile/full/<symbol>?symbol=<symbol>'
+      PROFILE: setting.BACKEND_SERVER + 'company/profile/full/<symbol>?symbol=<symbol>',
+      SECURITY: {
+        DIVIDEND: setting.BACKEND_SERVER + 'company/dividends?page=1&pageSize=20&symbol=<symbol>&retainPageSize=true',
+        SPLIT: setting.BACKEND_SERVER + 'company/splits?page=1&pageSize=20&symbol=<symbol>&retainPageSize=true'
+      }
 		}
 
 };
