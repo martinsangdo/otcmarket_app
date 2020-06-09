@@ -18,17 +18,19 @@ import {setting} from '../../utils/config.js';
 
 const Item = Picker.Item;
 
-class StockDetailNews extends BaseScreen {
+class StockDetailFinancial extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
         loading_indicator_state: false,
-        current_detail_part: 'news',
+        current_detail_part: 'financials',
         symbol:'',  //current stock
-        list_data: [],
-        current_page: 1,
-        can_load_more: true,
-        totalRecords: 0
+        income_statement: [],
+        balance_sheet: [],
+        cash_flow: [],
+        current_type: 'income-statement', //balance-sheet, cash-flow
+        current_duration: 'annual', //semi-annual, quarterly
+        current_time_index: '0' //0 -> 3
 			};
 		}
 		//
@@ -36,7 +38,7 @@ class StockDetailNews extends BaseScreen {
       this.setState({
         symbol:this.props.navigation.state.params.symbol
       }, ()=>{
-        this._load_data();
+        // this._load_data();
 			});
       //todo: check bookmark
 			//
@@ -60,7 +62,7 @@ class StockDetailNews extends BaseScreen {
           can_load_more: true,
           totalRecords: 0
         }, ()=>{
-          this._load_data();
+          // this._load_data();
         });
       }
 		}
@@ -229,4 +231,4 @@ class StockDetailNews extends BaseScreen {
 		}
 }
 
-export default StockDetailNews;
+export default StockDetailFinancial;
