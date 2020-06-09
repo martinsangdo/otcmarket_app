@@ -177,7 +177,6 @@ class StockDetailProfile extends BaseScreen {
       }
       let display_securities_notes = [];
       let securities_notes = this.state.general['security_notes'];
-      console.log(securities_notes !== undefined);
       if (securities_notes !== undefined && securities_notes != null){
         display_securities_notes = securities_notes.map(function(item){
           return <View key={Math.random()}><Text style={[common_styles.margin_b_10]}>{item}</Text></View>;

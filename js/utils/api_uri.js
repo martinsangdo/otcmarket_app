@@ -48,7 +48,9 @@ export const API_URI = {
       SECURITY: {
         DIVIDEND: setting.BACKEND_SERVER + 'company/dividends?page=1&pageSize=20&symbol=<symbol>&retainPageSize=true',
         SPLIT: setting.BACKEND_SERVER + 'company/splits?page=1&pageSize=20&symbol=<symbol>&retainPageSize=true'
-      }
+      },
+      NEWS: setting.BACKEND_SERVER + 'company/<symbol>/dns/news?symbol=<symbol>&pageSize=20&sortOn=releaseDate&sortDir=DESC&page=',
+      NEWS_DETAIL: setting.BACKEND_SERVER + 'company/dns/news/'
 		}
 
 };
