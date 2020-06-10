@@ -75,6 +75,9 @@ export default {
 		font_10: {
 				fontSize: 10
 		},
+		font_13: {
+				fontSize: 13
+		},
 		font_15: {
 				fontSize: 15
 		},

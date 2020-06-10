@@ -29,7 +29,7 @@ class StockDetailFinancial extends BaseScreen {
         current_detail_part: 'financials',
         symbol:'',  //current stock
         data: [],
-        current_type: 'balance-sheet', //balance-sheet, cash-flow
+        current_type: 'cash-flow', //balance-sheet, cash-flow
         current_duration: 'annual', //semi-annual, quarterly
         current_time_index: 0 //0 -> 3
 			};

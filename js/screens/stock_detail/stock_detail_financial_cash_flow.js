@@ -34,125 +34,97 @@ export default class FinancialCashFlow extends Component {
   render() {
     return (
       <View style={[common_styles.margin_l_10, common_styles.margin_r_10]}>
-        {/* Revenue */}
+        {/* Operating Activities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Revenues</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Total Revenue</Text>
-          <Text>{this.state.data['totalRevenue']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Cost of Revenue</Text>
-          <Text>{this.state.data['costOfRevenue']}</Text>
-        </View>
-        <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Gross Profit</Text>
-          <Text style={common_styles.bold}>{this.state.data['grossProfit']}</Text>
-        </View>
-        {/* Operating Expenses */}
-        <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Operating Expenses</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Research & Development</Text>
-          <Text>{this.state.data['researchAndDevelopment']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Sales, General and Admin</Text>
-          <Text>{this.state.data['salesGeneralAndAdmin']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Non-Recurring Items</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Other</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Total Expenses</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalExpenses']}</Text>
-        </View>
-        <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Operating Income</Text>
-          <Text style={common_styles.bold}>{this.state.data['operatingIncome']}</Text>
-        </View>
-        {/* Operating Expenses */}
-        <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Income from Continuing Operations</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Additional Income / Expense Items</Text>
-          <Text>{this.state.data['additionalIncomeExpenseItems']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Earnings Before Interest and Taxes</Text>
-          <Text>{this.state.data['earningsBeforeInterestTaxes']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Interest Expense</Text>
-          <Text>{this.state.data['interestExpense']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Earnings Before Tax</Text>
-          <Text>{this.state.data['earningsBeforeTax']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Income Tax</Text>
-          <Text>{this.state.data['incomeTax']}</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Minority Interest</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Equity Earnings</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Net Income Cont. Operations</Text>
-          <Text style={common_styles.bold}>{this.state.data['netIncomeOperations']}</Text>
-        </View>
-        {/* Non-Recurring Events */}
-        <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Non-Recurring Events</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Discontinued Operations</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Extraordinary Operations</Text>
-          <Text>-</Text>
-        </View>
-        <View style={[styles.financial_item]}>
-          <Text>Effect of Accounting Changes</Text>
-          <Text>-</Text>
+          <Text style={[common_styles.default_font_color, common_styles.bold]}>Operating Activities</Text>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
           <Text style={common_styles.bold}>Net Income</Text>
           <Text style={common_styles.bold}>{this.state.data['netIncome']}</Text>
         </View>
-        {/* Key Financial Ratios */}
+        <View style={[styles.financial_item]}>
+          <Text>Depreciation</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Adjustments to Net Income</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Changes in Liabilities</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Changes in Accounts Receivables</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Changes in Inventories</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text style={common_styles.font_13}>Changes in Other Operating Activities</Text>
+          <Text>{this.state.data['']}</Text>
+        </View>
+        <View style={[styles.financial_item, styles.financial_item_last]}>
+          <Text style={common_styles.font_13}>Total Cash Flow From Operating Activities</Text>
+          <Text style={common_styles.bold}>{this.state.data['totalCashFlowFromOperatingActivities']}</Text>
+        </View>
+        {/* Investing Activities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Key Financial Ratios</Text>
+          <Text style={[common_styles.default_font_color, common_styles.bold]}>Investing Activities</Text>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Earnings Per Share</Text>
-          <Text>{this.state.data['earningsperShare']}</Text>
+          <Text>Capital Expenditures</Text>
+          <Text>{this.state.data['capitalExpenditures']}</Text>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Price/Earnings</Text>
-          <Text>{this.state.data['priceEarnings']}</Text>
+          <Text>Investments</Text>
+          <Text>{this.state.data['investments']}</Text>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Gross Margin</Text>
-          <Text>{this.state.data['grossMargin']}</Text>
+          <Text style={common_styles.font_13}>Other Cash Flows From Investing Activities</Text>
+          <Text>{this.state.data['otherCashFlowFromInvestingActivities']}</Text>
+        </View>
+        <View style={[styles.financial_item, styles.financial_item_last]}>
+          <Text style={common_styles.font_13}>Total Cash Flow From Investing Activities</Text>
+          <Text style={common_styles.bold}>{this.state.data['totalCashFlowFromInvestingActivities']}</Text>
+        </View>
+        {/* Financing Activities */}
+        <View style={[styles.financial_header]}>
+          <Text style={[common_styles.default_font_color, common_styles.bold]}>Financing Activities</Text>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Operating Margin</Text>
-          <Text>{this.state.data['operatingMargin']}</Text>
+          <Text>Dividends Paid</Text>
+          <Text>{this.state.data['dividendsPaid']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Sale/Purchase of Stock</Text>
+          <Text>{this.state.data['salePurchaseOfStock']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Net Borrowings</Text>
+          <Text>{this.state.data['netBorrowings']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text style={common_styles.font_13}>Other Cash Flows From Financing Activities</Text>
+          <Text>{this.state.data['otherCashFlowsFromFinancingActivities']}</Text>
+        </View>
+        <View style={[styles.financial_item, styles.financial_item_last]}>
+          <Text style={common_styles.font_13}>Total Cash Flow From Financing Activities</Text>
+          <Text style={common_styles.bold}>{this.state.data['totalCashFlowsFromFinancingActivities']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text>Effect of Exchange Rate Changes</Text>
+          <Text>{this.state.data['effectOfExchangeRateChanges']}</Text>
+        </View>
+        <View style={[styles.financial_item]}>
+          <Text></Text>
+          <Text></Text>
+        </View>
+        <View style={[styles.financial_item, styles.financial_item_last]}>
+          <Text style={common_styles.bold}>Change in Cash and Cash Equivalents</Text>
+          <Text style={common_styles.bold}>{this.state.data['changeInCashAndEquities']}</Text>
         </View>
       </View>
     );
