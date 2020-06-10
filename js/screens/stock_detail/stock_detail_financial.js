@@ -159,6 +159,9 @@ class StockDetailFinancial extends BaseScreen {
                   !this.state.loading_indicator_state && this.state.current_type == 'income-statement' &&
                     <FinancialIncome data={this.state.data[this.state.current_time_index]}/>
                 }
+                <View style={[common_styles.margin_t_20, common_styles.margin_10]}>
+									<Text style={[common_styles.darkGrayColor, common_styles.font_15]}>For information not originally reported in U.S. Dollars, conversion is based on applicable exchange rate on the last day of the period reported</Text>
+								</View>
                 <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>

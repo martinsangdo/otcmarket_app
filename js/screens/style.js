@@ -50,7 +50,7 @@ export default {
   td_stock_price_item_first: {width: '17%'},
   list_item: {padding:5},
   stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'},
-  financial_header: {padding:10, borderBottomColor: '#777', borderBottomWidth: 1},
+  financial_header: {padding:10, borderBottomColor: '#008da9', borderBottomWidth: 1, marginTop:10},
   financial_item: {padding:5, paddingLeft:10, borderBottomColor: '#ccc', borderBottomWidth: 1, justifyContent:'space-between', flexDirection: 'row'},
-
+  financial_item_last: {paddingLeft:0}
 };
