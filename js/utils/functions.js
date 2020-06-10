@@ -90,16 +90,10 @@ exports.formatYear = function(date){
   Moment.locale('en');
   return Moment(date).format(C_Const.YEAR_FORMAT);
 };
-//https://momentjs.com/docs/#/customization/
-exports.formatCourseDate = function(lang_key, date){
-  if (lang_key == C_Const.VI_LANG_KEY){
-    Moment.locale('vi');
-  } else if (lang_key == C_Const.CN_LANG_KEY){
-    Moment.locale('zh-cn');
-  } else {
-    Moment.locale(lang_key);
-  }
-  return Moment(date).format(C_Const.COURSE_DATE_FORMAT);
+//
+exports.formatMonthYear = function(date){
+  Moment.locale('en');
+  return Moment(date).format(C_Const.MONTH_YEAR_FORMAT);
 };
 //trim a text
 exports.trim = function(str){
@@ -146,67 +140,6 @@ exports.number_to_float = function(number){
 };
 exports.makeApplink = function (file_src) {
     return setting.SERVER_URL + file_src;
-};
-//convert date time to duration likes "xx ago"
-exports.getDurationTime = function (target_date, lang_info){
-  // var today = Moment.utc(new Date()).format(C_Const.NOTIFICATION_DATE_FORMAT);
-  var today = Moment(new Date()).format(C_Const.NOTIFICATION_DATE_FORMAT);
-  // var diff = Moment.duration(Moment(today, C_Const.NOTIFICATION_DATE_FORMAT).diff(Moment(target_date, C_Const.NOTIFICATION_DATE_FORMAT)));
-  // target_date = Moment.utc(target_date).format(C_Const.NOTIFICATION_DATE_FORMAT);
-  var diff = Moment.duration(Moment(today, C_Const.NOTIFICATION_DATE_FORMAT).diff(Moment(target_date, C_Const.NOTIFICATION_DATE_FORMAT)));
-  //
-  if (diff._data != null){
-    var _d = diff._data;
-    // console.log(today);
-    // console.log(target_date);
-    // console.log(_d);
-    if (_d.hours == 0 && _d.days == 0 && _d.months == 0 && _d.years == 0) {
-      //less than 1 hour
-      if (_d.minutes < 2){   //less than 1 minute
-        return '1 ' + lang_info[C_MULTI_LANG.min_ago];
-      } else {
-        return _d.minutes + ' ' + lang_info[C_MULTI_LANG.mins_ago];
-      }
-    } else if (_d.days == 0 && _d.months == 0 && _d.years == 0){
-      //less than 1 day
-      if (_d.hours < 2){   //less than 1 hour
-        return '1 ' + lang_info[C_MULTI_LANG.hour_ago];
-      } else {
-        return _d.hours + ' ' + lang_info[C_MULTI_LANG.hours_ago];
-      }
-    } else if (_d.months == 0 && _d.years == 0){
-      //less than 1 month
-      if (_d.days < 2){   //less than 1 day
-        return '1 ' + lang_info[C_MULTI_LANG.day_ago];
-      } else {
-        //calculate week
-        if (_d.days < 7){ //less than 1 week
-          return _d.days + ' ' + lang_info[C_MULTI_LANG.days_ago];
-        } else if (_d.days % 7 == 0){   //enough week
-          if (_d.days / 7 == 1){
-            return '1 ' + lang_info[C_MULTI_LANG.week_ago];
-          } else {
-            return (_d.days / 7) + ' ' + lang_info[C_MULTI_LANG.weeks_ago];
-          }
-        } else {
-          return _d.days + ' ' + lang_info[C_MULTI_LANG.days_ago];
-        }
-      }
-    } else if (_d.years == 0){
-      //less than 1 year
-      if (_d.months < 2){   //less than 1 month
-        return '1 ' + lang_info[C_MULTI_LANG.month_ago];
-      } else {
-        return _d.months + ' ' + lang_info[C_MULTI_LANG.months_ago];
-      }
-    } else if (_d.years == 1){
-      return '1 ' + lang_info[C_MULTI_LANG.year_ago];
-    } else {
-      return _d.years + ' ' + lang_info[C_MULTI_LANG.years_ago];
-    }
-  } else {
-    return '';
-  }
 };
 //check response from server API
 exports.isSuccessResponse = function (response) {

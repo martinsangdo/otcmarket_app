@@ -69,7 +69,7 @@ class StockDetailQuote extends BaseScreen {
     //
     _load_quote(){
       var me = this;
-      var url = API_URI.STOCK_DETAIL.QUOTE.GENERAL.replace('<symbol>', this.state.symbol);
+      var url = API_URI.STOCK_DETAIL.QUOTE.GENERAL.replace(/<symbol>/g, this.state.symbol);
       //general
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){
@@ -93,7 +93,7 @@ class StockDetailQuote extends BaseScreen {
         }
       });
       //Trade data
-      var urlTrade = API_URI.STOCK_DETAIL.QUOTE.TRADE_DATA.replace('<symbol>', this.state.symbol);
+      var urlTrade = API_URI.STOCK_DETAIL.QUOTE.TRADE_DATA.replace(/<symbol>/g, this.state.symbol);
       RequestData.sentGetRequest(urlTrade, (detail, error) => {
         if (detail){
           var records = detail['records'];
@@ -116,7 +116,7 @@ class StockDetailQuote extends BaseScreen {
         }
       });
       //Short interest
-      var urlShortInterest = API_URI.STOCK_DETAIL.QUOTE.SHORT_INTEREST.replace('<symbol>', this.state.symbol);
+      var urlShortInterest = API_URI.STOCK_DETAIL.QUOTE.SHORT_INTEREST.replace(/<symbol>/g, this.state.symbol);
       RequestData.sentGetRequest(urlShortInterest, (detail, error) => {
         if (detail){
           var records = detail['records'];
@@ -138,7 +138,7 @@ class StockDetailQuote extends BaseScreen {
         }
       });
       //Real time level 2
-      var urlQuote = API_URI.STOCK_DETAIL.QUOTE.REAL_TIME_LEVEL_2.replace('<symbol>', this.state.symbol);
+      var urlQuote = API_URI.STOCK_DETAIL.QUOTE.REAL_TIME_LEVEL_2.replace(/<symbol>/g, this.state.symbol);
       RequestData.sentGetRequest(urlQuote, (detail, error) => {
         if (detail){
           var bid_data = detail['montageBuyList'];

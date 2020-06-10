@@ -19,7 +19,7 @@ export const C_Const = {
 	SPLASH_TIMER: 1000,   //time to display splash screen
   MAX_WAIT_RESPONSE: 12000, //12s, max time to wait response
 	MAX_SPLASH_TIMER: 30000,   //maximum time to display splash screen
-	DATE_FORMAT: 'DD-MMM',   //birthday format
+	MONTH_YEAR_FORMAT: 'MMM-YYYY',   //birthday format
 	YEAR_FORMAT: 'YYYY',
 	DATE_US: 'YYYY-MM-DD',
 	NOTIFICATION_DATE_FORMAT: 'YYYY-MM-DD HH:mm:ss',

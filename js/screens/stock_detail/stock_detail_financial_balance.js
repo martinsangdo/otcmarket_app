@@ -22,7 +22,7 @@ export default class FinancialBalance extends Component {
   }
   //
   componentDidUpdate(){
-    if (this.props['data']['periodEndDate'] != this.state.data['periodEndDate']){
+    if (this.props['data'] !== undefined && this.props['data']['periodEndDate'] != this.state.data['periodEndDate']){
       this.setState({
         data: this.props['data']
       }, ()=>{

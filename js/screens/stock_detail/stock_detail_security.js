@@ -63,7 +63,7 @@ class StockDetailSecurity extends BaseScreen {
     //
     _load_data(){
       var me = this;
-      var url = API_URI.STOCK_DETAIL.SECURITY.DIVIDEND.replace('<symbol>', this.state.symbol);
+      var url = API_URI.STOCK_DETAIL.SECURITY.DIVIDEND.replace(/<symbol>/g, this.state.symbol);
       //devidend
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){
@@ -86,7 +86,7 @@ class StockDetailSecurity extends BaseScreen {
         }
       });
       //splits
-      var urlTrade = API_URI.STOCK_DETAIL.SECURITY.SPLIT.replace('<symbol>', this.state.symbol);
+      var urlTrade = API_URI.STOCK_DETAIL.SECURITY.SPLIT.replace(/<symbol>/g, this.state.symbol);
       RequestData.sentGetRequest(urlTrade, (detail, error) => {
         if (detail){
           var records = detail['records'];

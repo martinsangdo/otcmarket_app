@@ -67,7 +67,7 @@ class StockDetailNews extends BaseScreen {
     //
     _load_data(){
       var me = this;
-      var url = API_URI.STOCK_DETAIL.NEWS.replace('<symbol>', this.state.symbol) + this.state.current_page;
+      var url = API_URI.STOCK_DETAIL.NEWS.replace(/<symbol>/g, this.state.symbol) + this.state.current_page;
       //
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){

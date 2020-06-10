@@ -61,7 +61,7 @@ class StockDetailProfile extends BaseScreen {
     //
     _load_data(){
       var me = this;
-      var url = API_URI.STOCK_DETAIL.PROFILE.replace('<symbol>', this.state.symbol);
+      var url = API_URI.STOCK_DETAIL.PROFILE.replace(/<symbol>/g, this.state.symbol);
       //general
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){

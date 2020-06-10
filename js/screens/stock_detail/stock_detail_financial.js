@@ -28,8 +28,24 @@ class StockDetailFinancial extends BaseScreen {
         loading_indicator_state: true,
         current_detail_part: 'financials',
         symbol:'',  //current stock
-        data: [],
-        current_type: 'cash-flow', //balance-sheet, cash-flow
+        data: {
+          'income-statement': {
+            annual: [],
+            'semi-annual': [],
+            quarterly: []
+          },
+          'balance-sheet': {
+            annual: [],
+            'semi-annual': [],
+            quarterly: []
+          },
+          'cash-flow': {
+            annual: [],
+            'semi-annual': [],
+            quarterly: []
+          }
+        },
+        current_type: 'income-statement', //balance-sheet, cash-flow
         current_duration: 'annual', //semi-annual, quarterly
         current_time_index: 0 //0 -> 3
 			};
@@ -57,7 +73,23 @@ class StockDetailFinancial extends BaseScreen {
       if (prevPropParams.getParam('symbol') != newPropParams['symbol']){
         this.setState({
           symbol: newPropParams['symbol'],
-          data: [],
+          data: {
+            'income-statement': {
+              annual: [],
+              'semi-annual': [],
+              quarterly: []
+            },
+            'balance-sheet': {
+              annual: [],
+              'semi-annual': [],
+              quarterly: []
+            },
+            'cash-flow': {
+              annual: [],
+              'semi-annual': [],
+              quarterly: []
+            }
+          },
           current_type: 'income-statement',
           current_duration: 'annual',
           current_time_index: 0
@@ -68,22 +100,27 @@ class StockDetailFinancial extends BaseScreen {
 		}
     //
     _load_data(){
-      var me = this;
-      var url = API_URI.STOCK_DETAIL.FINANCIAL.
-        replace('<symbol>', this.state.symbol).
-          replace('<current_type>', this.state.current_type).
-            replace('<current_duration>', this.state.current_duration);
-      //
-      this.setState({loading_indicator_state: true}, ()=>{
-        RequestData.sentGetRequest(url, (detail, error) => {
-          if (detail){
-            me.setState({data: detail});
-          } else if (error){
-            //do nothing
-          }
-          me.setState({loading_indicator_state: false});
+      if (this.state.data[this.state.current_type][this.state.current_duration].length == 0){
+        //load from server
+        var me = this;
+        var url = API_URI.STOCK_DETAIL.FINANCIAL.
+          replace(/<symbol>/g, this.state.symbol).
+            replace('<current_type>', this.state.current_type).
+              replace('<current_duration>', this.state.current_duration);
+        //
+        this.setState({loading_indicator_state: true}, ()=>{
+          RequestData.sentGetRequest(url, (detail, error) => {
+            if (detail){
+              var data = me.state.data;
+              data[me.state.current_type][me.state.current_duration] = detail;
+              me.setState({data: data});
+            } else if (error){
+              //do nothing
+            }
+            me.setState({loading_indicator_state: false});
+          });
         });
-      });
+      }
     }
     //when user wants to see another part of stock detail
     onChangePart = (new_part) => {
@@ -114,18 +151,22 @@ class StockDetailFinancial extends BaseScreen {
     }
     //
     _on_change_type(new_type){
-
+      this.setState({current_type: new_type, current_time_index: 0, current_duration: 'annual'}, ()=>{
+         this._load_data();
+      });
     }
     //
     _on_change_duration(new_duration){
-
+      this.setState({current_duration: new_duration, current_time_index: 0}, ()=>{
+         this._load_data();
+      });
     }
     //
     _on_change_time(time){
       var index = 0;
       var me = this;
-      this.state.data.map(function(item){
-        if (Utils.formatYear(item['periodEndDate']) == time){
+      this.state.data[this.state.current_type][this.state.current_duration].map(function(item){
+        if ((me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate'])) == time){
           me.setState({current_time_index: index});
         }
         index++;
@@ -135,12 +176,16 @@ class StockDetailFinancial extends BaseScreen {
     time_index(){
       var me = this;
       var index = 0;
-      var display_time = this.state.data.map(function(item){
-        return <TouchableOpacity key={Math.random()} onPress={()=>me._on_change_time(Utils.formatYear(item['periodEndDate']))}>
-            <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, me.state.current_time_index==index++&&{color:'#3f481a', fontWeight:'bold'}]}>{Utils.formatYear(item['periodEndDate'])}</Text>
+      var display_time = this.state.data[this.state.current_type][this.state.current_duration].map(function(item){
+        return <TouchableOpacity key={Math.random()} onPress={()=>me._on_change_time(me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate']))}>
+            <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, me.state.current_time_index==index++&&{color:'#3f481a', fontWeight:'bold'}]}>{me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate'])}</Text>
           </TouchableOpacity>;
       });
-      return display_time;
+      if (display_time.length > 0){
+        return display_time;
+      } else {
+        return <Text>Data is unavailable at this time.</Text>;
+      }
     }
 	 //==========
 		render() {
@@ -188,19 +233,41 @@ class StockDetailFinancial extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 <View style={styles.financial_options}>
-									{this.time_index()}
+                  <TouchableOpacity onPress={()=>this._on_change_type('income-statement')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='income-statement'&&{color:'#3f481a', fontWeight:'bold'}]}>Income Statement</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>this._on_change_type('balance-sheet')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='balance-sheet'&&{color:'#3f481a', fontWeight:'bold'}]}>Balance Sheet</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>this._on_change_type('cash-flow')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='cash-flow'&&{color:'#3f481a', fontWeight:'bold'}]}>Cash Flow</Text>
+                  </TouchableOpacity>
+				        </View>
+                <View style={styles.financial_options}>
+                  <TouchableOpacity onPress={()=>this._on_change_duration('annual')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Annual</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>this._on_change_duration('semi-annual')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='semi-annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Semi-Annual</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>this._on_change_duration('quarterly')}>
+                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='quarterly'&&{color:'#3f481a', fontWeight:'bold'}]}>Quarterly</Text>
+                  </TouchableOpacity>
+				        </View>
+                <View style={styles.financial_options}>
+									{!this.state.loading_indicator_state && this.time_index()}
 				        </View>
                 {
                   !this.state.loading_indicator_state && this.state.current_type == 'income-statement' &&
-                    <FinancialIncome data={this.state.data[this.state.current_time_index]}/>
+                    <FinancialIncome data={this.state.data[this.state.current_type][this.state.current_duration][this.state.current_time_index]}/>
                 }
                 {
                   !this.state.loading_indicator_state && this.state.current_type == 'balance-sheet' &&
-                    <FinancialBalance data={this.state.data[this.state.current_time_index]}/>
+                    <FinancialBalance data={this.state.data[this.state.current_type][this.state.current_duration][this.state.current_time_index]}/>
                 }
                 {
                   !this.state.loading_indicator_state && this.state.current_type == 'cash-flow' &&
-                    <FinancialCashFlow data={this.state.data[this.state.current_time_index]}/>
+                    <FinancialCashFlow data={this.state.data[this.state.current_type][this.state.current_duration][this.state.current_time_index]}/>
                 }
                 <View style={[common_styles.margin_t_20, common_styles.margin_10]}>
 									<Text style={[common_styles.darkGrayColor, common_styles.font_15]}>For information not originally reported in U.S. Dollars, conversion is based on applicable exchange rate on the last day of the period reported</Text>

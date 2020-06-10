@@ -22,7 +22,7 @@ export default class FinancialIncome extends Component {
   }
   //
   componentDidUpdate(){
-    if (this.props['data']['periodEndDate'] != this.state.data['periodEndDate']){
+    if (this.props['data'] !== undefined && this.props['data']['periodEndDate'] != this.state.data['periodEndDate']){
       this.setState({
         data: this.props['data']
       }, ()=>{
@@ -64,11 +64,11 @@ export default class FinancialIncome extends Component {
         </View>
         <View style={[styles.financial_item]}>
           <Text>Non-Recurring Items</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item]}>
           <Text>Other</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
           <Text style={common_styles.bold}>Total Expenses</Text>
@@ -104,11 +104,11 @@ export default class FinancialIncome extends Component {
         </View>
         <View style={[styles.financial_item]}>
           <Text>Minority Interest</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item]}>
           <Text>Equity Earnings</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
           <Text style={common_styles.bold}>Net Income Cont. Operations</Text>
@@ -120,15 +120,15 @@ export default class FinancialIncome extends Component {
         </View>
         <View style={[styles.financial_item]}>
           <Text>Discontinued Operations</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item]}>
           <Text>Extraordinary Operations</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item]}>
           <Text>Effect of Accounting Changes</Text>
-          <Text>-</Text>
+          <Text></Text>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
           <Text style={common_styles.bold}>Net Income</Text>
