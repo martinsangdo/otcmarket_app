@@ -16,6 +16,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const deviceWidth = Dimensions.get("window").width;
 import {setting} from '../../utils/config.js';
 import FinancialIncome from "./stock_detail_financial_income";
+import FinancialBalance from "./stock_detail_financial_balance";
+import FinancialCashFlow from "./stock_detail_financial_cash_flow";
 
 const Item = Picker.Item;
 
@@ -27,7 +29,7 @@ class StockDetailFinancial extends BaseScreen {
         current_detail_part: 'financials',
         symbol:'',  //current stock
         data: [],
-        current_type: 'income-statement', //balance-sheet, cash-flow
+        current_type: 'balance-sheet', //balance-sheet, cash-flow
         current_duration: 'annual', //semi-annual, quarterly
         current_time_index: 0 //0 -> 3
 			};
@@ -111,20 +113,20 @@ class StockDetailFinancial extends BaseScreen {
       }
     }
     //
+    _on_change_type(new_type){
+
+    }
+    //
+    _on_change_duration(new_duration){
+
+    }
+    //
     _on_change_time(time){
       var index = 0;
-      var chosen_index = 0;
       var me = this;
       this.state.data.map(function(item){
-        switch (me.state.current_type) {
-          case 'income-statement':
-            if (Utils.formatYear(item['periodEndDate']) == time){
-              chosen_index = index;
-              me.setState({current_time_index: index});
-            }
-            break;
-          default:
-
+        if (Utils.formatYear(item['periodEndDate']) == time){
+          me.setState({current_time_index: index});
         }
         index++;
       });
@@ -191,6 +193,14 @@ class StockDetailFinancial extends BaseScreen {
                 {
                   !this.state.loading_indicator_state && this.state.current_type == 'income-statement' &&
                     <FinancialIncome data={this.state.data[this.state.current_time_index]}/>
+                }
+                {
+                  !this.state.loading_indicator_state && this.state.current_type == 'balance-sheet' &&
+                    <FinancialBalance data={this.state.data[this.state.current_time_index]}/>
+                }
+                {
+                  !this.state.loading_indicator_state && this.state.current_type == 'cash-flow' &&
+                    <FinancialCashFlow data={this.state.data[this.state.current_time_index]}/>
                 }
                 <View style={[common_styles.margin_t_20, common_styles.margin_10]}>
 									<Text style={[common_styles.darkGrayColor, common_styles.font_15]}>For information not originally reported in U.S. Dollars, conversion is based on applicable exchange rate on the last day of the period reported</Text>
