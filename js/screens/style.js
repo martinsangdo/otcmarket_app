@@ -49,6 +49,8 @@ export default {
   td_stock_price_item: {width:'25%'},
   td_stock_price_item_first: {width: '17%'},
   list_item: {padding:5},
-  stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'}
+  stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'},
+  financial_header: {padding:10, borderBottomColor: '#777', borderBottomWidth: 1},
+  financial_item: {padding:5, paddingLeft:10, borderBottomColor: '#ccc', borderBottomWidth: 1, justifyContent:'space-between', flexDirection: 'row'},
 
 };

@@ -191,6 +191,10 @@ export default {
       borderBottomColor: '#ccc',
       borderBottomWidth: 1
     },
+    border_t_gray:{
+      borderBottomColor: '#ccc',
+      borderBottomWidth: 1
+    },
 		arrow_color: {color: '#444'},
 		load_more: {marginBottom: 10},
 		text_input: {width: '100%', fontSize: 18},

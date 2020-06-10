@@ -50,7 +50,8 @@ export const API_URI = {
         SPLIT: setting.BACKEND_SERVER + 'company/splits?page=1&pageSize=20&symbol=<symbol>&retainPageSize=true'
       },
       NEWS: setting.BACKEND_SERVER + 'company/<symbol>/dns/news?symbol=<symbol>&pageSize=20&sortOn=releaseDate&sortDir=DESC&page=',
-      NEWS_DETAIL: setting.BACKEND_SERVER + 'company/dns/news/'
+      NEWS_DETAIL: setting.BACKEND_SERVER + 'company/dns/news/',
+      FINANCIAL: setting.INBERNAL_BACKEND_SERVER + 'financials/<current_type>/<symbol>?symbol=<symbol>&duration=<current_duration>'
 		}
 
 };
