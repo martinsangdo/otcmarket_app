@@ -14,6 +14,7 @@ import StockDetailProfile from "./screens/stock_detail/stock_detail_profile";
 import StockDetailSecurity from "./screens/stock_detail/stock_detail_security";
 import StockDetailNews from "./screens/stock_detail/stock_detail_news";
 import StockDetailFinancial from "./screens/stock_detail/stock_detail_financial";
+import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosure";
 
 import Splash from "./screens/splash";
 
@@ -25,7 +26,8 @@ const Drawer = createDrawerNavigator(
     StockDetailProfile: { screen: StockDetailProfile },
     StockDetailSecurity: { screen: StockDetailSecurity },
     StockDetailNews: { screen: StockDetailNews },
-    StockDetailFinancial: { screen: StockDetailFinancial }
+    StockDetailFinancial: { screen: StockDetailFinancial },
+    StockDetailDisclosure: { screen: StockDetailDisclosure }
 
   },
   {

@@ -54,6 +54,7 @@ class StockDetailNews extends BaseScreen {
       if (prevPropParams.getParam('symbol') != newPropParams['symbol']){
         this.setState({
           symbol: newPropParams['symbol'],
+          current_detail_part: 'news',
           dividend_data: [],
           news_data: [],
           current_page: 1,
@@ -217,11 +218,14 @@ class StockDetailNews extends BaseScreen {
                         style={{width:Dimensions.get("window").width, padding:10}}
 											/>
 								</View>
-                <View style={common_styles.view_align_center}>
-									<TouchableOpacity onPress={() => this._open_more_page()}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
-									</TouchableOpacity>
-								</View>
+                {
+                  this.state.can_load_more && 
+                    <View style={common_styles.view_align_center}>
+    									<TouchableOpacity onPress={() => this._open_more_page()}>
+    										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+    									</TouchableOpacity>
+    								</View>
+                }
                 <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>

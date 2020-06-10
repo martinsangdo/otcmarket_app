@@ -159,6 +159,7 @@ export default {
 		width_25p: {width: '25%'},
     width_30p: {width: '30%'},
     width_50p: {width: '50%'},
+		width_75p: {width: '75%'},
 		flex_10p: {flex: 0.1},
 		flex_20p: {flex: 0.2},
 		flex_40p: {flex: 0.4},
@@ -202,5 +203,6 @@ export default {
 		load_more: {marginBottom: 10},
 		text_input: {width: '100%', fontSize: 18},
     fetch_row: {flexDirection: 'row', justifyContent: 'space-between'},
-    heading_1: {fontWeight: 'bold', fontSize: 20, color:'#008da9'}
+    heading_1: {fontWeight: 'bold', fontSize: 20, color:'#008da9'},
+		view_wrap: {width: 0, flexGrow: 1}
 };

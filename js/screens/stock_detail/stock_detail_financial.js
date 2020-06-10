@@ -73,6 +73,7 @@ class StockDetailFinancial extends BaseScreen {
       if (prevPropParams.getParam('symbol') != newPropParams['symbol']){
         this.setState({
           symbol: newPropParams['symbol'],
+          current_detail_part: 'financials',
           data: {
             'income-statement': {
               annual: [],

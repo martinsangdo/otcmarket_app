@@ -79,8 +79,8 @@ class StockDetailSecurity extends BaseScreen {
                 payDate: Utils.formatDate(records[i]['payDate'])
               });
             }
+            me.setState({dividend_data: dividend_data});
           }
-          me.setState({dividend_data: dividend_data});
         } else if (error){
           //do nothing
         }
@@ -100,8 +100,8 @@ class StockDetailSecurity extends BaseScreen {
                 payDate: Utils.formatDate(records[i]['payDate'])
               });
             }
+            me.setState({splits_data: splits_data});
           }
-          me.setState({splits_data: splits_data});
         } else if (error){
           //do nothing
         }

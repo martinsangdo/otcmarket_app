@@ -51,7 +51,12 @@ export const API_URI = {
       },
       NEWS: setting.BACKEND_SERVER + 'company/<symbol>/dns/news?symbol=<symbol>&pageSize=20&sortOn=releaseDate&sortDir=DESC&page=',
       NEWS_DETAIL: setting.BACKEND_SERVER + 'company/dns/news/',
-      FINANCIAL: setting.INBERNAL_BACKEND_SERVER + 'financials/<current_type>/<symbol>?symbol=<symbol>&duration=<current_duration>'
+      FINANCIAL: setting.INTERNAL_BACKEND_SERVER + 'financials/<current_type>/<symbol>?symbol=<symbol>&duration=<current_duration>',
+      DISCLOSURE: {
+        REPORT: setting.BACKEND_SERVER + 'company/<symbol>/financial-report?symbol=<symbol>&page=<page_index>&pageSize=20&sortOn=releaseDate&sortDir=DESC',
+        FILLING: setting.BACKEND_SERVER + 'company/sec-filings/<symbol>?symbol=<symbol>&page=<page_index>&pageSize=20',
+        INSIDER: setting.BACKEND_SERVER + 'insider-disclosure/otc/<symbol>?symbol=<symbol>&sortOn=transDate&sortDir=DESC&page=<page_index>&pageSize=20'
+      }
 		}
 
 };
