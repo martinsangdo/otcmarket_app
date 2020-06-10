@@ -52,5 +52,6 @@ export default {
   stock_ico: {maxWidth:25, maxHeight:15, resizeMode:'center'},
   financial_header: {padding:10, borderBottomColor: '#008da9', borderBottomWidth: 1, marginTop:10},
   financial_item: {padding:5, paddingLeft:10, borderBottomColor: '#ccc', borderBottomWidth: 1, justifyContent:'space-between', flexDirection: 'row'},
-  financial_item_last: {paddingLeft:0}
+  financial_item_last: {paddingLeft:0},
+  financial_options: {flexDirection: 'row', justifyContent: 'space-around', borderBottomColor: '#ccc', borderBottomWidth: 1, paddingBottom: 5, marginLeft:10, marginRight:10}
 };

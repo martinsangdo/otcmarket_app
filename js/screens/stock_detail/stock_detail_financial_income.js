@@ -20,6 +20,16 @@ export default class FinancialIncome extends Component {
       });
     }
   }
+  //
+  componentDidUpdate(){
+    if (this.props['data']['periodEndDate'] != this.state.data['periodEndDate']){
+      this.setState({
+        data: this.props['data']
+      }, ()=>{
+        // console.log('data income 2', this.state.data);
+      });
+    }
+  }
   //////////
   render() {
     return (

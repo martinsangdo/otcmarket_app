@@ -110,6 +110,36 @@ class StockDetailFinancial extends BaseScreen {
                       break;
       }
     }
+    //
+    _on_change_time(time){
+      var index = 0;
+      var chosen_index = 0;
+      var me = this;
+      this.state.data.map(function(item){
+        switch (me.state.current_type) {
+          case 'income-statement':
+            if (Utils.formatYear(item['periodEndDate']) == time){
+              chosen_index = index;
+              me.setState({current_time_index: index});
+            }
+            break;
+          default:
+
+        }
+        index++;
+      });
+    }
+    //
+    time_index(){
+      var me = this;
+      var index = 0;
+      var display_time = this.state.data.map(function(item){
+        return <TouchableOpacity key={Math.random()} onPress={()=>me._on_change_time(Utils.formatYear(item['periodEndDate']))}>
+            <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, me.state.current_time_index==index++&&{color:'#3f481a', fontWeight:'bold'}]}>{Utils.formatYear(item['periodEndDate'])}</Text>
+          </TouchableOpacity>;
+      });
+      return display_time;
+    }
 	 //==========
 		render() {
 				return (
@@ -155,6 +185,9 @@ class StockDetailFinancial extends BaseScreen {
               <Content>
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
+                <View style={styles.financial_options}>
+									{this.time_index()}
+				        </View>
                 {
                   !this.state.loading_indicator_state && this.state.current_type == 'income-statement' &&
                     <FinancialIncome data={this.state.data[this.state.current_time_index]}/>
