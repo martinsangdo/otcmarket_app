@@ -148,18 +148,13 @@ class StockDetailDisclosure extends BaseScreen {
       }
     }
     //
-    _open_pdf_viewer(news_id){
-      var url = API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, news_id);
-      this.props.navigation.navigate('PDFViewer', {url: url});
-    }
-    //
 		_keyExtractorReports = (item) => item.id+'';
 		//render the list. MUST use "item" as param
 		_renderItemReports = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
 					<View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
           <View style={[styles.width_50p, common_styles.view_wrap]}>
-            <TouchableOpacity onPress={()=>this._open_pdf_viewer(item.id)}>
+            <TouchableOpacity onPress={()=>this._open_pdf_viewer(API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, item.id))}>
               <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</Text>
               </TouchableOpacity>
           </View>

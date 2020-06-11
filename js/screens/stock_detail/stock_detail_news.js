@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, View, TouchableOpacity, FlatList, YellowBox, Linking, Dimensions} from "react-native";
+import {Image, View, TouchableOpacity, FlatList, YellowBox, Dimensions} from "react-native";
 
 import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
   CardItem, Picker} from "native-base";
@@ -153,7 +153,7 @@ class StockDetailNews extends BaseScreen {
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){
           if (!Utils.isEmpty(detail['documentList']) && !Utils.isEmpty(detail['documentList'][0]) && !Utils.isEmpty(detail['documentList'][0]['url'])){
-            Linking.openURL(setting.BACKEND_SERVER_URI + detail['documentList'][0]['url']);
+            this._open_pdf_viewer(setting.BACKEND_SERVER_URI + detail['documentList'][0]['url']);
           }
         } else if (error){
           //do nothing
@@ -219,7 +219,7 @@ class StockDetailNews extends BaseScreen {
 											/>
 								</View>
                 {
-                  this.state.can_load_more && 
+                  this.state.can_load_more &&
                     <View style={common_styles.view_align_center}>
     									<TouchableOpacity onPress={() => this._open_more_page()}>
     										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
