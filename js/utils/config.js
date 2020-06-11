@@ -7,5 +7,5 @@ export const setting = {
   INTERNAL_BACKEND_SERVER: 'https://backend.otcmarkets.com/internal-otcapi/',
   BACKEND_SERVER: 'https://backend.otcmarkets.com/otcapi/',
   BACKEND_SERVER_URI: 'https://backend.otcmarkets.com/otcapi',
-
+  GOOGLE_PDF_REVIEW_URI: 'https://docs.google.com/gview?embedded=true&url='
 };

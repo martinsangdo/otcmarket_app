@@ -54,6 +54,7 @@ export const API_URI = {
       FINANCIAL: setting.INTERNAL_BACKEND_SERVER + 'financials/<current_type>/<symbol>?symbol=<symbol>&duration=<current_duration>',
       DISCLOSURE: {
         REPORT: setting.BACKEND_SERVER + 'company/<symbol>/financial-report?symbol=<symbol>&page=<page_index>&pageSize=20&sortOn=releaseDate&sortDir=DESC',
+        REPORT_DOWNLOAD: setting.BACKEND_SERVER + 'company/financial-report/<symbol>/content',
         FILLING: setting.BACKEND_SERVER + 'company/sec-filings/<symbol>?symbol=<symbol>&page=<page_index>&pageSize=20',
         INSIDER: setting.BACKEND_SERVER + 'insider-disclosure/otc/<symbol>?symbol=<symbol>&sortOn=transDate&sortDir=DESC&page=<page_index>&pageSize=20'
       }

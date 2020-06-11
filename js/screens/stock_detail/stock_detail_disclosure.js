@@ -13,6 +13,7 @@ import {C_Const} from '../../utils/constant';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {setting} from '../../utils/config.js';
 
 const Item = Picker.Item;
 
@@ -146,13 +147,27 @@ class StockDetailDisclosure extends BaseScreen {
                       break;
       }
     }
+    //https://backend.otcmarkets.com/otcapi/company/financial-report/171300/content
+    //https://docs.google.com/gview?embedded=true&url=https://backend.otcmarkets.com/otcapi/company/financial-report/171300/content
+    _download_detail(news_id){
+      var me = this;
+      var url = setting.GOOGLE_PDF_REVIEW_URI + API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, news_id);
+      Utils.xlog('000', url);
+      Linking.openURL(url).catch((err) => {
+        console.log(err);
+      });
+    }
     //
 		_keyExtractorReports = (item) => item.id+'';
 		//render the list. MUST use "item" as param
 		_renderItemReports = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
 					<View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
-          <View style={[styles.width_50p, common_styles.view_wrap]}><Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</Text></View>
+          <View style={[styles.width_50p, common_styles.view_wrap]}>
+            <TouchableOpacity onPress={()=>this._download_detail(item.id)}>
+              <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</Text>
+              </TouchableOpacity>
+          </View>
           <View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.periodDate}</Text></View>
 				</View>
 		);
@@ -248,12 +263,15 @@ class StockDetailDisclosure extends BaseScreen {
 								</View>
                 {
                   this.state.data['reports']['can_load_more'] &&
-                    <View style={common_styles.view_align_center}>
+                    <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
     									<TouchableOpacity onPress={() => this._open_more_page('reports')}>
     										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
     									</TouchableOpacity>
     								</View>
                 }
+                <View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data['reports']['list'].length} of {this.state.data['reports']['totalRecords']} items</Text>
+								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* SEC filling */}
                 <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SEC Fillings</Text></View>
