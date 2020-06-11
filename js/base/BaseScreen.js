@@ -85,7 +85,7 @@ class BaseScreen extends Component {
 					</View>
 					<View style={[styles.td_stock_price_item_first]}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('StockDetailDisclosure', {symbol: item.symbol})}
+              onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
   						<Text>{item.symbol}</Text>
             </TouchableOpacity>

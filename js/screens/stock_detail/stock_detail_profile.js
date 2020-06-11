@@ -215,7 +215,6 @@ class StockDetailProfile extends BaseScreen {
                     <Item label="News" value="news" />
                     <Item label="Financials" value="financials" />
                     <Item label="Disclosure" value="disclosure" />
-                    <Item label="Research" value="research" />
                   </Picker>
 								</Right>
 							</Header>

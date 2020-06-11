@@ -74,16 +74,16 @@ class StockDetailQuote extends BaseScreen {
       RequestData.sentGetRequest(url, (detail, error) => {
         if (detail){
           var save_detail = {
-            open: detail['openingPrice'],
-            daily_range: detail['dailyLow'] + ' - ' + detail['dailyHigh'],
+            open: Utils.getNullableString(detail['openingPrice']),
+            daily_range: Utils.getNullableString(detail['dailyLow']) + ' - ' + Utils.getNullableString(detail['dailyHigh']),
             volume: Utils.format_currency_thousand(detail['volume']),
             dividend: Utils.getNullableString(detail['dividend']),
-            prev_close: detail['previousClose'],
+            prev_close: Utils.getNullableString(detail['previousClose']),
             wk_range: Utils.getNullableString(detail['annualLow']) + ' - ' + Utils.getNullableString(detail['annualHigh']),
             average_vol: Utils.format_currency_thousand(Math.round(detail['thirtyDaysAvgVol'])),
             net_dividend: Utils.getNullableString(detail['yield']),
-            best_bid: detail['bidPrice'] + ' x ' + detail['bidSize'],
-            best_ask: detail['askPrice'] + ' x ' + detail['askSize'],
+            best_bid: Utils.getNullableString(detail['bidPrice']) + ' x ' + Utils.getNullableString(detail['bidSize']),
+            best_ask: Utils.getNullableString(detail['askPrice']) + ' x ' + Utils.getNullableString(detail['askSize']),
             market_cap: Utils.format_currency_thousand(detail['marketCap']),
             shares_out: Utils.format_currency_thousand(detail['sharesOutstanding'])
           };
@@ -255,11 +255,6 @@ class StockDetailQuote extends BaseScreen {
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
 								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.openDrawer()}
-                  >
-                    <Icon name="menu" style={common_styles.greenColor}/>
-                  </TouchableOpacity>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -291,7 +286,6 @@ class StockDetailQuote extends BaseScreen {
                     <Item label="News" value="news" />
                     <Item label="Financials" value="financials" />
                     <Item label="Disclosure" value="disclosure" />
-                    <Item label="Research" value="research" />
                   </Picker>
 								</Right>
 							</Header>
