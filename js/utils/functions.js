@@ -184,6 +184,9 @@ exports.get_data_from_cache = function(cache_time_key, cache_duration, cache_dat
     if (saved_time!=null){
       //saved last time
       var current_timestamp = Moment().unix() * 1000;
+      // console.log('current_timestamp', current_timestamp);
+      // console.log('saved_time.t', saved_time.t);
+      // console.log('diff', current_timestamp - saved_time.t);
       if (current_timestamp - saved_time.t >= cache_duration){
         //expired
         callback(false, {});

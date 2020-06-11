@@ -175,7 +175,7 @@ class CurrentMarket extends BaseScreen {
 			this.setState({sortOn: newSortOn, current_page:1, data_list:{}}, ()=>{
         var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
           '&sortOn=' + newSortOn+'&page=1&pageSize='+C_Const.PAGE_LEN;
-        this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION);
+        this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 			});
 		}
 		//
@@ -184,7 +184,7 @@ class CurrentMarket extends BaseScreen {
 			this.setState({advancer_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
         var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
           '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
-        this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION);
+        this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 			});
 		}
 		//
@@ -193,7 +193,7 @@ class CurrentMarket extends BaseScreen {
 			this.setState({decliner_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
         var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
           '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
-        this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION);
+        this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 			});
 		}
 		//next page
@@ -207,17 +207,17 @@ class CurrentMarket extends BaseScreen {
 					case 'MOST ACTIVE':
 						var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
 							'&sortOn=' + me.state.sortOn+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-						this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION);
+						this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 						break;
 						case 'ADVANCERS':
 							var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
 								'&priceMin=' + me.state.advancer_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-							this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION);
+							this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 							break;
 							case 'DECLINERS':
 								var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
 									'&priceMin=' + me.state.decliner_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-								this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION);
+								this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
 								break;
 				}
 			});

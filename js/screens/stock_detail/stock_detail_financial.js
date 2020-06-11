@@ -145,9 +145,6 @@ class StockDetailFinancial extends BaseScreen {
                   case 'disclosure':
                     this.props.navigation.navigate('StockDetailDisclosure', {symbol: this.state.symbol});
                     break;
-                    case 'research':
-                      this.props.navigation.navigate('StockDetailResearch', {symbol: this.state.symbol});
-                      break;
       }
     }
     //

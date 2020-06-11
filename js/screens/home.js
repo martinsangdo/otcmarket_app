@@ -95,7 +95,7 @@ class Home extends BaseScreen {
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + this.state.tierGroup +
           '&sortOn=' + this.state.sortOn+'&page=1&pageSize=15';
-			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_DURATION,
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
@@ -127,7 +127,7 @@ class Home extends BaseScreen {
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + this.state.tierGroup +
         '&priceMin=' + this.state.advancer_priceMin+'&page=1&pageSize=15';
-			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_DURATION,
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
@@ -159,7 +159,7 @@ class Home extends BaseScreen {
 			var me = this;
 			var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + this.state.tierGroup +
         '&priceMin=' + this.state.decliner_priceMin+'&page=1&pageSize=15';
-			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_DURATION,
+			Utils.get_data_from_cache(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION,
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
