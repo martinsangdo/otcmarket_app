@@ -54,5 +54,16 @@ export default {
   financial_item: {padding:5, paddingLeft:10, borderBottomColor: '#ccc', borderBottomWidth: 1, justifyContent:'space-between', flexDirection: 'row'},
   financial_master_item: {paddingLeft:20, backgroundColor:'#eee'},
   financial_item_last: {paddingLeft:0},
-  financial_options: {flexDirection: 'row', justifyContent: 'space-around', borderBottomColor: '#ccc', borderBottomWidth: 1, paddingTop: 10, paddingBottom: 10, marginLeft:10, marginRight:10}
+  financial_options: {flexDirection: 'row', justifyContent: 'space-around', borderBottomColor: '#ccc', borderBottomWidth: 1, paddingTop: 10, paddingBottom: 10, marginLeft:10, marginRight:10},
+  pdf_view: {
+    flex:1,
+    width:Dimensions.get('window').width,
+    height:Dimensions.get('window').height
+  },
+  pdf_container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 10
+    }
 };

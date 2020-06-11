@@ -15,19 +15,14 @@ import StockDetailSecurity from "./screens/stock_detail/stock_detail_security";
 import StockDetailNews from "./screens/stock_detail/stock_detail_news";
 import StockDetailFinancial from "./screens/stock_detail/stock_detail_financial";
 import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosure";
+import PDFViewer from "./screens/pdf_viewer";
 
 import Splash from "./screens/splash";
 
 const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
-    CurrentMarket: { screen: CurrentMarket },
-    StockDetailQuote: { screen: StockDetailQuote },
-    StockDetailProfile: { screen: StockDetailProfile },
-    StockDetailSecurity: { screen: StockDetailSecurity },
-    StockDetailNews: { screen: StockDetailNews },
-    StockDetailFinancial: { screen: StockDetailFinancial },
-    StockDetailDisclosure: { screen: StockDetailDisclosure }
+    CurrentMarket: { screen: CurrentMarket }
 
   },
   {
@@ -42,7 +37,14 @@ const Drawer = createDrawerNavigator(
 const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
-    Splash: { screen: Splash }
+    Splash: { screen: Splash },
+    StockDetailQuote: { screen: StockDetailQuote },
+    StockDetailProfile: { screen: StockDetailProfile },
+    StockDetailSecurity: { screen: StockDetailSecurity },
+    StockDetailNews: { screen: StockDetailNews },
+    StockDetailFinancial: { screen: StockDetailFinancial },
+    StockDetailDisclosure: { screen: StockDetailDisclosure },
+    PDFViewer: { screen: PDFViewer }
   },
   {
     initialRouteName: "Splash",

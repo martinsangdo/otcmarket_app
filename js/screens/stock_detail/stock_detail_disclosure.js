@@ -147,15 +147,10 @@ class StockDetailDisclosure extends BaseScreen {
                       break;
       }
     }
-    //https://backend.otcmarkets.com/otcapi/company/financial-report/171300/content
-    //https://docs.google.com/gview?embedded=true&url=https://backend.otcmarkets.com/otcapi/company/financial-report/171300/content
-    _download_detail(news_id){
-      var me = this;
-      var url = setting.GOOGLE_PDF_REVIEW_URI + API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, news_id);
-      Utils.xlog('000', url);
-      Linking.openURL(url).catch((err) => {
-        console.log(err);
-      });
+    //
+    _open_pdf_viewer(news_id){
+      var url = API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, news_id);
+      this.props.navigation.navigate('PDFViewer', {url: url});
     }
     //
 		_keyExtractorReports = (item) => item.id+'';
@@ -164,7 +159,7 @@ class StockDetailDisclosure extends BaseScreen {
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
 					<View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
           <View style={[styles.width_50p, common_styles.view_wrap]}>
-            <TouchableOpacity onPress={()=>this._download_detail(item.id)}>
+            <TouchableOpacity onPress={()=>this._open_pdf_viewer(item.id)}>
               <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</Text>
               </TouchableOpacity>
           </View>
