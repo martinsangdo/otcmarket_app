@@ -23,7 +23,10 @@ class CurrentMarket extends BaseScreen {
         loading_indicator_state: false,
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				snapshot_data: {},		//general info of market
-				data_list: {},
+				data_list: {
+          records: [],
+          totalRecords: 0
+        },
 				sortOn: 'dollarVolume',	//dollarVolume, volume, tradeCount
 				advancer_priceMin: 1,	//1, 0.05, 0
 				decliner_priceMin: 1,	//1, 0.05, 0
@@ -70,7 +73,10 @@ class CurrentMarket extends BaseScreen {
 							advancer_priceMin: newPropParams['advancer_priceMin'],
 							decliner_priceMin: newPropParams['decliner_priceMin'],
 							loading_indicator_state: false,
-							data_list: {},
+							data_list: {
+                records: [],
+                totalRecords: 0
+              },
 							current_page: 0,
 							can_load_more: true
 						}, ()=>{
@@ -360,11 +366,16 @@ class CurrentMarket extends BaseScreen {
 												extraData={this.state}
 											/>
 								</View>
-							{this.state.can_load_more && <View style={common_styles.view_align_center}>
+							{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_10]}>
 									<TouchableOpacity onPress={() => this._open_more_data()}>
 										<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
 									</TouchableOpacity>
-								</View>}
+								</View>
+              }
+              <View style={common_styles.view_align_center}>
+                <Text style={common_styles.darkGrayColor}>Displaying {this.state.data_list['records'].length} of {this.state.data_list['totalRecords']} items</Text>
+              </View>
+              <View style={common_styles.margin_b_20} />
 							</Content>
 						</Container>
 				);

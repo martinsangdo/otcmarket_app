@@ -75,11 +75,11 @@ class BaseScreen extends Component {
       this.props.navigation.goBack();
     }
     //
-		_keyExtractor = (item) => item.symbol;
+		_keyExtractor = (item) => item.symbol+Math.random()+'';
 		//render the list. MUST use "item" as param
     //used to show list of stocks (Home, current_market)
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol}>
+				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol+Math.random()+''}>
 					<View style={[common_styles.margin_r_5]}>
 						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
 					</View>
