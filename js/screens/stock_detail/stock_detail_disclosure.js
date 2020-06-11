@@ -30,11 +30,6 @@ class StockDetailDisclosure extends BaseScreen {
             list: [],
             can_load_more: true
           },
-          fillings: {
-            current_page: 1,
-            list: [],
-            can_load_more: true
-          },
           insiders: {
             current_page: 1,
             list: [],
@@ -49,6 +44,7 @@ class StockDetailDisclosure extends BaseScreen {
         symbol:this.props.navigation.state.params.symbol
       }, ()=>{
         this._load_reports();
+        this._load_insiders();
 			});
       //todo: check bookmark
 			//
@@ -87,6 +83,7 @@ class StockDetailDisclosure extends BaseScreen {
           }
         }, ()=>{
           this._load_reports();
+          this._load_insiders();
         });
       }
 		}
@@ -112,6 +109,36 @@ class StockDetailDisclosure extends BaseScreen {
             data['reports']['totalRecords'] = detail['totalRecords'];
             if (data['reports']['list'].length >= detail['totalRecords']){
               data['reports']['can_load_more'] = false;
+            }
+            me.setState({data: data});
+          }
+        } else if (error){
+          //do nothing
+        }
+      });
+    }
+    //
+    _load_insiders(){
+      var me = this;
+      var url = API_URI.STOCK_DETAIL.DISCLOSURE.INSIDER.
+          replace(/<symbol>/g, this.state.symbol).replace('<page_index>', this.state.data['insiders']['current_page']);
+      //
+      RequestData.sentGetRequest(url, (detail, error) => {
+        if (detail){
+          var records = detail['records'];
+          if (records != null){
+            var data = me.state.data;
+            for (var i=0; i<records.length; i++){
+              data['insiders']['list'].push({
+                id: records[i]['id'],
+                title: records[i]['title'],
+                releaseDate: Utils.formatDate(records[i]['releaseDate']),
+                typeName: records[i]['typeName']
+              });
+            }
+            data['insiders']['totalRecords'] = detail['totalRecords'];
+            if (data['insiders']['list'].length >= detail['totalRecords']){
+              data['insiders']['can_load_more'] = false;
             }
             me.setState({data: data});
           }
@@ -162,15 +189,18 @@ class StockDetailDisclosure extends BaseScreen {
 				</View>
 		);
     //
-		_keyExtractorSplit = (item) => item.changeDate + '-' + item.payDate;
+		_keyExtractorInsider = (item) => item.id+'';
 		//render the list. MUST use "item" as param
-		_renderItemSplit = ({item}) => (
-      <View style={[styles.list_item, common_styles.fetch_row]} key={item.changeDate + '-' + item.payDate}>
-					<View style={[common_styles.width_25p]}><Text>{item.changeDate}</Text></View>
-					<View style={[common_styles.width_25p]}><Text>{item.splitRatio}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.recordDate}</Text></View>
-          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.payDate}</Text></View>
-				</View>
+		_renderItemInsider = ({item}) => (
+      <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
+        <View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
+        <View style={[styles.width_50p, common_styles.view_wrap]}>
+          <TouchableOpacity onPress={()=>this._open_pdf_viewer(API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, item.id))}>
+            <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.title}</Text>
+            </TouchableOpacity>
+        </View>
+        <View style={[styles.width_25p, common_styles.view_wrap]}><Text style={common_styles.padding_5}>{item.typeName}</Text></View>
+			</View>
 		);
     //
     _open_more_page(category){
@@ -185,6 +215,13 @@ class StockDetailDisclosure extends BaseScreen {
             this._load_reports();
           });
           break;
+          case 'fillings':
+            var data = this.state.data;
+            data['fillings']['current_page'] += 1;
+            this.setState({data: data}, ()=>{
+              this._load_sec_fillings();
+            });
+            break;
         default:
 
       }
@@ -263,50 +300,34 @@ class StockDetailDisclosure extends BaseScreen {
 									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data['reports']['list'].length} of {this.state.data['reports']['totalRecords']} items</Text>
 								</View>
                 <View style={common_styles.margin_b_20} />
-                {/* SEC filling */}
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SEC Fillings</Text></View>
-                <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
-								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>PUBLIST DATE</Text></View>
-									<View style={styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TITLE</Text></View>
-									<View style={[styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PERIOD END DATE</Text></View>
-								</View>
-								<View>
-									<FlatList
-												data={this.state.data['reports']['list']}
-												renderItem={this._renderItemReports}
-												refreshing={false}
-												keyExtractor={this._keyExtractorReports}
-                        style={{width:Dimensions.get("window").width}}
-											/>
-								</View>
-                <View style={common_styles.view_align_center}>
-									<TouchableOpacity onPress={() => this._open_more_page('fillings')}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
-									</TouchableOpacity>
-								</View>
-                <View style={common_styles.margin_b_20} />
                 {/* insider */}
                 <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>INSIDER</Text></View>
                 <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>FORM TYPE</Text></View>
-									<View style={styles.width_75p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>RECEIVED</Text></View>
+									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
+									<View style={styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>TITLE</Text></View>
+                  <View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>TYPE</Text></View>
 								</View>
 								<View>
 									<FlatList
-												data={this.state.data['reports']['list']}
-												renderItem={this._renderItemReports}
+												data={this.state.data['insiders']['list']}
+												renderItem={this._renderItemInsider}
 												refreshing={false}
-												keyExtractor={this._keyExtractorReports}
+												keyExtractor={this._keyExtractorInsider}
                         style={{width:Dimensions.get("window").width}}
 											/>
 								</View>
-                <View style={common_styles.view_align_center}>
-									<TouchableOpacity onPress={() => this._open_more_page('insiders')}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
-									</TouchableOpacity>
-								</View>
+                  {
+                    this.state.data['insiders']['can_load_more'] &&
+                      <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
+      									<TouchableOpacity onPress={() => this._open_more_page('insiders')}>
+      										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+      									</TouchableOpacity>
+      								</View>
+                  }
+                  <View style={common_styles.view_align_center}>
+  									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data['insiders']['list'].length} of {this.state.data['insiders']['totalRecords']} items</Text>
+  								</View>
                 <View style={common_styles.margin_b_20} />
               </Content>
 						</Container>
