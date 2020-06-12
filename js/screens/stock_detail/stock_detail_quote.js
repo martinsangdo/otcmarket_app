@@ -208,12 +208,12 @@ class StockDetailQuote extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemQuote = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.mmId}>
-					<View style={[styles.td_stock_price_item]}>
+					<View style={[common_styles.width_25p]}>
             <Text>{item.mmId}</Text>
           </View>
-					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right]}>{item.priceDisplay}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.sizeDisplay}</Text></View>
-          <View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{item.transTimeDisplay}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.priceDisplay}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.sizeDisplay}</Text></View>
+          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.transTimeDisplay}</Text></View>
 				</View>
 		);
     //
@@ -413,10 +413,10 @@ class StockDetailQuote extends BaseScreen {
 									</TouchableOpacity>
 				        </View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>MPID</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SIZE</Text></View>
-									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIME</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>MPID</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SIZE</Text></View>
+									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIME</Text></View>
 								</View>
 								<View>
 									<FlatList

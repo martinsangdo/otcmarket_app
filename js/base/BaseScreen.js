@@ -79,20 +79,20 @@ class BaseScreen extends Component {
 		//render the list. MUST use "item" as param
     //used to show list of stocks (Home, current_market)
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol+Math.random()+''}>
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, {paddingBottom:5}]} key={item.symbol+Math.random()+''}>
 					<View style={[common_styles.margin_r_5]}>
 						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
 					</View>
-					<View style={[styles.td_stock_price_item_first]}>
+					<View style={[common_styles.width_25p_first]}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text>{item.symbol}</Text>
+  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
             </TouchableOpacity>
           </View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
-					<View style={[styles.td_stock_price_item]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
 				</View>
 		);
 }

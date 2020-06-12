@@ -39,6 +39,8 @@ const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
     Splash: { screen: Splash },
+    Home: { screen: Home },
+    CurrentMarket: { screen: CurrentMarket },
     StockDetailQuote: { screen: StockDetailQuote },
     StockDetailProfile: { screen: StockDetailProfile },
     StockDetailSecurity: { screen: StockDetailSecurity },

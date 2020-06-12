@@ -62,8 +62,8 @@ class StockFinder extends BaseScreen {
                     market: item['market'],
                     securityType: item['securityType'],
                     country: item['state']+', '+item['country'],
-                    price: item['price'],
-                    pct1Day: Utils.number_to_float(item['pct1Day']*100),
+                    price: Utils.number_to_float_2(item['price']),
+                    pct1Day: item['pct1Day']!=null?Utils.number_to_float_2(item['pct1Day']*100):'',
                     volume: Utils.format_currency_thousand(item['volume']),
                     penny: item['penny']?'Yes':'No',
                     dividendYield: item['dividendYield'],
@@ -85,6 +85,30 @@ class StockFinder extends BaseScreen {
           });
       });
     }
+    //
+    _open_more_data(){
+			if (this.state.loading_indicator_state){
+				return;
+			}
+    }
+    //
+		_keyExtractor = (item) => item.symbol+Math.random()+'';
+		//render the list. MUST use "item" as param
+    //used to show list of stocks (Home, current_market)
+		_renderItem = ({item}) => (
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray]} key={item.symbol+Math.random()+''}>
+					<View style={[common_styles.width_25p_first]}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
+            >
+  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+            </TouchableOpacity>
+          </View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.price}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.pct1Day}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.volume}</Text></View>
+				</View>
+		);
 	 //==========
 		render() {
 				return (
@@ -118,7 +142,29 @@ class StockFinder extends BaseScreen {
                 <View style={common_styles.view_align_center}>
 									<Text style={common_styles.darkGrayColor}>Total Securities: {this.state.totalRecords}</Text>
 								</View>
-
+                <View style={common_styles.margin_b_20} />
+                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+                  <View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOL</Text></View>
+                </View>
+                <View>
+									<FlatList
+												data={this.state.data_list}
+												renderItem={this._renderItem}
+												refreshing={false}
+												keyExtractor={this._keyExtractor}
+												initialNumToRender={25}
+												extraData={this.state}
+											/>
+								</View>
+  							{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
+  									<TouchableOpacity onPress={() => this._open_more_data()}>
+  										<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+  									</TouchableOpacity>
+  								</View>
+                }
 								<View style={common_styles.margin_b_30} />
 							</Content>
 						</Container>

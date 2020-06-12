@@ -310,10 +310,10 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
 								</View>
 								<View>
 									<FlatList
@@ -325,6 +325,7 @@ class Home extends BaseScreen {
 												initialNumToRender={10}
 											/>
 								</View>
+                <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('MOST ACTIVE')}>
 										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
@@ -345,10 +346,10 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
 								</View>
 								<View>
 									<FlatList
@@ -360,6 +361,7 @@ class Home extends BaseScreen {
 												initialNumToRender={10}
 											/>
 								</View>
+                <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('ADVANCERS')}>
 										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
@@ -380,10 +382,10 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={styles.td_stock_price_item}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[styles.td_stock_price_item]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
+									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
+									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
 								</View>
 								<View>
 									<FlatList
@@ -395,6 +397,7 @@ class Home extends BaseScreen {
 												initialNumToRender={10}
 											/>
 								</View>
+                <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('DECLINERS')}>
 										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>

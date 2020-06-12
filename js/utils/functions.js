@@ -138,6 +138,12 @@ exports.number_to_float = function(number){
     return number.toFixed(4);
   return '';
 };
+//format number to float
+exports.number_to_float_2 = function(number){
+  if (number != null && number != '')
+    return number.toFixed(2);
+  return '';
+};
 exports.makeApplink = function (file_src) {
     return setting.SERVER_URL + file_src;
 };
