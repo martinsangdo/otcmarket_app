@@ -16,17 +16,18 @@ import StockDetailNews from "./screens/stock_detail/stock_detail_news";
 import StockDetailFinancial from "./screens/stock_detail/stock_detail_financial";
 import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosure";
 import PDFViewer from "./screens/pdf_viewer";
+import StockFinder from "./screens/stock_finder";
 
 import Splash from "./screens/splash";
 
 const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
-    CurrentMarket: { screen: CurrentMarket }
-
+    CurrentMarket: { screen: CurrentMarket },
+    StockFinder: {screen: StockFinder}
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "StockFinder",
     contentOptions: {
       activeTintColor: "#81af68"
     },

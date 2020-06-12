@@ -58,6 +58,10 @@ export const API_URI = {
         FILLING: setting.BACKEND_SERVER + 'company/sec-filings/<symbol>?symbol=<symbol>&page=<page_index>&pageSize=20',
         INSIDER: setting.BACKEND_SERVER + 'insider-disclosure/otc/<symbol>?symbol=<symbol>&sortOn=transDate&sortDir=DESC&page=<page_index>&pageSize=20'
       }
+		},
+		STOCK_FINDER: {	//stock screener
+			GET_FILTERS: setting.HOMEPAGE + 'research/stock-screener/api/controls',
+			SEARCH: setting.HOMEPAGE + 'research/stock-screener/api?page=<page_index>&pageSize=25&'
 		}
 
 };

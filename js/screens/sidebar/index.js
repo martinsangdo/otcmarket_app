@@ -22,8 +22,8 @@ const datas = [
     icon: 'home'
   },
   {
-    name: "Stock Directory",
-    route: "Home",
+    name: "Stock Finder",
+    route: "StockFinder",
     icon: "ios-search"
   },
   {
