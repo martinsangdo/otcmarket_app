@@ -77,7 +77,8 @@ class StockFinder extends BaseScreen {
                 Utils.xlog('new list', current_data);
                 me.setState({data_list: current_data});
               }
-              me.setState({totalRecords: Utils.format_currency_thousand(rawDataJson['count'])});
+              me.setState({totalRecords: Utils.format_currency_thousand(rawDataJson['count']),
+                can_load_more: rawDataJson['count'] > current_data.length });
             } else if (error){
               //do nothing
             }
@@ -90,6 +91,9 @@ class StockFinder extends BaseScreen {
 			if (this.state.loading_indicator_state){
 				return;
 			}
+      this.setState({current_page: this.state.current_page+1}, ()=>{
+        this._load_data();
+      });
     }
     //
 		_keyExtractor = (item) => item.symbol+Math.random()+'';
@@ -122,7 +126,7 @@ class StockFinder extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>StockFinder</Text>
+									<Text style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<TouchableOpacity style={common_styles.margin_r_20}>
@@ -138,10 +142,6 @@ class StockFinder extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
-                <View style={common_styles.margin_b_10} />
-                <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Total Securities: {this.state.totalRecords}</Text>
-								</View>
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
@@ -165,6 +165,10 @@ class StockFinder extends BaseScreen {
   									</TouchableOpacity>
   								</View>
                 }
+                <View style={common_styles.margin_b_10} />
+                <View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data_list.length} of {this.state.totalRecords} items</Text>
+								</View>
 								<View style={common_styles.margin_b_30} />
 							</Content>
 						</Container>
