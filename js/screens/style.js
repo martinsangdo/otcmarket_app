@@ -19,7 +19,6 @@ export default {
     width: 300, height: 300, resizeMode: 'contain'
   },
 	left_row: {flex:1, flexDirection: 'row'},
-	list_item: {margin:10},
 	imageContainer: {
     width: deviceWidth-20, height: 170
     // , flex: 1, resizeMode:'stretch'

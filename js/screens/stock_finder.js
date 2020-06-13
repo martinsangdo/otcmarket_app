@@ -25,6 +25,7 @@ class StockFinder extends BaseScreen {
         totalRecords: 0,
         data_list:[],
         filter: {},
+        showing_detail_symbols: {},   //default no any symbol showing its detail
         can_load_more: true
 			};
 		}
@@ -68,7 +69,7 @@ class StockFinder extends BaseScreen {
                     penny: item['penny']?'Yes':'No',
                     dividendYield: item['dividendYield'],
                     shortInterest: Utils.format_currency_thousand(item['shortInterest']),
-                    shortInterestRatio: item['shortInterestRatio']*100,
+                    shortInterestRatio: (item['shortInterestRatio']!=null)?Utils.number_to_float_2(item['shortInterestRatio']*100):'',
                     isBank: item['isBank']
                   });
                 }
@@ -96,11 +97,22 @@ class StockFinder extends BaseScreen {
       });
     }
     //
+    _toogle_showing_detail(symbol){
+      var showing_detail_symbols = this.state.showing_detail_symbols;
+      if (showing_detail_symbols[symbol]){
+        showing_detail_symbols[symbol] = false;
+      } else {
+        showing_detail_symbols[symbol] = true;
+      }
+      this.setState({showing_detail_symbols: showing_detail_symbols});
+    }
+    //
 		_keyExtractor = (item) => item.symbol+Math.random()+'';
 		//render the list. MUST use "item" as param
     //used to show list of stocks (Home, current_market)
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray]} key={item.symbol+Math.random()+''}>
+      <View style={[common_styles.border_b_gray]}>
+				<View style={[styles.list_item, common_styles.fetch_row]} key={item.symbol+Math.random()+''}>
 					<View style={[common_styles.width_25p_first]}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
@@ -110,8 +122,57 @@ class StockFinder extends BaseScreen {
           </View>
 					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.price}</Text></View>
 					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.pct1Day}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.volume}</Text></View>
+					<View style={[common_styles.width_20p]}>
+            <TouchableOpacity
+              onPress={() => this._toogle_showing_detail(item.symbol)}
+            >
+              <Text style={common_styles.float_right}>{item.volume}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[common_styles.width_5p, common_styles.margin_l_5, common_styles.margin_r_5]}>
+            <TouchableOpacity
+              onPress={() => this._toogle_showing_detail(item.symbol)}
+            >
+              {
+                !this.state.showing_detail_symbols[item.symbol] &&
+                <Icon name="ios-arrow-down" style={[common_styles.greenColor, common_styles.font_20]}/>
+              }
+              {
+                this.state.showing_detail_symbols[item.symbol] &&
+                <Icon name="ios-arrow-up" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
+              }
+            </TouchableOpacity>
+          </View>
 				</View>
+        {
+          this.state.showing_detail_symbols[item.symbol] &&
+          <View>
+            <View style={[common_styles.fetch_row, common_styles.margin_5]}>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>NAME</Text>
+              <Text style={common_styles.width_75p}>{item.securityName}</Text>
+            </View>
+            <View style={[common_styles.fetch_row, common_styles.margin_5]}>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>MARKET</Text>
+              <Text style={common_styles.width_75p}>{item.market}</Text>
+            </View>
+            <View style={[common_styles.fetch_row, common_styles.margin_5]}>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>SEC TYPE</Text>
+              <Text style={common_styles.width_75p}>{item.securityType}</Text>
+            </View>
+            <View style={[common_styles.fetch_row, common_styles.margin_5]}>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>COUNTRY</Text>
+              <Text style={common_styles.width_50p}>{item.country}</Text>
+              <View style={[common_styles.width_25p, common_styles.flex_row]}><Text style={[common_styles.bold, common_styles.margin_r_10]}>BANK</Text><Text>{item.isBank}</Text></View>
+            </View>
+            <View style={[common_styles.fetch_row, common_styles.margin_5]}>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>SHORT INT</Text>
+              <Text style={common_styles.width_25p}>{item.shortInterest}</Text>
+              <Text style={[common_styles.width_25p, common_styles.bold]}>SHORT %</Text>
+              <Text style={common_styles.width_25p}>{item.shortInterestRatio}</Text>
+            </View>
+          </View>
+        }
+      </View>
 		);
 	 //==========
 		render() {
@@ -147,7 +208,8 @@ class StockFinder extends BaseScreen {
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-                  <View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOL</Text></View>
+                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOL</Text></View>
+                  <View style={[common_styles.width_5p]}></View>
                 </View>
                 <View>
 									<FlatList
