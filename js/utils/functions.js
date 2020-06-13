@@ -43,6 +43,18 @@ exports.changeObjectinArray = function(array, key, oldValue, newValue) {
   });
   return array;
 };
+//check if the value existed in array, return first position of value
+exports.isExistedInArray = function(array, value) {
+  var existed_index = -1;
+  var run_index = 0;
+  array.map(function(item){
+    if (item == value){
+      existed_index = run_index;
+    }
+    run_index++;
+  });
+  return existed_index;
+};
 
 exports.moveObjectinArray = function(array, key, step) {
   const index = array.map(item => item.symbol).indexOf(key);
@@ -61,7 +73,8 @@ exports.moveObjectinArray = function(array, key, step) {
 };
 
 exports.removeArrayAtIndex = function(array, index){
-  return array.splice(index, 1);
+  array.splice(index, 1);
+  return array;
 };
 //custom a request
 exports.my_fetch = function(url, method, body){
@@ -105,7 +118,7 @@ exports.parseInt = function(str){
 };
 //
 exports.isEmpty = function(str){
-  return str == null || str == '';
+  return str === undefined || str == null || str == '';
 };
 //
 exports.getNullableString = function(str){

@@ -111,6 +111,7 @@ export default {
 		whiteBg: {backgroundColor: '#fff'},
 		grayBg: {backgroundColor: '#ccc'},
     activeBg: {backgroundColor: '#008da9'},
+    lightGrayBg: {backgroundColor: '#ddd'},
 		//align
 		view_align_right: {flex: 1, flexDirection: 'row', justifyContent: 'flex-end'},
 		view_align_center: {flex: 1, flexDirection: 'row', justifyContent: 'center'},

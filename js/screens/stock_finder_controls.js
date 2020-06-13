@@ -13,11 +13,38 @@ import {API_URI} from '../utils/api_uri';
 import Utils from "../utils/functions";
 import CheckBox from '@react-native-community/checkbox';
 
+const market_prefix = 'market_';
+
 class StockFinderControls extends BaseScreen {
 	constructor(props) {
 		super(props);
 		this.state = {
-			controls: {}
+			controls: {},
+			is_loaded_controls: false,
+			options: {	//what user chose
+				market: [],
+				securityType: [],
+				country: [],
+				ce: false,	//Caveat Emptor
+				industry: [],
+				priceMin: [],
+				priceMax: [],
+				pcPct: [],	//price change
+				pc: 52,			//price change duration
+				volMin: [],	//volume
+				volMax: [],
+				penny: 'all',	//yes/no, empty means All
+				perf: {
+					index: 0,
+					duration: 52,
+					pricePctMin: -40,
+					pricePctMax: 40
+				},		//performance
+				volChgMin: 25,	//25-200 %
+				div: false,	//Dividend Payer
+				shinMin: 0		//percentage 0-100
+			},
+			is_show_market: false,
 		};
 	}
 
@@ -29,8 +56,10 @@ class StockFinderControls extends BaseScreen {
 		RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
 			if (detail){
 				var rawDataJson = JSON.parse(detail);
-				Utils.xlog('controls', rawDataJson);
-				me.setState({controls: rawDataJson});
+				// Utils.xlog('controls', rawDataJson);
+				me.setState({controls: rawDataJson, is_loaded_controls:true}, ()=>{
+					// me._render_markets();
+				});
 			} else {
 				//error
 			}
@@ -41,8 +70,65 @@ class StockFinderControls extends BaseScreen {
 
 	}
 	//
-	_toogle_options(key){
+	_toogle_options(options_key, value){
+		var current_options = this.state.options;
+		var found_index = Utils.isExistedInArray(current_options[options_key], value);
+		if (found_index >= 0){
+			//existed, remove that value
+			current_options[options_key] = Utils.removeArrayAtIndex(current_options[options_key], found_index);
+		} else {
+			//not existed, add that value
+			current_options[options_key].push(value);
+		}
+		this.setState({options: current_options}, ()=>{
+			// Utils.xlog('changed', this.state.options);
+		});
+	}
+	//
+	_on_clear_market(){
 
+	}
+	//
+	_show_hide_market(){
+		this.setState({is_show_market: !this.state.is_show_market});
+	}
+	//
+	_render_markets(){
+		var markets = [];
+		if (Utils.isEmpty(this.state.controls['markets'])){
+			return;
+		}
+		var me = this;
+		this.state.controls['markets'].map(function(item){
+			if (item['mkts'] != null && item['mkts'].length > 0){
+				item['mkts'].map(function(subitem){
+					if (!Utils.isEmpty(subitem.id)){
+						markets.push({
+							id: subitem.id, name: subitem.name, num: subitem.num
+						});
+					}
+				});
+			} else if (!Utils.isEmpty(item.id)){
+				markets.push({
+					id: item.id, name: item.name, num: item.num
+				});
+			}
+		});
+		if (markets.length > 0){
+			var display_options = markets.map(function(item){
+				return <View style={common_styles.flex_row} key={item.id}>
+									<CheckBox
+										boxType={'square'}
+										value={Utils.isExistedInArray(me.state.options['market'], item.id)>=0?true:false}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => me._toogle_options('market', item.id)}
+									/>
+									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+								</View>;
+			});
+			return display_options;
+		}
 	}
 	 //==========
 		render() {
@@ -74,21 +160,37 @@ class StockFinderControls extends BaseScreen {
               <Content>
 								{/* Market */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}>
+								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
 									<Text style={[common_styles.heading_1]}>MARKETS</Text>
+									<View style={[common_styles.float_right]}>
+										<TouchableOpacity onPress={()=>this._on_clear_market()}>
+											<Text>Reset</Text>
+										</TouchableOpacity>
+									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
-
-								<View style={{height: 200}} >
-				          <ScrollView>
-										<CheckBox
-											disabled={false}
-											value={false}
-											style={{width:20,height:20, margin:5}}
-											onValueChange={() => this._toogle_options()}
-										/>
-				          </ScrollView>
-				        </View>
+								<View style={common_styles.margin_5}><Text>Markets</Text></View>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market()}>
+									<View style={common_styles.justifyCenter}><Text>{this.state.options['market'].length==0?'All':this.state.options['market'].length+' selected'}</Text></View>
+									<View>
+										{
+											!this.state.is_show_market &&
+											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+										}
+										{
+											this.state.is_show_market &&
+											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+										}
+									</View>
+								</TouchableOpacity>
+								{
+									this.state.is_show_market &&
+									<View style={styles.finder_options_sub_container} >
+					          <ScrollView>
+											{this.state.is_loaded_controls && this._render_markets()}
+					          </ScrollView>
+					        </View>
+								}
 							</Content>
 						</Container>
 				);

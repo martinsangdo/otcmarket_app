@@ -59,23 +59,11 @@ export default {
     height:Dimensions.get('window').height
   },
   pdf_container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginTop: 10
-    },
-    btnYes: {marginBottom: 20},
-    btncontainerStyle: {
-            height: 46, borderRadius: 6,
-            justifyContent: "center",
-            paddingLeft:10, paddingRight:10, width:120,
-            borderColor: '#008da9', borderWidth:1
-        },
-            btnTextStyle: {
-                    textAlign: "center",
-                    textAlignVertical: "center",
-                    color: "#fff",
-                    fontSize: 16,
-                    fontWeight: "bold"
-                }
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  chkbox: {width:20,height:20, margin:10},
+  finder_options_sub_container: {height: 180, backgroundColor:'#eee'}
 };
