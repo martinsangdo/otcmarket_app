@@ -110,6 +110,7 @@ export default {
 		},
 		whiteBg: {backgroundColor: '#fff'},
 		grayBg: {backgroundColor: '#ccc'},
+    activeBg: {backgroundColor: '#008da9'},
 		//align
 		view_align_right: {flex: 1, flexDirection: 'row', justifyContent: 'flex-end'},
 		view_align_center: {flex: 1, flexDirection: 'row', justifyContent: 'center'},
@@ -149,6 +150,7 @@ export default {
 		padding_5: {padding: 5},
 		padding_10: {padding: 10},
 		padding_20: {padding: 20},
+    padding_b_20: {paddingBottom: 20},
 		padding_h_10: {paddingHorizontal: 10},
 		padding_h_5: {paddingHorizontal: 5},
 		padding_r_10: {paddingRight: 10},

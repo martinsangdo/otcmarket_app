@@ -60,7 +60,11 @@ export const API_URI = {
       }
 		},
 		STOCK_FINDER: {	//stock screener
-			GET_FILTERS: setting.HOMEPAGE + 'research/stock-screener/api/controls',
+			GET_FILTERS: {
+				URL: setting.HOMEPAGE + 'research/stock-screener/api/controls',
+				CACHE_TIME_KEY: 'STOCK_FINDER_CONTROLS_CACHE_TIME_KEY',
+				CACHE_TIME_DURATION: 7*24*60*60*1000  //7 days in timestamp
+			},
 			SEARCH: setting.HOMEPAGE + 'research/stock-screener/api?page=<page_index>&pageSize=25&'
 		}
 

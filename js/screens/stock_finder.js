@@ -24,14 +24,16 @@ class StockFinder extends BaseScreen {
         current_page: 0,
         totalRecords: 0,
         data_list:[],
-        filter: {},
+        controls: {},
         showing_detail_symbols: {},   //default no any symbol showing its detail
-        can_load_more: true
+        can_load_more: true,
+        is_loaded_controls: false
 			};
 		}
 		//
 		componentDidMount() {
-      this._load_data();
+      // this._load_data();
+      this._load_controls();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -40,9 +42,6 @@ class StockFinder extends BaseScreen {
 		}
     //
     _load_data(){
-      if (this.state.loading_indicator_state){
-        return;
-      }
       var me = this;
 			var url = API_URI.STOCK_FINDER.SEARCH.replace(/<page_index>/g, this.state.current_page);
       Utils.xlog('url', url);
@@ -75,7 +74,6 @@ class StockFinder extends BaseScreen {
                 }
                 var current_data = me.state.data_list;
                 current_data.push(...new_list);
-                Utils.xlog('new list', current_data);
                 me.setState({data_list: current_data});
               }
               me.setState({totalRecords: Utils.format_currency_thousand(rawDataJson['count']),
@@ -85,6 +83,31 @@ class StockFinder extends BaseScreen {
             }
             me.setState({loading_indicator_state: false});
           });
+      });
+    }
+    //
+    _load_controls(){
+      var me = this;
+      Utils.get_data_from_cache(API_URI.STOCK_FINDER.GET_FILTERS.CACHE_TIME_KEY, API_URI.STOCK_FINDER.GET_FILTERS.CACHE_TIME_DURATION,
+          API_URI.STOCK_FINDER.GET_FILTERS.URL, (has_cache_data, cache_data)=>{
+				if (has_cache_data){
+					//parse cached data
+					Utils.xlog('cached data', cache_data);
+					me.setState({controls: cache_data, is_loaded_controls: true});
+				} else {
+          //load from server
+          RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
+            if (detail){
+              var rawDataJson = JSON.parse(detail);
+              // Utils.xlog('controls', rawDataJson);
+              store.update(API_URI.STOCK_FINDER.GET_FILTERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              store.update(API_URI.STOCK_FINDER.GET_FILTERS.URL, {d: rawDataJson});
+              me.setState({controls: rawDataJson, is_loaded_controls: true});
+            } else {
+              //error
+            }
+          });
+        }
       });
     }
     //
@@ -174,6 +197,12 @@ class StockFinder extends BaseScreen {
         }
       </View>
 		);
+    //
+    _show_controls=()=>{
+      this.props.navigation.navigate('StockFinderControls', {
+        controls: this.state.controls
+			});
+    }
 	 //==========
 		render() {
 				return (
@@ -190,9 +219,12 @@ class StockFinder extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
-									<TouchableOpacity style={common_styles.margin_r_20}>
-										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
-									</TouchableOpacity>
+                  {
+                    this.state.is_loaded_controls &&
+                    <TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._show_controls()}>
+  										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
+  									</TouchableOpacity>
+                  }
                   <TouchableOpacity onPress={() => this._check_login()}>
                     <View style={[common_styles.float_center]}>
                       <Icon name="md-download" style={common_styles.default_font_color}/>

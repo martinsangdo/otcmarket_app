@@ -79,11 +79,11 @@ class BaseScreen extends Component {
 		//render the list. MUST use "item" as param
     //used to show list of stocks (Home, current_market)
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, {paddingBottom:5}]} key={item.symbol+Math.random()+''}>
-					<View style={[common_styles.margin_r_5]}>
-						<Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
-					</View>
-					<View style={[common_styles.width_25p_first]}>
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.symbol+Math.random()+''}>
+					<View style={[common_styles.width_25p_first, common_styles.flex_row]}>
+            <View style={[common_styles.margin_r_5]}>
+              <Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
+            </View>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >

@@ -17,6 +17,7 @@ import StockDetailFinancial from "./screens/stock_detail/stock_detail_financial"
 import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosure";
 import PDFViewer from "./screens/pdf_viewer";
 import StockFinder from "./screens/stock_finder";
+import StockFinderControls from "./screens/stock_finder_controls";
 
 import Splash from "./screens/splash";
 
@@ -24,10 +25,11 @@ const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     CurrentMarket: { screen: CurrentMarket },
-    StockFinder: {screen: StockFinder}
+    StockFinder: {screen: StockFinder},
+    StockFinderControls: {screen: StockFinderControls}
   },
   {
-    initialRouteName: "StockFinder",
+    initialRouteName: "StockFinderControls",
     contentOptions: {
       activeTintColor: "#81af68"
     },
@@ -47,7 +49,8 @@ const AppNavigator = createStackNavigator(
     StockDetailNews: { screen: StockDetailNews },
     StockDetailFinancial: { screen: StockDetailFinancial },
     StockDetailDisclosure: { screen: StockDetailDisclosure },
-    PDFViewer: { screen: PDFViewer }
+    PDFViewer: { screen: PDFViewer },
+    StockFinderControls: { screen: StockFinderControls }
   },
   {
     initialRouteName: "Splash",
