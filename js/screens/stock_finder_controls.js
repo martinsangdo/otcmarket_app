@@ -22,11 +22,11 @@ class StockFinderControls extends BaseScreen {
 			controls: {},
 			is_loaded_controls: false,
 			options: {	//what user chose
-				market: [],
-				securityType: [],
-				country: [],
+				markets: [],
+				securityTypes: [],
+				countryTotals: [],
 				ce: false,	//Caveat Emptor
-				industry: [],
+				industryTotals: [],
 				priceMin: [],
 				priceMax: [],
 				pcPct: [],	//price change
@@ -45,6 +45,9 @@ class StockFinderControls extends BaseScreen {
 				shinMin: 0		//percentage 0-100
 			},
 			is_show_market: false,
+			is_show_securityType: false,
+			is_show_countries: false,
+			is_show_industries: false,
 		};
 	}
 
@@ -56,7 +59,7 @@ class StockFinderControls extends BaseScreen {
 		RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
 			if (detail){
 				var rawDataJson = JSON.parse(detail);
-				// Utils.xlog('controls', rawDataJson);
+				Utils.xlog('controls', rawDataJson);
 				me.setState({controls: rawDataJson, is_loaded_controls:true}, ()=>{
 					// me._render_markets();
 				});
@@ -65,12 +68,12 @@ class StockFinderControls extends BaseScreen {
 			}
 		});
   }
-	//
-	_reset_all(){
+	//begin searching
+	_apply_options(){
 
 	}
-	//
-	_toogle_options(options_key, value){
+	//when user taps on checkbox
+	_toogle_options_array(options_key, value){
 		var current_options = this.state.options;
 		var found_index = Utils.isExistedInArray(current_options[options_key], value);
 		if (found_index >= 0){
@@ -84,8 +87,20 @@ class StockFinderControls extends BaseScreen {
 			// Utils.xlog('changed', this.state.options);
 		});
 	}
+	//when user taps on checkbox
+	_toogle_options_value(options_key, value){
+		var current_options = this.state.options;
+		current_options[options_key] = value;
+		this.setState({options: current_options}, ()=>{
+			// Utils.xlog('changed', this.state.options);
+		});
+	}
 	//
 	_on_clear_market(){
+
+	}
+	//
+	_on_clear_growth(){
 
 	}
 	//
@@ -119,10 +134,112 @@ class StockFinderControls extends BaseScreen {
 				return <View style={common_styles.flex_row} key={item.id}>
 									<CheckBox
 										boxType={'square'}
-										value={Utils.isExistedInArray(me.state.options['market'], item.id)>=0?true:false}
+										value={Utils.isExistedInArray(me.state.options['markets'], item.id)>=0?true:false}
 										style={styles.chkbox}
 										onAnimationType={'bounce'}
-										onValueChange={() => me._toogle_options('market', item.id)}
+										onValueChange={() => me._toogle_options_array('markets', item.id)}
+									/>
+									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+								</View>;
+			});
+			return display_options;
+		}
+	}
+	//
+	_show_hide_security_type(){
+		this.setState({is_show_securityType: !this.state.is_show_securityType});
+	}
+	//
+	_render_security_types(){
+		var securityTypes = [];
+		if (Utils.isEmpty(this.state.controls['securityTypes'])){
+			return;
+		}
+		var me = this;
+		this.state.controls['securityTypes'].map(function(item){
+			if (!Utils.isEmpty(item.name)){
+				securityTypes.push({
+					name: item.name, num: item.num
+				});
+			}
+		});
+		if (securityTypes.length > 0){
+			var display_options = securityTypes.map(function(item){
+				return <View style={common_styles.flex_row} key={item.name}>
+									<CheckBox
+										boxType={'square'}
+										value={Utils.isExistedInArray(me.state.options['securityTypes'], item.name)>=0?true:false}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => me._toogle_options_array('securityTypes', item.name)}
+									/>
+									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+								</View>;
+			});
+			return display_options;
+		}
+	}
+	//
+	_show_hide_countries(){
+		this.setState({is_show_countries: !this.state.is_show_countries});
+	}
+	//
+	_render_countries(){
+		var countries = [];
+		if (Utils.isEmpty(this.state.controls['countryTotals'])){
+			return;
+		}
+		var me = this;
+		this.state.controls['countryTotals'].map(function(item){
+			if (!Utils.isEmpty(item.country)){
+				countries.push({
+					country: item.country, num: item.num
+				});
+			}
+		});
+		if (countries.length > 0){
+			var display_options = countries.map(function(item){
+				return <View style={common_styles.flex_row} key={item.country}>
+									<CheckBox
+										boxType={'square'}
+										value={Utils.isExistedInArray(me.state.options['countryTotals'], item.country)>=0?true:false}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => me._toogle_options_array('countryTotals', item.country)}
+									/>
+									<View style={common_styles.justifyCenter}><Text>{item.country} ({item.num})</Text></View>
+								</View>;
+			});
+			return display_options;
+		}
+	}
+	//
+	_show_hide_industries(){
+		this.setState({is_show_industries: !this.state.is_show_industries});
+	}
+	//
+	_render_industries(){
+		var industries = [];
+		if (Utils.isEmpty(this.state.controls['industryTotals'])){
+			return;
+		}
+		var me = this;
+		this.state.controls['industryTotals'].map(function(item){
+			if (!Utils.isEmpty(item.sic)){
+				industries.push({
+					name: item.name, sic: item.sic, num: item.num
+				});
+			}
+		});
+		if (industries.length > 0){
+			var display_options = industries.map(function(item){
+				return <View style={common_styles.flex_row} key={item.sic+''}>
+									<CheckBox
+										boxType={'square'}
+										value={Utils.isExistedInArray(me.state.options['industryTotals'], item.sic)>=0?true:false}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => me._toogle_options_array('industryTotals', item.sic)}
 									/>
 									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
 								</View>;
@@ -151,8 +268,8 @@ class StockFinderControls extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Advanced Settings</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
-									<TouchableOpacity onPress={() => this._reset_all()}>
-										<Text uppercase={false} style={[common_styles.default_font_color]}>Reset all</Text>
+									<TouchableOpacity onPress={() => this._apply_options()}>
+										<Text uppercase={false} style={[common_styles.default_font_color]}>Apply</Text>
 									</TouchableOpacity>
 								</Right>
 							</Header>
@@ -169,9 +286,10 @@ class StockFinderControls extends BaseScreen {
 									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
+								{/* Markets */}
 								<View style={common_styles.margin_5}><Text>Markets</Text></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market()}>
-									<View style={common_styles.justifyCenter}><Text>{this.state.options['market'].length==0?'All':this.state.options['market'].length+' selected'}</Text></View>
+									<View style={common_styles.justifyCenter}><Text>{this.state.options['markets'].length==0?'All':this.state.options['markets'].length+' selected'}</Text></View>
 									<View>
 										{
 											!this.state.is_show_market &&
@@ -191,6 +309,96 @@ class StockFinderControls extends BaseScreen {
 					          </ScrollView>
 					        </View>
 								}
+								{/* Security Type */}
+								<View style={common_styles.margin_5}><Text>Security Types</Text></View>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type()}>
+									<View style={common_styles.justifyCenter}><Text>{this.state.options['securityTypes'].length==0?'All':this.state.options['securityTypes'].length+' selected'}</Text></View>
+									<View>
+										{
+											!this.state.is_show_securityType &&
+											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+										}
+										{
+											this.state.is_show_securityType &&
+											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+										}
+									</View>
+								</TouchableOpacity>
+								{
+									this.state.is_show_securityType &&
+									<View style={styles.finder_options_sub_container} >
+					          <ScrollView>
+											{this.state.is_loaded_controls && this._render_security_types()}
+					          </ScrollView>
+					        </View>
+								}
+								{/* Country */}
+								<View style={common_styles.margin_5}><Text>Countries</Text></View>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_countries()}>
+									<View style={common_styles.justifyCenter}><Text>{this.state.options['countryTotals'].length==0?'All':this.state.options['countryTotals'].length+' selected'}</Text></View>
+									<View>
+										{
+											!this.state.is_show_countries &&
+											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+										}
+										{
+											this.state.is_show_countries &&
+											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+										}
+									</View>
+								</TouchableOpacity>
+								{
+									this.state.is_show_countries &&
+									<View style={styles.finder_options_sub_container} >
+					          <ScrollView>
+											{this.state.is_loaded_controls && this._render_countries()}
+					          </ScrollView>
+					        </View>
+								}
+								{/* Industry */}
+								<View style={common_styles.margin_5}><Text>Industries</Text></View>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_industries()}>
+									<View style={common_styles.justifyCenter}><Text>{this.state.options['industryTotals'].length==0?'All':this.state.options['industryTotals'].length+' selected'}</Text></View>
+									<View>
+										{
+											!this.state.is_show_industries &&
+											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+										}
+										{
+											this.state.is_show_industries &&
+											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+										}
+									</View>
+								</TouchableOpacity>
+								{
+									this.state.is_show_industries &&
+									<View style={styles.finder_options_sub_container} >
+					          <ScrollView>
+											{this.state.is_loaded_controls && this._render_industries()}
+					          </ScrollView>
+					        </View>
+								}
+								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
+									<View><Text>Caveat Emptor</Text></View>
+									<CheckBox
+										boxType={'square'}
+										value={this.state.options['ce']}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => this._toogle_options_value('ce', !this.state.options['ce'])}
+									/>
+								</View>
+								{/* Market */}
+								<View style={common_styles.margin_b_10} />
+								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
+									<Text style={[common_styles.heading_1]}>GROWTH</Text>
+									<View style={[common_styles.float_right]}>
+										<TouchableOpacity onPress={()=>this._on_clear_growth()}>
+											<Text>Reset</Text>
+										</TouchableOpacity>
+									</View>
+								</View>
+								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 							</Content>
 						</Container>
 				);

@@ -65,5 +65,5 @@ export default {
     marginTop: 10
   },
   chkbox: {width:20,height:20, margin:10},
-  finder_options_sub_container: {height: 180, backgroundColor:'#eee'}
+  finder_options_sub_container: {height: 260, backgroundColor:'#eee'}
 };
