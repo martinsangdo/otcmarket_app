@@ -27,12 +27,13 @@ class StockFinder extends BaseScreen {
         controls: {},
         showing_detail_symbols: {},   //default no any symbol showing its detail
         can_load_more: true,
-        is_loaded_controls: false
+        is_loaded_controls: false,
+        advanced_options: ''  //search params
 			};
 		}
 		//
 		componentDidMount() {
-      // this._load_data();
+      this._load_data();
       this._load_controls();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
@@ -43,13 +44,13 @@ class StockFinder extends BaseScreen {
     //
     _load_data(){
       var me = this;
-			var url = API_URI.STOCK_FINDER.SEARCH.replace(/<page_index>/g, this.state.current_page);
-      Utils.xlog('url', url);
+			var url = API_URI.STOCK_FINDER.SEARCH.replace(/<page_index>/g, this.state.current_page) + this.state.advanced_options;
+      // Utils.xlog('url', url);
       this.setState({loading_indicator_state: true}, ()=>{
         RequestData.sentGetRequest(url, (detail, error) => {
             if (detail){
               var rawDataJson = JSON.parse(detail);
-              Utils.xlog('detail', rawDataJson);
+              // Utils.xlog('detail', rawDataJson);
               if (rawDataJson['stocks'] != null){
                 var len = rawDataJson['stocks'].length;
                 var new_list = [];
@@ -59,21 +60,25 @@ class StockFinder extends BaseScreen {
                     id: item['securityId'],
                     symbol: item['symbol'],
                     securityName: item['securityName'],
-                    market: item['market'],
-                    securityType: item['securityType'],
-                    country: item['state']+', '+item['country'],
+                    market: Utils.getNullableString(item['market']),
+                    securityType: Utils.getNullableString(item['securityType']),
+                    country: Utils.getNullableString(item['state'])+' ' +Utils.getNullableString(item['country']),
                     price: Utils.number_to_float_2(item['price']),
                     pct1Day: item['pct1Day']!=null?Utils.number_to_float_2(item['pct1Day']*100):'',
                     volume: Utils.format_currency_thousand(item['volume']),
                     penny: item['penny']?'Yes':'No',
-                    dividendYield: item['dividendYield'],
+                    dividendYield: Utils.getNullableString(item['dividendYield']),
                     shortInterest: Utils.format_currency_thousand(item['shortInterest']),
                     shortInterestRatio: (item['shortInterestRatio']!=null)?Utils.number_to_float_2(item['shortInterestRatio']*100):'',
                     isBank: item['isBank']
                   });
                 }
-                var current_data = me.state.data_list;
-                current_data.push(...new_list);
+                if (me.state.current_page > 0){
+                  var current_data = me.state.data_list;
+                  current_data.push(...new_list); //append
+                } else {
+                  var current_data = new_list;
+                }
                 me.setState({data_list: current_data});
               }
               me.setState({totalRecords: Utils.format_currency_thousand(rawDataJson['count']),
@@ -200,8 +205,18 @@ class StockFinder extends BaseScreen {
     //
     _show_controls=()=>{
       this.props.navigation.navigate('StockFinderControls', {
-        controls: this.state.controls
+        controls: this.state.controls,
+        _on_search_advance: this._on_search_advance
 			});
+    }
+    //called from another page
+    _on_search_advance=(new_options)=>{
+      Utils.xlog('new_options', new_options);
+      if (this.state.advanced_options != new_options){
+        this.setState({advanced_options: new_options, current_page: 0}, ()=>{
+          this._load_data();
+        });
+      }
     }
 	 //==========
 		render() {

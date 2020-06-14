@@ -25,11 +25,10 @@ const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     CurrentMarket: { screen: CurrentMarket },
-    StockFinder: {screen: StockFinder},
-    StockFinderControls: {screen: StockFinderControls}
+    StockFinder: {screen: StockFinder}
   },
   {
-    initialRouteName: "StockFinderControls",
+    initialRouteName: "Home",
     contentOptions: {
       activeTintColor: "#81af68"
     },

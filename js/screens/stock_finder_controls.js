@@ -36,7 +36,7 @@ class StockFinderControls extends BaseScreen {
 				volMax: '',
 				penny: 'all',	//yes/no, empty means All
 				perf_index: '0',
-				perf_duration: '52',
+				perf_duration: '2',
 				perf_pricePctMin: '-40',
 				perf_pricePctMax: '40',
 				volChgMin: '25',	//25-200 %
@@ -53,25 +53,108 @@ class StockFinderControls extends BaseScreen {
 	}
 
 	componentDidMount() {
-		// this.setState({
-		// 	controls: this.props.navigation.state.params.controls
-		// });
-		var me = this;
-		RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
-			if (detail){
-				var rawDataJson = JSON.parse(detail);
-				Utils.xlog('controls', rawDataJson);
-				me.setState({controls: rawDataJson, is_loaded_controls:true}, ()=>{
-					// me._render_markets();
-				});
-			} else {
-				//error
-			}
+		this.setState({
+			controls: this.props.navigation.state.params.controls,
+			is_loaded_controls:true
 		});
+		// var me = this;
+		// RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
+		// 	if (detail){
+		// 		var rawDataJson = JSON.parse(detail);
+		// 		Utils.xlog('controls', rawDataJson);
+		// 		me.setState({controls: rawDataJson, is_loaded_controls:true}, ()=>{
+		// 			// me._render_markets();
+		// 		});
+		// 	} else {
+		// 		//error
+		// 	}
+		// });
   }
 	//begin searching
 	_apply_options(){
-
+		var params = [];
+		var me = this;
+		var options = this.state.options;
+		Object.keys(options).map(function(key) {
+			switch (key) {
+				case 'markets':
+					if (options[key].length > 0){
+						params.push('market='+options[key].join(','));
+					}
+				break;
+				case 'securityTypes':
+					if (options[key].length > 0){
+						params.push('securityType='+options[key].join(','));
+					}
+				break;
+				case 'countryTotals':
+					if (options[key].length > 0){
+						params.push('country='+options[key].join(','));
+					}
+				break;
+				case 'industryTotals':
+					if (options[key].length > 0){
+						params.push('industry='+options[key].join(','));
+					}
+				break;
+				case 'ce':
+					if (options[key] != false){
+						params.push('ce='+options[key]);
+					}
+				break;
+				case 'penny':
+					if (options[key] != 'all'){
+						params.push('penny='+options[key]);
+					}
+				break;
+				case 'div':
+					if (options[key] != false){
+						params.push('div='+options[key]);
+					}
+				break;
+				case 'pc':
+					if (options[key] != '52'){
+						params.push('pc='+options[key]);
+					}
+				break;
+				case 'perf_index':
+				case 'perf_duration':
+				case 'perf_pricePctMin':
+				case 'perf_pricePctMax':
+					//skip it
+				break;
+				case 'volChgMin':
+					if (options[key] != '25'){
+						params.push('volChgMin='+options[key]);
+					}
+				break;
+				case 'volChgMax':
+					if (options[key] != '200'){
+						params.push('volChgMax='+options[key]);
+					}
+				break;
+				case 'shinMin':
+					if (options[key] != '0'){
+						params.push('shinMin='+options[key]);
+					}
+				break;
+				case 'shinMax':
+					if (options[key] != '100'){
+						params.push('shinMax='+options[key]);
+					}
+				break;
+				default:
+					if (options[key] != ''){
+						params.push(key+'='+options[key]);
+					}
+			}
+		});
+		if (options['perf_index'] != '0' || options['perf_duration'] != '2' ||
+				options['perf_pricePctMin'] != '-40' || options['perf_pricePctMax'] != '40'){
+					params.push('perf='+options['perf_index']+'/'+options['perf_duration']+'/'+options['perf_pricePctMin']+'/'+options['perf_pricePctMax']);
+				}
+		this.props.navigation.state.params._on_search_advance(params.join('&'));
+		this._on_go_back();
 	}
 	//when user taps on checkbox
 	_toogle_options_array(options_key, value){
@@ -523,9 +606,9 @@ class StockFinderControls extends BaseScreen {
 										selectedValue={this.state.options.perf_duration}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_duration', newval)}}
 										>
-										<PickerItem label="Last 4 weeks" value="4" />
-										<PickerItem label="Last 13 weeks" value="13" />
-										<PickerItem label="Last 52 weeks" value="52" />
+										<PickerItem label="Last 4 weeks" value="0" />
+										<PickerItem label="Last 13 weeks" value="1" />
+										<PickerItem label="Last 52 weeks" value="2" />
 									</Picker>
 								</View>
 								{/* Price % change */}
@@ -547,7 +630,7 @@ class StockFinderControls extends BaseScreen {
 									<PickerItem label="-25%" value="-25" />
 									<PickerItem label="-30%" value="-30" />
 									<PickerItem label="-35%" value="-35" />
-									<PickerItem label="-40%" value="-40" />
+									<PickerItem label="< -40%" value="-40" />
 									</Picker>
 									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
 									<Picker
@@ -557,7 +640,7 @@ class StockFinderControls extends BaseScreen {
 										selectedValue={this.state.options.perf_pricePctMax}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_pricePctMax', newval)}}
 										>
-										<PickerItem label="40%" value="40" />
+										<PickerItem label="> 40%" value="40" />
 										<PickerItem label="35%" value="35" />
 										<PickerItem label="30%" value="30" />
 										<PickerItem label="25%" value="25" />
@@ -605,7 +688,7 @@ class StockFinderControls extends BaseScreen {
 										<PickerItem label="170%" value="170" />
 										<PickerItem label="180%" value="180" />
 										<PickerItem label="190%" value="190" />
-										<PickerItem label="200%" value="200" />
+										<PickerItem label="> 200%" value="200" />
 									</Picker>
 								</View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
