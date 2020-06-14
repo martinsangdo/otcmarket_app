@@ -2,9 +2,9 @@
 * author: Martin SangDo
 */
 import React, {Component} from "react";
-import {Image, View, Platform, TouchableOpacity, ScrollView} from "react-native";
+import {Image, View, Platform, TouchableOpacity, ScrollView, TextInput} from "react-native";
 
-import {Container, Content, Header, Title, Body, Left, Right, Text, Icon} from "native-base";
+import {Container, Content, Header, Title, Body, Left, Right, Text, Icon, Form, Item, Input, Picker} from "native-base";
 import styles from "./style";    //CSS defined here
 import common_styles from "../../css/common";
 import BaseScreen from "../base/BaseScreen.js";
@@ -14,6 +14,7 @@ import Utils from "../utils/functions";
 import CheckBox from '@react-native-community/checkbox';
 
 const market_prefix = 'market_';
+const PickerItem = Picker.Item;
 
 class StockFinderControls extends BaseScreen {
 	constructor(props) {
@@ -27,19 +28,17 @@ class StockFinderControls extends BaseScreen {
 				countryTotals: [],
 				ce: false,	//Caveat Emptor
 				industryTotals: [],
-				priceMin: [],
-				priceMax: [],
-				pcPct: [],	//price change
-				pc: 52,			//price change duration
-				volMin: [],	//volume
-				volMax: [],
+				priceMin: '',
+				priceMax: '',
+				pcPct: '',	//price change
+				pc: '52',			//price change duration
+				volMin: '',	//volume
+				volMax: '',
 				penny: 'all',	//yes/no, empty means All
-				perf: {
-					index: 0,
-					duration: 52,
-					pricePctMin: -40,
-					pricePctMax: 40
-				},		//performance
+				perf_index: '0',
+				perf_duration: '52',
+				perf_pricePctMin: -40,
+				perf_pricePctMax: 40,
 				volChgMin: 25,	//25-200 %
 				div: false,	//Dividend Payer
 				shinMin: 0		//percentage 0-100
@@ -182,6 +181,10 @@ class StockFinderControls extends BaseScreen {
 	//
 	_show_hide_countries(){
 		this.setState({is_show_countries: !this.state.is_show_countries});
+	}
+	//
+	_on_clear_performance(){
+
 	}
 	//
 	_render_countries(){
@@ -388,7 +391,7 @@ class StockFinderControls extends BaseScreen {
 										onValueChange={() => this._toogle_options_value('ce', !this.state.options['ce'])}
 									/>
 								</View>
-								{/* Market */}
+								{/* GROWTH */}
 								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
 									<Text style={[common_styles.heading_1]}>GROWTH</Text>
@@ -399,6 +402,109 @@ class StockFinderControls extends BaseScreen {
 									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
+								{/* Price */}
+								<View style={common_styles.margin_5}><Text>Price</Text></View>
+								<Form style={[common_styles.flex_row, common_styles.space_around]}>
+									<Item style={styles.finder_textbox_container} regular>
+										<TextInput placeholder="Min US$" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, priceMin : event.nativeEvent.text}})} value={this.state.options.priceMin}/>
+									</Item>
+									<Item style={styles.finder_textbox_container} regular>
+										<TextInput placeholder="Max US$" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, priceMax : event.nativeEvent.text}})} value={this.state.options.priceMax}/>
+									</Item>
+								</Form>
+								{/* Volume */}
+								<View style={common_styles.margin_5}><Text>Volume</Text></View>
+								<Form style={[common_styles.flex_row, common_styles.space_around]}>
+									<Item style={styles.finder_textbox_container} regular>
+										<TextInput placeholder="Min" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, volMin : event.nativeEvent.text}})} value={this.state.options.volMin}/>
+									</Item>
+									<Item style={styles.finder_textbox_container} regular>
+										<TextInput placeholder="Max" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, volMax : event.nativeEvent.text}})} value={this.state.options.volMax}/>
+									</Item>
+								</Form>
+								{/* Price change */}
+								<View style={common_styles.margin_5}><Text>Price change</Text></View>
+								<Form style={[common_styles.flex_row, common_styles.space_around]}>
+									<Item style={styles.finder_textbox_container} regular>
+										<TextInput placeholder="Min %" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, pcPct : event.nativeEvent.text}})} value={this.state.options.pcPct}/>
+									</Item>
+									<Picker
+                    mode="dropdown"
+                    iosHeader="Duration"
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+                    selectedValue={this.state.options.pc}
+                    onValueChange={(newval)=>{this._toogle_options_value('pc', newval)}}
+                  >
+                    <PickerItem label="Last 1 day" value="1" />
+                    <PickerItem label="Last 5 days" value="5" />
+                    <PickerItem label="Last 4 weeks" value="4" />
+										<PickerItem label="Last 13 weeks" value="13" />
+										<PickerItem label="Last 52 weeks" value="52" />
+                  </Picker>
+								</Form>
+								{/* Penny Stock Exempt */}
+								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
+									<View style={common_styles.justifyCenter}><Text>Penny Stock Exempt</Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Penny Stock"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.penny}
+										onValueChange={(newval)=>{this._toogle_options_value('penny', newval)}}
+									>
+										<PickerItem label="All" value="all" />
+										<PickerItem label="Yes" value="yes" />
+										<PickerItem label="No" value="no" />
+									</Picker>
+								</View>
+								{/* Performance */}
+								<View style={common_styles.margin_b_10} />
+								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
+									<Text style={[common_styles.heading_1]}>PERFORMANCE</Text>
+									<View style={[common_styles.float_right]}>
+										<TouchableOpacity onPress={()=>this._on_clear_performance()}>
+											<Text>Reset</Text>
+										</TouchableOpacity>
+									</View>
+								</View>
+								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
+								{/* Penny Stock Exempt */}
+								<View style={common_styles.margin_5}><Text>Price Performance</Text></View>
+								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
+									<Picker
+										mode="dropdown"
+										iosHeader="Penny Stock"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.perf_index}
+										onValueChange={(newval)=>{this._toogle_options_value('perf_index', newval)}}
+									>
+										<PickerItem label="OTCQX Composite" value="0" />
+										<PickerItem label="OTCQX Billion +" value="1" />
+										<PickerItem label="OTCQX Banks" value="2" />
+										<PickerItem label="OTCQX Intl" value="3" />
+										<PickerItem label="OTCQX U.S." value="4" />
+										<PickerItem label="OTCQB Venture" value="5" />
+										<PickerItem label="OTCM QX ADR 30" value="6" />
+										<PickerItem label="OTCM ADR" value="7" />
+										<PickerItem label="S&P 500" value="8" />
+										<PickerItem label="OTCQX Dividend" value="9" />
+										<PickerItem label="OTCQX Canada" value="10" />
+									</Picker>
+									<Picker
+										mode="dropdown"
+										iosHeader="Duration"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.perf_duration}
+										onValueChange={(newval)=>{this._toogle_options_value('perf_duration', newval)}}
+										>
+										<PickerItem label="Last 4 weeks" value="4" />
+										<PickerItem label="Last 13 weeks" value="13" />
+										<PickerItem label="Last 52 weeks" value="52" />
+									</Picker>
+								</View>
+
+
+								<View style={common_styles.margin_b_20} />
 							</Content>
 						</Container>
 				);
