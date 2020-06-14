@@ -37,11 +37,13 @@ class StockFinderControls extends BaseScreen {
 				penny: 'all',	//yes/no, empty means All
 				perf_index: '0',
 				perf_duration: '52',
-				perf_pricePctMin: -40,
-				perf_pricePctMax: 40,
-				volChgMin: 25,	//25-200 %
+				perf_pricePctMin: '-40',
+				perf_pricePctMax: '40',
+				volChgMin: '25',	//25-200 %
+				volChgMax: '200',	//25-200 %
 				div: false,	//Dividend Payer
-				shinMin: 0		//percentage 0-100
+				shinMin: '0',		//percentage 0-100
+				shinMax: '100'
 			},
 			is_show_market: false,
 			is_show_securityType: false,
@@ -96,11 +98,39 @@ class StockFinderControls extends BaseScreen {
 	}
 	//
 	_on_clear_market(){
-
+		this.setState({options: {...this.state.options,
+			markets: [],
+			securityTypes: [],
+			countryTotals: [],
+			ce: false,	//Caveat Emptor
+			industryTotals: []
+		}});
 	}
 	//
 	_on_clear_growth(){
-
+		this.setState({options: {...this.state.options,
+			priceMin: '',
+			priceMax: '',
+			pcPct: '',	//price change
+			pc: '52',			//price change duration
+			volMin: '',	//volume
+			volMax: '',
+			penny: 'all'	//yes/no, empty means All
+		}});
+	}
+	//
+	_on_clear_performance(){
+		this.setState({options: {...this.state.options,
+			perf_index: '0',
+			perf_duration: '52',
+			perf_pricePctMin: '-40',
+			perf_pricePctMax: '40',
+			volChgMin: '25',	//25-200 %
+			volChgMax: '200',	//25-200 %
+			div: false,	//Dividend Payer
+			shinMin: '0',		//percentage 0-100
+			shinMax: '100'
+		}});
 	}
 	//
 	_show_hide_market(){
@@ -181,10 +211,6 @@ class StockFinderControls extends BaseScreen {
 	//
 	_show_hide_countries(){
 		this.setState({is_show_countries: !this.state.is_show_countries});
-	}
-	//
-	_on_clear_performance(){
-
 	}
 	//
 	_render_countries(){
@@ -290,7 +316,7 @@ class StockFinderControls extends BaseScreen {
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Markets */}
-								<View style={common_styles.margin_5}><Text>Markets</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Markets</Text></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market()}>
 									<View style={common_styles.justifyCenter}><Text>{this.state.options['markets'].length==0?'All':this.state.options['markets'].length+' selected'}</Text></View>
 									<View>
@@ -313,7 +339,7 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Security Type */}
-								<View style={common_styles.margin_5}><Text>Security Types</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Security Types</Text></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type()}>
 									<View style={common_styles.justifyCenter}><Text>{this.state.options['securityTypes'].length==0?'All':this.state.options['securityTypes'].length+' selected'}</Text></View>
 									<View>
@@ -336,7 +362,7 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Country */}
-								<View style={common_styles.margin_5}><Text>Countries</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Countries</Text></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_countries()}>
 									<View style={common_styles.justifyCenter}><Text>{this.state.options['countryTotals'].length==0?'All':this.state.options['countryTotals'].length+' selected'}</Text></View>
 									<View>
@@ -359,7 +385,7 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Industry */}
-								<View style={common_styles.margin_5}><Text>Industries</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Industries</Text></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_industries()}>
 									<View style={common_styles.justifyCenter}><Text>{this.state.options['industryTotals'].length==0?'All':this.state.options['industryTotals'].length+' selected'}</Text></View>
 									<View>
@@ -382,7 +408,7 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
-									<View><Text>Caveat Emptor</Text></View>
+									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Caveat Emptor</Text></View>
 									<CheckBox
 										boxType={'square'}
 										value={this.state.options['ce']}
@@ -403,7 +429,7 @@ class StockFinderControls extends BaseScreen {
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Price */}
-								<View style={common_styles.margin_5}><Text>Price</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price</Text></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min US$" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, priceMin : event.nativeEvent.text}})} value={this.state.options.priceMin}/>
@@ -413,7 +439,7 @@ class StockFinderControls extends BaseScreen {
 									</Item>
 								</Form>
 								{/* Volume */}
-								<View style={common_styles.margin_5}><Text>Volume</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Volume</Text></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, volMin : event.nativeEvent.text}})} value={this.state.options.volMin}/>
@@ -423,7 +449,7 @@ class StockFinderControls extends BaseScreen {
 									</Item>
 								</Form>
 								{/* Price change */}
-								<View style={common_styles.margin_5}><Text>Price change</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price change</Text></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min %" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, pcPct : event.nativeEvent.text}})} value={this.state.options.pcPct}/>
@@ -444,7 +470,7 @@ class StockFinderControls extends BaseScreen {
 								</Form>
 								{/* Penny Stock Exempt */}
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
-									<View style={common_styles.justifyCenter}><Text>Penny Stock Exempt</Text></View>
+									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Penny Stock Exempt</Text></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Penny Stock"
@@ -469,11 +495,11 @@ class StockFinderControls extends BaseScreen {
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Penny Stock Exempt */}
-								<View style={common_styles.margin_5}><Text>Price Performance</Text></View>
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price Performance</Text></View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
 									<Picker
 										mode="dropdown"
-										iosHeader="Penny Stock"
+										iosHeader="Market Index"
 										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
 										selectedValue={this.state.options.perf_index}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_index', newval)}}
@@ -502,7 +528,129 @@ class StockFinderControls extends BaseScreen {
 										<PickerItem label="Last 52 weeks" value="52" />
 									</Picker>
 								</View>
-
+								{/* Price % change */}
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price % Change</Text></View>
+								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
+									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Min change"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.perf_pricePctMin}
+										onValueChange={(newval)=>{this._toogle_options_value('perf_pricePctMin', newval)}}
+									>
+									<PickerItem label="0%" value="0" />
+									<PickerItem label="-5%" value="-5" />
+									<PickerItem label="-10%" value="-10" />
+									<PickerItem label="-15%" value="-15" />
+									<PickerItem label="-20%" value="-20" />
+									<PickerItem label="-25%" value="-25" />
+									<PickerItem label="-30%" value="-30" />
+									<PickerItem label="-35%" value="-35" />
+									<PickerItem label="-40%" value="-40" />
+									</Picker>
+									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Max change"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.perf_pricePctMax}
+										onValueChange={(newval)=>{this._toogle_options_value('perf_pricePctMax', newval)}}
+										>
+										<PickerItem label="40%" value="40" />
+										<PickerItem label="35%" value="35" />
+										<PickerItem label="30%" value="30" />
+										<PickerItem label="25%" value="25" />
+										<PickerItem label="20%" value="20" />
+										<PickerItem label="15%" value="15" />
+										<PickerItem label="10%" value="10" />
+										<PickerItem label="5%" value="5" />
+									</Picker>
+								</View>
+								{/* 10 days vs 90  */}
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>10 Days vs 90 Days Avg. volume</Text></View>
+								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
+									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Min change"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.volChgMin}
+										onValueChange={(newval)=>{this._toogle_options_value('volChgMin', newval)}}
+									>
+									<PickerItem label="25%" value="25" />
+									<PickerItem label="35%" value="35" />
+									<PickerItem label="45%" value="45" />
+									<PickerItem label="55%" value="55" />
+									<PickerItem label="65%" value="65" />
+									<PickerItem label="75%" value="75" />
+									<PickerItem label="85%" value="85" />
+									<PickerItem label="95%" value="95" />
+									</Picker>
+									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Max change"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.volChgMax}
+										onValueChange={(newval)=>{this._toogle_options_value('volChgMax', newval)}}
+										>
+										<PickerItem label="100%" value="100" />
+										<PickerItem label="110%" value="110" />
+										<PickerItem label="120%" value="120" />
+										<PickerItem label="130%" value="130" />
+										<PickerItem label="140%" value="140" />
+										<PickerItem label="150%" value="150" />
+										<PickerItem label="160%" value="160" />
+										<PickerItem label="170%" value="170" />
+										<PickerItem label="180%" value="180" />
+										<PickerItem label="190%" value="190" />
+										<PickerItem label="200%" value="200" />
+									</Picker>
+								</View>
+								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
+									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Dividend Payer</Text></View>
+									<CheckBox
+										boxType={'square'}
+										value={this.state.options['div']}
+										style={styles.chkbox}
+										onAnimationType={'bounce'}
+										onValueChange={() => this._toogle_options_value('div', !this.state.options['div'])}
+									/>
+								</View>
+								{/* Short Interest as Percent  */}
+								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Short Interest as Percent of Shares Outstanding</Text></View>
+								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
+									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Min"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.shinMin}
+										onValueChange={(newval)=>{this._toogle_options_value('shinMin', newval)}}
+									>
+									<PickerItem label="0%" value="0" />
+									<PickerItem label="10%" value="10" />
+									<PickerItem label="20%" value="20" />
+									<PickerItem label="30%" value="30" />
+									<PickerItem label="40%" value="40" />
+									<PickerItem label="50%" value="50" />
+									</Picker>
+									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<Picker
+										mode="dropdown"
+										iosHeader="Max"
+										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										selectedValue={this.state.options.shinMax}
+										onValueChange={(newval)=>{this._toogle_options_value('shinMax', newval)}}
+										>
+										<PickerItem label="60%" value="60" />
+										<PickerItem label="70%" value="70" />
+										<PickerItem label="80%" value="80" />
+										<PickerItem label="90%" value="90" />
+										<PickerItem label="100%" value="100" />
+									</Picker>
+								</View>
 
 								<View style={common_styles.margin_b_20} />
 							</Content>
