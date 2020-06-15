@@ -23,6 +23,7 @@ class Home extends BaseScreen {
         is_loading_most_active: true,
         is_loading_advancers: true,
         is_loading_decliners: true,
+        index_snapshot_data: [],
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				snapshot_data: {},		//general info of market
 				active_data: {},
@@ -35,6 +36,7 @@ class Home extends BaseScreen {
 		}
 		//
 		componentDidMount() {
+      this._load_index_snapshot();
 			this._load_snaphot_market();
 			this._load_most_active();
 			this._load_advancers();
@@ -58,6 +60,37 @@ class Home extends BaseScreen {
   			});
       }
 	  }
+    //
+    _load_index_snapshot(){
+      var me = this;
+			Utils.get_data_from_cache(API_URI.INDEX_SNAPSHOT.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION,
+				API_URI.INDEX_SNAPSHOT.URI, (has_cache_data, cache_data)=>{
+				if (has_cache_data){
+					//parse cached data
+					me.setState({index_snapshot_data: cache_data});
+				} else {
+					//get from server
+          RequestData.sentGetRequest(API_URI.INDEX_SNAPSHOT.URI, (detail, error) => {
+              if (detail){
+                var index_snapshot_data = [];
+                for (var i=0; i<detail.length; i++){
+                  index_snapshot_data.push({
+                    description: detail[i]['description'],
+                    lastSale: Utils.format_currency_thousand(Utils.number_to_float_2(detail[i]['lastSale'])),
+                    change: Utils.number_to_float_2(detail[i]['change']),
+                    percentChange: Utils.number_to_float_2(detail[i]['percentChange'])
+                  });
+                }
+                me.setState({index_snapshot_data: index_snapshot_data});
+                store.update(API_URI.INDEX_SNAPSHOT.URI, {d:index_snapshot_data});
+                store.update(API_URI.INDEX_SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              } else if (error){
+                //do nothing
+              }
+            });
+				}
+			});
+    }
 		//general info
 		_load_snaphot_market(){
 			var me = this;
@@ -71,6 +104,7 @@ class Home extends BaseScreen {
 					//get from server
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
+                Utils.xlog('000', detail);
                 var save_detail = {
                   dollarVolume: Utils.format_currency_thousand(detail['dollarVolume']),
                   shareVolume: Utils.format_currency_thousand(detail['shareVolume']),
@@ -78,7 +112,7 @@ class Home extends BaseScreen {
                   advancers: Utils.format_currency_thousand(detail['advancers']),
                   decliners: Utils.format_currency_thousand(detail['decliners'])
                 };
-
+                Utils.xlog('111', save_detail);
                 me.setState({snapshot_data: save_detail});
                 store.update(url, {d:save_detail});
                 store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
@@ -98,11 +132,9 @@ class Home extends BaseScreen {
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
-					Utils.xlog('cached active data', cache_data);
 					me.setState({active_data: cache_data, is_loading_most_active: false});
 				} else {
 					//get from server
-					Utils.xlog('get active data from server', url);
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
                 var save_detail = {
@@ -129,11 +161,9 @@ class Home extends BaseScreen {
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
-					Utils.xlog('cached advancers data', cache_data);
 					me.setState({advancers_data: cache_data, is_loading_advancers: false});
 				} else {
 					//get from server
-					Utils.xlog('get advancers data from server', url);
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
                 var save_detail = {
@@ -160,11 +190,9 @@ class Home extends BaseScreen {
 				url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
-					Utils.xlog('cached decliner data', cache_data);
 					me.setState({decliners_data: cache_data, is_loading_decliners: false});
 				} else {
 					//get from server
-					Utils.xlog('get decliner data from server', url);
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
                 var save_detail = {
@@ -210,12 +238,20 @@ class Home extends BaseScreen {
         decliner_priceMin: this.state.decliner_priceMin
 			});
 		}
+    //
+		_keyExtractorIndexSnapshot = (item) => item.description;
+		//render the list. MUST use "item" as param
+    //used to show list of stocks (Home, current_market)
+		_renderItemIndexSnapshot = ({item}) => (
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.description}>
+					<View style={common_styles.width_40p}><Text>{item.description}</Text></View>
+					<View style={common_styles.width_20p}><Text style={common_styles.float_right}>{item.lastSale}</Text></View>
+					<View style={common_styles.width_20p}><Text style={[common_styles.float_right]}>{item.change}</Text></View>
+					<View style={common_styles.width_20p}><Text style={common_styles.float_right}>{item.percentChange}%</Text></View>
+				</View>
+		);
 	 //==========
 		render() {
-      console.log('111', this.state.is_loading_most_active);
-      console.log('222', this.state.is_loading_advancers);
-      console.log('333', this.state.is_loading_decliners);
-
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
@@ -241,7 +277,27 @@ class Home extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} textStyle={common_styles.whiteColor} />
+                <View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>All data in this app delayed 15 minutes</Text>
+								</View>
+                {/* Index snapshot */}
+								<View style={common_styles.margin_b_10} />
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>MARKET INDEX</Text></View>
+                <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
+								<View>
+									<FlatList
+												data={this.state.index_snapshot_data}
+												renderItem={this._renderItemIndexSnapshot}
+												refreshing={false}
+												onEndReachedThreshold={0.5}
+												keyExtractor={this._keyExtractorIndexSnapshot}
+												initialNumToRender={10}
+											/>
+								</View>
 								{/* Snap shot */}
+                <View style={common_styles.margin_b_20} />
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SNAPSHOT</Text></View>
+                <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
 								<View>
   								<Picker
   									mode="dropdown"

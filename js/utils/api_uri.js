@@ -16,6 +16,10 @@ export const API_URI = {
 				'Content-Type': 'multipart/form-data'
 		},
 		CACHE_STOCK_PRICE_DURATION: 15*60*1000,	//15 mins
+		INDEX_SNAPSHOT: {
+			URI: setting.BACKEND_SERVER + 'index/snapshot',
+			CACHE_TIME_KEY: 'INDEX_SNAPSHOT_CACHE_TIME_KEY',
+		},
     //Current Market
     CURRENT_MARKET: {
       SNAPSHOT: { //general info
