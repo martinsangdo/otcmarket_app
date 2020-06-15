@@ -85,7 +85,7 @@ class BaseScreen extends Component {
               <Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
             </View>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
+              onPress={() => this.props.navigation.navigate('StockDetailNews', {symbol: item.symbol})}
             >
   						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
             </TouchableOpacity>

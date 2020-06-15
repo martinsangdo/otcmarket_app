@@ -70,6 +70,11 @@ export const API_URI = {
 				CACHE_TIME_DURATION: 7*24*60*60*1000  //7 days in timestamp
 			},
 			SEARCH: setting.HOMEPAGE + 'research/stock-screener/api?page=<page_index>&pageSize=25&'
+		},
+		NEWS_REPORTS: {
+			NEWS_URI: setting.BACKEND_SERVER + 'company/dns/tier/news?tierGroups=<tierGroup>&page=<page_index>&pageSize=20',
+			FINANCIAL_URI: setting.BACKEND_SERVER + 'company/financial-report?tierGroup=<tierGroup>&page=<page_index>&pageSize=20',
+			SEC_URI: setting.BACKEND_SERVER + 'company/sec-filings?tierGroup=<tierGroup>&page=<page_index>&pageSize=20'
 		}
 
 };

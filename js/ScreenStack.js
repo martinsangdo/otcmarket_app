@@ -18,6 +18,7 @@ import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosur
 import PDFViewer from "./screens/pdf_viewer";
 import StockFinder from "./screens/stock_finder";
 import StockFinderControls from "./screens/stock_finder_controls";
+import NewsReports from "./screens/news_reports";
 
 import Splash from "./screens/splash";
 
@@ -25,10 +26,11 @@ const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     CurrentMarket: { screen: CurrentMarket },
-    StockFinder: {screen: StockFinder}
+    StockFinder: {screen: StockFinder},
+    NewsReports: {screen: NewsReports}
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "NewsReports",
     contentOptions: {
       activeTintColor: "#81af68"
     },

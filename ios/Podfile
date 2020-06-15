@@ -78,10 +78,6 @@ target 'otcmarket_app' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
-  target 'otcmarket_appTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   use_native_modules!
 
@@ -92,14 +88,5 @@ target 'otcmarket_app' do
   add_flipper_pods!
   post_install do |installer|
     flipper_post_install(installer)
-  end
-end
-
-target 'otcmarket_app-tvOS' do
-  # Pods for otcmarket_app-tvOS
-
-  target 'otcmarket_app-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
   end
 end

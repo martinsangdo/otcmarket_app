@@ -15,6 +15,7 @@ import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 const deviceWidth = Dimensions.get("window").width;
 import {setting} from '../../utils/config.js';
+import Toast from 'react-native-simple-toast';
 
 const Item = Picker.Item;
 
@@ -151,6 +152,8 @@ class StockDetailNews extends BaseScreen {
         if (detail){
           if (!Utils.isEmpty(detail['documentList']) && !Utils.isEmpty(detail['documentList'][0]) && !Utils.isEmpty(detail['documentList'][0]['url'])){
             this._open_pdf_viewer(setting.BACKEND_SERVER_URI + detail['documentList'][0]['url']);
+          } else {
+            Toast.show('This resource is not available!');
           }
         } else if (error){
           //do nothing
