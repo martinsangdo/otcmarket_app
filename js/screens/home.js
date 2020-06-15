@@ -20,7 +20,9 @@ class Home extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        is_loading_most_active: true,
+        is_loading_advancers: true,
+        is_loading_decliners: true,
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
 				snapshot_data: {},		//general info of market
 				active_data: {},
@@ -38,24 +40,21 @@ class Home extends BaseScreen {
 			this._load_advancers();
 			this._load_decliners();
 			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
+        this.setState({is_loading_most_active: false, is_loading_advancers: false, is_loading_decliners: false});  //stop loading all
 			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//
 		onChangeMarket(newMarket) {
       if (newMarket != this.state.tierGroup){
-        this.setState({tierGroup: newMarket}, ()=>{
+        this.setState({tierGroup: newMarket, is_loading_most_active: true,
+            is_loading_advancers: true, is_loading_decliners: true}, ()=>{
   				this._load_snaphot_market();
   				this._load_most_active();
   				this._load_advancers();
   				this._load_decliners();
-  				setTimeout(() => {
-  					if (this.state.loading_indicator_state){
-  						this.setState({loading_indicator_state: false});  //stop loading
-  					}
-  				}, C_Const.MAX_WAIT_RESPONSE);
+          setTimeout(() => {
+    				this.setState({is_loading_most_active: false, is_loading_advancers: false, is_loading_decliners: false});  //stop loading all
+    			}, C_Const.MAX_WAIT_RESPONSE);
   			});
       }
 	  }
@@ -100,25 +99,24 @@ class Home extends BaseScreen {
 				if (has_cache_data){
 					//parse cached data
 					Utils.xlog('cached active data', cache_data);
-					me.setState({active_data: cache_data});
+					me.setState({active_data: cache_data, is_loading_most_active: false});
 				} else {
 					//get from server
 					Utils.xlog('get active data from server', url);
-					me.setState({loading_indicator_state: true}, () => {
-						RequestData.sentGetRequest(url, (detail, error) => {
-								if (detail){
-									var save_detail = {
-										totalRecords: detail['totalRecords'],
-										records: detail['records']
-									};
-									me.setState({active_data: save_detail});
-									store.update(url, {d:save_detail});
-									store.update(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
-								} else if (error){
-									//do nothing
-								}
-							});
-					});
+          RequestData.sentGetRequest(url, (detail, error) => {
+              if (detail){
+                var save_detail = {
+                  totalRecords: detail['totalRecords'],
+                  records: detail['records']
+                };
+                me.setState({active_data: save_detail});
+                store.update(url, {d:save_detail});
+                store.update(API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              } else if (error){
+                //do nothing
+              }
+              me.setState({is_loading_most_active: false});
+            });
 				}
 			});
 		}
@@ -132,25 +130,24 @@ class Home extends BaseScreen {
 				if (has_cache_data){
 					//parse cached data
 					Utils.xlog('cached advancers data', cache_data);
-					me.setState({advancers_data: cache_data});
+					me.setState({advancers_data: cache_data, is_loading_advancers: false});
 				} else {
 					//get from server
 					Utils.xlog('get advancers data from server', url);
-					me.setState({loading_indicator_state: true}, () => {
-						RequestData.sentGetRequest(url, (detail, error) => {
-								if (detail){
-									var save_detail = {
-										totalRecords: detail['totalRecords'],
-										records: detail['records']
-									};
-									me.setState({advancers_data: save_detail});
-									store.update(url, {d:save_detail});
-									store.update(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
-								} else if (error){
-									//do nothing
-								}
-							});
-					});
+          RequestData.sentGetRequest(url, (detail, error) => {
+              if (detail){
+                var save_detail = {
+                  totalRecords: detail['totalRecords'],
+                  records: detail['records']
+                };
+                me.setState({advancers_data: save_detail});
+                store.update(url, {d:save_detail});
+                store.update(API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              } else if (error){
+                //do nothing
+              }
+              me.setState({is_loading_advancers: false});
+            });
 				}
 			});
 		}
@@ -164,43 +161,42 @@ class Home extends BaseScreen {
 				if (has_cache_data){
 					//parse cached data
 					Utils.xlog('cached decliner data', cache_data);
-					me.setState({decliners_data: cache_data});
+					me.setState({decliners_data: cache_data, is_loading_decliners: false});
 				} else {
 					//get from server
 					Utils.xlog('get decliner data from server', url);
-					me.setState({loading_indicator_state: true}, () => {
-						RequestData.sentGetRequest(url, (detail, error) => {
-								if (detail){
-									var save_detail = {
-										totalRecords: detail['totalRecords'],
-										records: detail['records']
-									};
-									me.setState({decliners_data: save_detail});
-									store.update(url, {d:save_detail});
-									store.update(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
-								} else if (error){
-									//do nothing
-								}
-							});
-					});
+          RequestData.sentGetRequest(url, (detail, error) => {
+              if (detail){
+                var save_detail = {
+                  totalRecords: detail['totalRecords'],
+                  records: detail['records']
+                };
+                me.setState({decliners_data: save_detail});
+                store.update(url, {d:save_detail});
+                store.update(API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
+              } else if (error){
+                //do nothing
+              }
+              me.setState({is_loading_decliners: false});
+            });
 				}
 			});
 		}
 		//
 		_change_sortOn(newSortOn){
-			this.setState({sortOn: newSortOn}, ()=>{
+			this.setState({sortOn: newSortOn, is_loading_most_active: true}, ()=>{
 				this._load_most_active();
 			});
 		}
 		//
 		_change_advancers_priceMin(newPriceMin){
-			this.setState({advancer_priceMin: newPriceMin}, ()=>{
+			this.setState({advancer_priceMin: newPriceMin, is_loading_advancers: true}, ()=>{
 				this._load_advancers();
 			});
 		}
 		//
 		_change_decliners_priceMin(newPriceMin){
-			this.setState({decliner_priceMin: newPriceMin}, ()=>{
+			this.setState({decliner_priceMin: newPriceMin, is_loading_decliners: true}, ()=>{
 				this._load_decliners();
 			});
 		}
@@ -216,6 +212,10 @@ class Home extends BaseScreen {
 		}
 	 //==========
 		render() {
+      console.log('111', this.state.is_loading_most_active);
+      console.log('222', this.state.is_loading_advancers);
+      console.log('333', this.state.is_loading_decliners);
+
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
@@ -240,7 +240,7 @@ class Home extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} textStyle={common_styles.whiteColor} />
 								{/* Snap shot */}
 								<View>
   								<Picker
