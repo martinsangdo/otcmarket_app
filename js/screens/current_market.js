@@ -253,7 +253,7 @@ class CurrentMarket extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={false} textStyle={common_styles.whiteColor} />
 								{/* Snap shot */}
 								<View>
 									<Picker

@@ -199,7 +199,7 @@ class StockDetailNews extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={false} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
                 <View style={[common_styles.margin_10]}><Text style={[common_styles.heading_1]}>NEWS DOCUMENTS</Text></View>

@@ -227,7 +227,7 @@ class StockDetailFinancial extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={false} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_type('income-statement')}>

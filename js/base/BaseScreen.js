@@ -90,7 +90,7 @@ class BaseScreen extends Component {
   						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.number_to_float(item.price)}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.number_to_float_2(item.price)}</Text></View>
 					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
 					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
 				</View>

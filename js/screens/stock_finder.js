@@ -249,7 +249,7 @@ class StockFinder extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={false} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>

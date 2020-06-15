@@ -291,7 +291,7 @@ class StockDetailQuote extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={false} textStyle={common_styles.whiteColor} />
                 {/* general data */}
                 <View style={common_styles.margin_10}>
                   <Card>
