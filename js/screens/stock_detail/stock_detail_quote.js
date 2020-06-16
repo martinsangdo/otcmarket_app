@@ -245,7 +245,7 @@ class StockDetailQuote extends BaseScreen {
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.positionDate}>
 					<View style={[common_styles.width_25p]}><Text>{item.positionDateDisplay}</Text></View>
 					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.shortInterest}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.pctChgVolume}</Text></View>
+					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right, styles.positivePriceColor, item.pctChgVolume < 0 && common_styles.redColor]}>{item.pctChgVolume}</Text></View>
           <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.avgDailyVolume}</Text></View>
 				</View>
 		);
