@@ -13,6 +13,8 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Toast from 'react-native-simple-toast';
+import {setting} from '../utils/config.js';
 
 const Item = Picker.Item;
 
@@ -78,11 +80,28 @@ class NewsReports extends BaseScreen {
             if (data[category]['list'].length >= detail['totalRecords']){
               data[category]['can_load_more'] = false;
             }
-            Utils.xlog('data', data);
             me.setState({data: data});
           }
         } else if (error){
           //do nothing
+        }
+      });
+    }
+    //
+    _open_news_detail(news_id){
+      var me = this;
+      var url = API_URI.STOCK_DETAIL.NEWS_DETAIL + news_id;
+      //
+      RequestData.sentGetRequest(url, (detail, error) => {
+        if (detail){
+          if (!Utils.isEmpty(detail['documentList']) && !Utils.isEmpty(detail['documentList'][0]) && !Utils.isEmpty(detail['documentList'][0]['url'])){
+            me._open_pdf_viewer(setting.BACKEND_SERVER_URI + detail['documentList'][0]['url']);
+          } else {
+            var url_content = API_URI.STOCK_DETAIL.NEWS_CONTENT.replace(/<id>/g, news_id);
+            me._navigateCanBackTo('WebViewer', {url:url_content});
+          }
+        } else if (error){
+          Toast.show('No resource is available for this item!');
         }
       });
     }
@@ -94,13 +113,19 @@ class NewsReports extends BaseScreen {
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.id+''}>
 					<View style={[common_styles.width_25p, common_styles.flex_row]}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
+              onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
   						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
             </TouchableOpacity>
           </View>
 					<View style={[common_styles.width_25p]}><Text>{item.releaseDate}</Text></View>
-					<View style={[common_styles.width_50p]}><Text>{item.title}</Text></View>
+          <View style={[common_styles.width_50p, common_styles.underline]}>
+            <TouchableOpacity
+              onPress={() => this._open_news_detail(item.id)}
+            >
+              <Text>{item.title}</Text>
+            </TouchableOpacity>
+          </View>
 				</View>
 		);
 	 //==========

@@ -13,6 +13,8 @@ import { WebView } from 'react-native-webview';
 import RequestData from '../utils/https/RequestData';
 import Utils from "../utils/functions";
 import {API_URI} from '../utils/api_uri';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {C_Const} from '../utils/constant';
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height - 50;
@@ -22,7 +24,8 @@ class WebViewer extends BaseScreen {
 		super(props);
 		this.state = {
 			url: '',
-			web_data: ''
+			web_data: '',
+			loading_indicator_state: true
 		};
 	}
 
@@ -33,6 +36,11 @@ class WebViewer extends BaseScreen {
 		}, ()=>{
 			this._load_data();
 		});
+		setTimeout(() => {
+			if (this.state.loading_indicator_state){
+				this.setState({loading_indicator_state: false});  //stop loading
+			}
+		}, C_Const.MAX_WAIT_RESPONSE);
   }
 	componentDidUpdate(prevProps){
 		var prevPropParams = prevProps.navigation;
@@ -40,23 +48,34 @@ class WebViewer extends BaseScreen {
 		//check if any param is updated, load data again
 		if (prevPropParams.getParam('url') != newPropParams['url']){
 			this.setState({
-				url: newPropParams['url']
+				url: newPropParams['url'],
+				web_data: '',
+				loading_indicator_state: true
 			}, ()=>{
 				this._load_data();
 			});
 		}
+		setTimeout(() => {
+			if (this.state.loading_indicator_state){
+				this.setState({loading_indicator_state: false});  //stop loading
+			}
+		}, C_Const.MAX_WAIT_RESPONSE);
 	}
 	//
 	_load_data(){
 		var me = this;
 		RequestData.sentGetRequestWithHeader(this.state.url, API_URI.HTML_REQUEST_HEADER, (detail, error) => {
 			if (detail){
-				var new_html = detail.replace(/<\/head>/g, '<meta name="viewport" content="width=device-width, initial-scale=1.0"></head>');
+				var new_html = detail.replace(/<\/head>/g, '<meta name="viewport" content="width=device-width, initial-scale=1.0"/></head>');
 				me.setState({web_data: new_html});
 			} else if (error){
 				Toast.show('No resource is available for this item!');
 			}
 		});
+	}
+	//
+	_onLoadEnd = () =>{
+		this.setState({loading_indicator_state: false});
 	}
 	 //==========
 		render() {
@@ -83,8 +102,11 @@ class WebViewer extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
+								<Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
 								<View>
-									<WebView style={{height:deviceHeight}} source={{ html: this.state.web_data}} />
+									<WebView style={{height:deviceHeight}} source={{ html: this.state.web_data}}
+										onLoadEnd={()=>{this._onLoadEnd()}}
+									/>
 								</View>
 							</Content>
 						</Container>
