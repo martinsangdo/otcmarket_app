@@ -35,8 +35,8 @@ class BaseScreen extends Component {
     };
 
     //navigate to another screen
-    _navigateCanBackTo = (routeName: string) => {
-        this.props.navigation.navigate(routeName);
+    _navigateCanBackTo = (routeName: string, data) => {
+        this.props.navigation.navigate(routeName, data);
     };
     //Open PDF Viewer page
     _open_pdf_viewer = (url) => {

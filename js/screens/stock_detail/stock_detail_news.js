@@ -13,11 +13,11 @@ import {C_Const} from '../../utils/constant';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
-const deviceWidth = Dimensions.get("window").width;
 import {setting} from '../../utils/config.js';
 import Toast from 'react-native-simple-toast';
 
 const Item = Picker.Item;
+const deviceWidth = Dimensions.get("window").width;
 
 class StockDetailNews extends BaseScreen {
 		constructor(props) {
@@ -153,10 +153,11 @@ class StockDetailNews extends BaseScreen {
           if (!Utils.isEmpty(detail['documentList']) && !Utils.isEmpty(detail['documentList'][0]) && !Utils.isEmpty(detail['documentList'][0]['url'])){
             this._open_pdf_viewer(setting.BACKEND_SERVER_URI + detail['documentList'][0]['url']);
           } else {
-            Toast.show('This resource is not available!');
+            var url_content = API_URI.STOCK_DETAIL.NEWS_CONTENT.replace(/<id>/g, news_id);
+            this._navigateCanBackTo('WebViewer', {url:url_content});
           }
         } else if (error){
-          //do nothing
+          Toast.show('No resource is available for this item!');
         }
       });
     }
@@ -207,14 +208,14 @@ class StockDetailNews extends BaseScreen {
                 {/* List */}
                 <View style={[common_styles.margin_10]}><Text style={[common_styles.heading_1]}>NEWS DOCUMENTS</Text></View>
                 <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
-                <View><Text style={[common_styles.font_15, common_styles.margin_10, common_styles.darkGrayColor]}>Tap title to download</Text></View>
+                <View><Text style={[common_styles.font_15, common_styles.margin_10, common_styles.darkGrayColor]}>Tap title to view</Text></View>
 
 								<View>
 									<FlatList
 												data={this.state.list_data}
 												renderItem={this._renderItemNews}
 												keyExtractor={this._keyExtractorNews}
-                        style={{width:Dimensions.get("window").width, padding:10}}
+                        style={{width:deviceWidth, padding:10}}
 											/>
 								</View>
                 {

@@ -28,7 +28,7 @@ const datas = [
   },
   {
     name: "News & Reports",
-    route: "Home",
+    route: "NewsReports",
     icon: "md-paper"
   },
   {

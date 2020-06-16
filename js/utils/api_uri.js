@@ -15,6 +15,13 @@ export const API_URI = {
 		MULTIPART_REQUEST_HEADER: {
 				'Content-Type': 'multipart/form-data'
 		},
+		HTML_REQUEST_HEADER: {
+			'Cache-Control': 'no-cache, no-store, must-revalidate',
+			'Pragma': 'no-cache',
+			'Expires': 0,
+			'Content-Type': 'text/html;charset=UTF-8',
+			'Accept': 'application/json, text/plain, */*'
+		},
 		CACHE_STOCK_PRICE_DURATION: 15*60*1000,	//15 mins
 		INDEX_SNAPSHOT: {
 			URI: setting.BACKEND_SERVER + 'index/snapshot',
@@ -55,6 +62,7 @@ export const API_URI = {
       },
       NEWS: setting.BACKEND_SERVER + 'company/<symbol>/dns/news?symbol=<symbol>&pageSize=20&sortOn=releaseDate&sortDir=DESC&page=',
       NEWS_DETAIL: setting.BACKEND_SERVER + 'company/dns/news/',
+			NEWS_CONTENT: setting.BACKEND_SERVER + 'company/dns/news/content/<id>?newsId=<id>',	//html
       FINANCIAL: setting.INTERNAL_BACKEND_SERVER + 'financials/<current_type>/<symbol>?symbol=<symbol>&duration=<current_duration>',
       DISCLOSURE: {
         REPORT: setting.BACKEND_SERVER + 'company/<symbol>/financial-report?symbol=<symbol>&page=<page_index>&pageSize=20&sortOn=releaseDate&sortDir=DESC',

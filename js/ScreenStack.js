@@ -16,6 +16,7 @@ import StockDetailNews from "./screens/stock_detail/stock_detail_news";
 import StockDetailFinancial from "./screens/stock_detail/stock_detail_financial";
 import StockDetailDisclosure from "./screens/stock_detail/stock_detail_disclosure";
 import PDFViewer from "./screens/pdf_viewer";
+import WebViewer from "./screens/web_viewer";
 import StockFinder from "./screens/stock_finder";
 import StockFinderControls from "./screens/stock_finder_controls";
 import NewsReports from "./screens/news_reports";
@@ -51,6 +52,7 @@ const AppNavigator = createStackNavigator(
     StockDetailFinancial: { screen: StockDetailFinancial },
     StockDetailDisclosure: { screen: StockDetailDisclosure },
     PDFViewer: { screen: PDFViewer },
+    WebViewer: {screen: WebViewer},
     StockFinderControls: { screen: StockFinderControls }
   },
   {

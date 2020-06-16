@@ -92,15 +92,15 @@ class NewsReports extends BaseScreen {
     //used to show list of stocks (Home, current_market)
 		_renderItemNews = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.id+''}>
-					<View style={[common_styles.width_25p_first, common_styles.flex_row]}>
+					<View style={[common_styles.width_25p, common_styles.flex_row]}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
   						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.releaseDate}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.title}</Text></View>
+					<View style={[common_styles.width_25p]}><Text>{item.releaseDate}</Text></View>
+					<View style={[common_styles.width_50p]}><Text>{item.title}</Text></View>
 				</View>
 		);
 	 //==========
@@ -125,10 +125,12 @@ class NewsReports extends BaseScreen {
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_20} />
+								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>NEWS</Text></View>
+                <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TITLE</Text></View>
+                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
+                  <View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>TITLE</Text></View>
                 </View>
                 <View>
 									<FlatList
