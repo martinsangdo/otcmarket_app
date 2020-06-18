@@ -67,7 +67,7 @@ class BaseScreen extends Component {
 											return pl_icon;
 											break;
 				default:
-					return pn_icon;
+					return null;
 			}
 		}
     //
@@ -81,9 +81,12 @@ class BaseScreen extends Component {
 		_renderItem = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.symbol+Math.random()+''}>
 					<View style={[common_styles.width_25p_first, common_styles.flex_row]}>
-            <View style={[common_styles.margin_r_5]}>
-              <Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
-            </View>
+            {
+              this._get_symbol_icon(item.tierCode) &&
+              <View style={[common_styles.margin_r_5]}>
+                <Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
+              </View>
+            }
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >

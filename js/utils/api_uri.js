@@ -83,6 +83,7 @@ export const API_URI = {
 			NEWS_URI: setting.BACKEND_SERVER + 'company/dns/tier/news?tierGroups=<tierGroup>&page=<page_index>&pageSize=20',
 			FINANCIAL_URI: setting.BACKEND_SERVER + 'company/financial-report?tierGroup=<tierGroup>&page=<page_index>&pageSize=20',
 			SEC_URI: setting.BACKEND_SERVER + 'company/sec-filings?tierGroup=<tierGroup>&page=<page_index>&pageSize=20'
-		}
+		},
+		SEC_FILLING_DETAIL: setting.HOMEPAGE + 'filing/html?id=<id>&guid=<guid>'
 
 };

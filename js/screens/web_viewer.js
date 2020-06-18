@@ -25,16 +25,20 @@ class WebViewer extends BaseScreen {
 		this.state = {
 			url: '',
 			web_data: '',
-			loading_indicator_state: true
+			loading_indicator_state: true,
+			pure_link: false
 		};
 	}
 
 	componentDidMount() {
 		var me = this;
 		this.setState({
-			url: this.props.navigation.state.params.url
+			url: this.props.navigation.state.params.url,
+			pure_link: this.props.navigation.state.params.pure_link
 		}, ()=>{
-			this._load_data();
+			if (!me.props.navigation.state.params.pure_link){
+				me._load_data();
+			}
 		});
 		setTimeout(() => {
 			if (this.state.loading_indicator_state){
@@ -50,9 +54,12 @@ class WebViewer extends BaseScreen {
 			this.setState({
 				url: newPropParams['url'],
 				web_data: '',
+				pure_link: newPropParams['pure_link'],
 				loading_indicator_state: true
 			}, ()=>{
-				this._load_data();
+				if (!newPropParams['pure_link']){
+					this._load_data();
+				}
 			});
 		}
 		setTimeout(() => {
@@ -104,9 +111,18 @@ class WebViewer extends BaseScreen {
 							<Content>
 								<Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
 								<View>
-									<WebView style={{height:deviceHeight}} source={{ html: this.state.web_data}}
-										onLoadEnd={()=>{this._onLoadEnd()}}
-									/>
+									{
+										this.state.pure_link &&
+										<WebView style={{height:deviceHeight}} source={{ uri: this.state.url}}
+											onLoadEnd={()=>{this._onLoadEnd()}}
+										/>
+									}
+									{
+										!this.state.pure_link &&
+										<WebView style={{height:deviceHeight}} source={{ html: this.state.web_data}}
+											onLoadEnd={()=>{this._onLoadEnd()}}
+										/>
+									}
 								</View>
 							</Content>
 						</Container>
