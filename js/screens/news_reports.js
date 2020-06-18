@@ -48,7 +48,7 @@ class NewsReports extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-      this._load_news();
+      this._load_data('news');
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -56,35 +56,38 @@ class NewsReports extends BaseScreen {
 			}, C_Const.MAX_WAIT_RESPONSE);
 		}
     //
-    _load_news(){
-      var category = 'news';
+    _load_data(category){
       var me = this;
-      var url = API_URI.NEWS_REPORTS.NEWS_URI.
-          replace(/<tierGroup>/g, this.state.tierGroup).
-          replace('<page_index>', this.state.data[category]['current_page']);
-      //
-      RequestData.sentGetRequest(url, (detail, error) => {
-        if (detail){
-          var records = detail['records'];
-          if (records != null){
-            var data = me.state.data;
-            for (var i=0; i<records.length; i++){
-              data[category]['list'].push({
-                id: records[i]['id'],
-                title: records[i]['title'],
-                symbol: records[i]['symbol'],
-                releaseDate: Utils.formatDate(records[i]['releaseDate'])
-              });
+      me.setState({loading_indicator_state: true}, ()=>{
+        var url = API_URI.NEWS_REPORTS.NEWS_URI.
+            replace(/<tierGroup>/g, this.state.tierGroup).
+            replace('<page_index>', this.state.data[category]['current_page']);
+        //
+        RequestData.sentGetRequest(url, (detail, error) => {
+          if (detail){
+            var records = detail['records'];
+            if (records != null){
+              var data = me.state.data;
+              for (var i=0; i<records.length; i++){
+                data[category]['list'].push({
+                  id: records[i]['id'],
+                  title: records[i]['title'],
+                  symbol: records[i]['symbol'],
+                  tierCode: records[i]['tierCode'],
+                  releaseDate: Utils.formatDate(records[i]['releaseDate'])
+                });
+              }
+              data[category]['totalRecords'] = detail['totalRecords'];
+              if (data[category]['list'].length >= detail['totalRecords']){
+                data[category]['can_load_more'] = false;
+              }
+              me.setState({data: data});
             }
-            data[category]['totalRecords'] = detail['totalRecords'];
-            if (data[category]['list'].length >= detail['totalRecords']){
-              data[category]['can_load_more'] = false;
-            }
-            me.setState({data: data});
+          } else if (error){
+            //do nothing
           }
-        } else if (error){
-          //do nothing
-        }
+          me.setState({loading_indicator_state: false});
+        });
       });
     }
     //
@@ -112,6 +115,9 @@ class NewsReports extends BaseScreen {
 		_renderItemNews = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.id+''}>
 					<View style={[common_styles.width_25p, common_styles.flex_row]}>
+            <View style={[common_styles.margin_r_5]}>
+              <Image source={this._get_symbol_icon(item.tierCode)} style={[styles.stock_ico]}/>
+            </View>
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
@@ -119,15 +125,23 @@ class NewsReports extends BaseScreen {
             </TouchableOpacity>
           </View>
 					<View style={[common_styles.width_25p]}><Text>{item.releaseDate}</Text></View>
-          <View style={[common_styles.width_50p, common_styles.underline]}>
+          <View style={[common_styles.width_50p]}>
             <TouchableOpacity
               onPress={() => this._open_news_detail(item.id)}
             >
-              <Text>{item.title}</Text>
+              <Text style={common_styles.underline}>{item.title}</Text>
             </TouchableOpacity>
           </View>
 				</View>
 		);
+    //
+    _open_more_data(category){
+      var data = this.state.data;
+      data[category]['current_page'] += 1;
+      this.setState({data: data}, ()=>{
+        this._load_data(category);
+      });
+    }
 	 //==========
 		render() {
 				return (
@@ -167,8 +181,8 @@ class NewsReports extends BaseScreen {
 												extraData={this.state}
 											/>
 								</View>
-  							{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
-  									<TouchableOpacity onPress={() => this._open_more_data()}>
+  							{this.state.data['news']['can_load_more'] && <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
+  									<TouchableOpacity onPress={() => this._open_more_data('news')}>
   										<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
   									</TouchableOpacity>
   								</View>
