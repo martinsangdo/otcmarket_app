@@ -37,9 +37,9 @@ const datas = [
     icon: "ios-stats"
   },
   {
-    name: "Corporate Actions",
+    name: "Short Interest Data",
     route: "Home",
-    icon: "md-brush"
+    icon: "ios-book"
   },
   {
     name: "Broker Dealer Data",
@@ -47,12 +47,22 @@ const datas = [
     icon: "ios-journal"
   },
   {
-    name: "Terms of Service",
+    name: "Qualified Foreign Exchange",
     route: "Home",
-    icon: "ios-quote"
+    icon: "ios-medal"
   },
   {
-    name: "Contact",
+    name: "Corporate Actions",
+    route: "Home",
+    icon: "md-brush"
+  },
+  {
+    name: "Fees",
+    route: "Home",
+    icon: "md-card"
+  },
+  {
+    name: "Contact",  //Terms of Service
     route: "Home",
     icon: "md-mail"
   }
