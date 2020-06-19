@@ -80,7 +80,7 @@ class StockDetailQuote extends BaseScreen {
             dividend: Utils.getNullableString(detail['dividend']),
             prev_close: Utils.getNullableString(detail['previousClose']),
             wk_range: Utils.getNullableString(detail['annualLow']) + ' - ' + Utils.getNullableString(detail['annualHigh']),
-            average_vol: Utils.format_currency_thousand(Math.round(detail['thirtyDaysAvgVol'])),
+            average_vol: Utils.isEmpty(detail['thirtyDaysAvgVol'])?'-':Utils.format_currency_thousand(Math.round(detail['thirtyDaysAvgVol'])),
             net_dividend: Utils.getNullableString(detail['yield']),
             best_bid: Utils.getNullableString(detail['bidPrice']) + ' x ' + Utils.getNullableString(detail['bidSize']),
             best_ask: Utils.getNullableString(detail['askPrice']) + ' x ' + Utils.getNullableString(detail['askSize']),

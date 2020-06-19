@@ -75,6 +75,9 @@ export default {
 		font_10: {
 				fontSize: 10
 		},
+		font_12: {
+				fontSize: 12
+		},
 		font_13: {
 				fontSize: 13
 		},
@@ -164,8 +167,11 @@ export default {
     width_5p: {width: '5%'},
     width_10p: {width: '10%'},
     width_15p: {width: '15%'},
+    width_17p: {width: '17%'},
 		width_20p: {width: '20%'},
+    width_23p: {width: '23%'},
 		width_25p: {width: '25%'},
+    width_27p: {width: '27%'},
     width_30p: {width: '30%'},
 		width_40p: {width: '40%'},
     width_50p: {width: '50%'},
