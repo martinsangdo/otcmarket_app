@@ -84,6 +84,7 @@ export const API_URI = {
 			FINANCIAL_URI: setting.BACKEND_SERVER + 'company/financial-report?tierGroup=<tierGroup>&page=<page_index>&pageSize=20',
 			SEC_URI: setting.BACKEND_SERVER + 'company/sec-filings?tierGroup=<tierGroup>&page=<page_index>&pageSize=20'
 		},
-		SEC_FILLING_DETAIL: setting.HOMEPAGE + 'filing/html?id=<id>&guid=<guid>'
+		SEC_FILLING_DETAIL: setting.HOMEPAGE + 'filing/html?id=<id>&guid=<guid>',
+    PROMO_DATA: setting.BACKEND_SERVER + 'stock/promo-data', //compliance_statistic
 
 };

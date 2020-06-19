@@ -162,6 +162,7 @@ export default {
 		width_300: {width: 300},
     width_25p_first: {width: '25%'},
     width_5p: {width: '5%'},
+    width_10p: {width: '10%'},
 		width_20p: {width: '20%'},
 		width_25p: {width: '25%'},
     width_30p: {width: '30%'},

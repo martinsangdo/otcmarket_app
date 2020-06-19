@@ -20,6 +20,7 @@ import WebViewer from "./screens/web_viewer";
 import StockFinder from "./screens/stock_finder";
 import StockFinderControls from "./screens/stock_finder_controls";
 import NewsReports from "./screens/news_reports";
+import ComplianceStatistic from "./screens/compliance_statistic";
 
 import Splash from "./screens/splash";
 
@@ -28,10 +29,11 @@ const Drawer = createDrawerNavigator(
     Home: { screen: Home },
     CurrentMarket: { screen: CurrentMarket },
     StockFinder: {screen: StockFinder},
-    NewsReports: {screen: NewsReports}
+    NewsReports: {screen: NewsReports},
+    ComplianceStatistic: {screen: ComplianceStatistic}
   },
   {
-    initialRouteName: "NewsReports",
+    initialRouteName: "ComplianceStatistic",
     contentOptions: {
       activeTintColor: "#81af68"
     },

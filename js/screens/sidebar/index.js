@@ -33,7 +33,7 @@ const datas = [
   },
   {
     name: "Compliance Statistic",
-    route: "Home",
+    route: "ComplianceStatistic",
     icon: "ios-stats"
   },
   {
