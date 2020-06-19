@@ -171,6 +171,40 @@ class NewsReports extends BaseScreen {
     _change_category(category){
       this.setState({current_category: category});
     }
+    //
+		onChangeMarket(newMarket) {
+      if (newMarket != this.state.tierGroup){
+        this.setState({tierGroup: newMarket, loading_indicator_state: true,
+          data: {
+            news: {
+              current_page: 1,
+              list: [],
+              can_load_more: true,
+              totalRecords: 0
+            },
+            reports: {
+              current_page: 1,
+              list: [],
+              can_load_more: true,
+              totalRecords: 0
+            },
+            secs: {
+              current_page: 1,
+              list: [],
+              can_load_more: true,
+              totalRecords: 0
+            }
+          }
+        }, ()=>{
+          this._load_data('news');
+          this._load_data('reports');
+          this._load_data('secs');
+          setTimeout(() => {
+    				this.setState({loading_indicator_state: false});  //stop loading all
+    			}, C_Const.MAX_WAIT_RESPONSE);
+  			});
+      }
+	  }
 	 //==========
 		render() {
 				return (
@@ -204,6 +238,22 @@ class NewsReports extends BaseScreen {
 										<View style={[common_styles.padding_5, this.state.current_category=='secs'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.current_category=='secs'&&common_styles.bold]}>SEC FILLINGS</Text></View>
 									</TouchableOpacity>
 				        </View>
+                <View>
+  								<Picker
+  									mode="dropdown"
+  									iosHeader="Select Market"
+  									iosIcon={<Icon name="ios-arrow-down" />}
+  									style={{ width: undefined }}
+  									selectedValue={this.state.tierGroup}
+  									onValueChange={this.onChangeMarket.bind(this)}
+  								>
+  									<Item label="All Markets" value="ALL" />
+  									<Item label="OTCQX" value="QX" />
+  									<Item label="OTCQB" value="DQ" />
+  									<Item label="Pink" value="PS" />
+  								</Picker>
+								</View>
+                <View style={common_styles.margin_b_20} />
                 <View>
 									<FlatList
 												data={this.state.data[this.state.current_category]['list']}
