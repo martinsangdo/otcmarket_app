@@ -113,8 +113,21 @@ class NewsReports extends BaseScreen {
     _open_news_detail(news_id, guid){
       var me = this;
       if (this.state.current_category == 'secs'){
-        guid = guid.split('-');
-        var url_content = API_URI.SEC_FILLING_DETAIL.replace(/<id>/g, news_id).replace(/<guid>/g, guid[1]);
+        //break guid, get middle id only
+        var arr_guid = guid.split('-');
+        var str_core_guid = '';
+        if (arr_guid.length == 1){
+          str_core_guid = guid[0];
+        } else if (arr_guid.length == 3){
+          str_core_guid = arr_guid[1];  //middle
+        } else if (arr_guid.length > 3){
+          //more than 3 segments
+          var first_index = guid.indexOf('-');
+          var last_index = guid.lasIndexOf('-');
+          str_core_guid = guid.substring(first_index, last_index);
+        }
+        //
+        var url_content = API_URI.SEC_FILLING_DETAIL.replace(/<id>/g, news_id).replace(/<guid>/g, str_core_guid);
         me._navigateCanBackTo('WebViewer', {url:url_content, pure_link: true});
       } else {
         var url = API_URI.STOCK_DETAIL.NEWS_DETAIL + news_id;
