@@ -89,5 +89,6 @@ export const API_URI = {
     SHORT_SALE: {
       DATES: setting.BACKEND_SERVER + 'stock/short-sale/dates',
       LIST: setting.BACKEND_SERVER + 'stock/short-sale?date=<date>&page=<page_index>&pageSize=25'
-    }
+    },
+    FOREIGN_EXCHANGE: setting.BACKEND_SERVER + 'qualified-foreign-exchanges?page=<page_index>&pageSize=25'
 };
