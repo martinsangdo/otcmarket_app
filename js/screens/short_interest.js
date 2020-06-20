@@ -146,10 +146,11 @@ class ShortInterest extends BaseScreen {
   									{this._render_dates()}
   								</Picker>
 								</View>
+								<View style={[common_styles.view_align_center, common_styles.padding_5]}>
+									<Text style={common_styles.darkGrayColor}>Short position data for OTC equity securities must be reported by FINRA Member firms (FINRA Rule 4560) twice monthly. The table below groups securities by the settlement date of short interest reporting. Historical details at the symbol level may be found by selecting the symbol link.</Text>
+								</View>
                 {/* SHORT INTEREST BY SYMBOL */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SHORT INTEREST BY SYMBOL</Text></View>
-								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
                   <View style={common_styles.width_60p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SECURITY NAME</Text></View>
