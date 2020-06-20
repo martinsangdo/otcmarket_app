@@ -43,12 +43,12 @@ const datas = [
   },
   {
     name: "Broker Dealer Data",
-    route: "Home",
+    route: "BrokerDealer",
     icon: "ios-journal"
   },
   {
     name: "Qualified Foreign Exchange",
-    route: "Home",
+    route: "ForeignExchange",
     icon: "ios-medal"
   },
   {

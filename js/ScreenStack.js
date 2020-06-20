@@ -23,6 +23,7 @@ import NewsReports from "./screens/news_reports";
 import ComplianceStatistic from "./screens/compliance_statistic";
 import ShortInterest from "./screens/short_interest";
 import ForeignExchange from "./screens/foreign_exchange";
+import BrokerDealer from "./screens/broker_dealer";
 
 import Splash from "./screens/splash";
 
@@ -34,10 +35,11 @@ const Drawer = createDrawerNavigator(
     NewsReports: {screen: NewsReports},
     ComplianceStatistic: {screen: ComplianceStatistic},
     ShortInterest: {screen: ShortInterest},
-    ForeignExchange: {screen: ForeignExchange}
+    ForeignExchange: {screen: ForeignExchange},
+    BrokerDealer: {screen: BrokerDealer}
   },
   {
-    initialRouteName: "ForeignExchange",
+    initialRouteName: "BrokerDealer",
     contentOptions: {
       activeTintColor: "#81af68"
     },

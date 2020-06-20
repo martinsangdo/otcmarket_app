@@ -90,5 +90,11 @@ export const API_URI = {
       DATES: setting.BACKEND_SERVER + 'stock/short-sale/dates',
       LIST: setting.BACKEND_SERVER + 'stock/short-sale?date=<date>&page=<page_index>&pageSize=25'
     },
-    FOREIGN_EXCHANGE: setting.BACKEND_SERVER + 'qualified-foreign-exchanges?page=<page_index>&pageSize=25'
+    FOREIGN_EXCHANGE: setting.BACKEND_SERVER + 'qualified-foreign-exchanges?page=<page_index>&pageSize=25',
+    BROKER_DEALER: {
+      SNAPSHOT: setting.BACKEND_SERVER + 'market-activity/broker-dealer/executed-volume/snapshot?tierGroup=',
+      EXCECUTED_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/executed-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
+      EXCECUTED_LINK_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/executed-link-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
+      TOTAL_LINK_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/total-link-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
+      RESPONSE_QUALITY: setting.BACKEND_SERVER + 'market-activity/broker-dealer/response-quality?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=ASC&sortOn=l1AvgR'    }
 };

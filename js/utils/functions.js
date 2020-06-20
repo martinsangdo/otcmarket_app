@@ -108,6 +108,11 @@ exports.formatMonthYear = function(date){
   Moment.locale('en');
   return Moment(date).format(C_Const.MONTH_YEAR_FORMAT);
 };
+//
+exports.formatTime = function(datetime){
+  Moment.locale('en');
+  return Moment(datetime).format(C_Const.TIME_FORMAT);
+};
 //trim a text
 exports.trim = function(str){
   return String.prototype.trim.call(str);

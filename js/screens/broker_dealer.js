@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
 
-import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon} from "native-base";
+import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Picker, Card,
+  CardItem} from "native-base";
 
 import BaseScreen from "../base/BaseScreen.js";
 import common_styles from "../../css/common";
@@ -13,20 +14,26 @@ import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-class ForeignExchange extends BaseScreen {
+const Item = Picker.Item;
+
+class BrokerDealer extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
         loading_indicator_state: false,
+				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
+				current_type: 'EXCECUTED_VOLUME',	//EXCECUTED_VOLUME/EXCECUTED_LINK_VOLUME/TOTAL_LINK_VOLUME/RESPONSE_QUALITY
 				current_page: 1,
 				list_data: [],
 				totalRecords: 0,
-				can_load_more: true
+				can_load_more: true,
+				snapshot_data: {}
 			};
 		}
 		//
 		componentDidMount() {
-			this._load_data();
+			this._load_snaphot_market();
+			// this._load_data();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -37,15 +44,18 @@ class ForeignExchange extends BaseScreen {
     _load_data(){
       var me = this;
       me.setState({loading_indicator_state: true}, ()=>{
-				var url = API_URI.FOREIGN_EXCHANGE.replace(/<page_index>/g, this.state.current_page);
+				var url = API_URI.BROKER_DEALER[this.state.current_type].
+						replace(/<page_index>/g, this.state.current_page).replace(/<tierGroup>/g, this.state.tierGroup);
         RequestData.sentGetRequest(url, (detail, error) => {
           if (detail){
             var data = me.state.list_data;
-						for (var i=0; i<detail['qualifiedForeignExchanges'].length; i++){
+						for (var i=0; i<detail['records'].length; i++){
 							data.push({	//append
-								country: detail['qualifiedForeignExchanges'][i]['country'],
-								name: detail['qualifiedForeignExchanges'][i]['name'],
-								tier: Utils.getNullableString(detail['qualifiedForeignExchanges'][i]['tier'])=='No Tier'?'':Utils.getNullableString(detail['qualifiedForeignExchanges'][i]['tier'])
+								mpid: detail['records'][i]['mpid'],
+								brokerDealer: detail['records'][i]['brokerDealer'],
+								l1AvgR: Math.floor(detail['records'][i]['l1AvgR']),
+								expiredL1Pct: Utils.number_to_float_2(detail['records'][i]['expiredL1Pct']),
+								qscore: detail['records'][i]['qscore']
 							});
 						}
             //save it
@@ -68,21 +78,42 @@ class ForeignExchange extends BaseScreen {
           <View style={[common_styles.width_25p]}><Text>{item.tier}</Text></View>
 				</View>
 		);
-		//
-		onChangeDate(date){
-			this.setState({current_date: date, current_page: 1,
-			list_data: [],
-			totalRecords: 0}, ()=>{
-				this._load_data();
-			})
+		//general info
+		_load_snaphot_market(){
+			var me = this;
+			var url = API_URI.BROKER_DEALER.SNAPSHOT + this.state.tierGroup;
+			RequestData.sentGetRequest(url, (detail, error) => {
+					if (detail){
+						try{
+							var save_detail = {
+								dollarVolume: Utils.format_currency_thousand(Utils.number_to_float_2(detail['dollarVolume'])),
+								shareVolume: Utils.format_currency_thousand(detail['shareVolume']),
+								lastUpdated: Utils.formatTime(detail['lastUpdated']),
+								trades: Utils.format_currency_thousand(detail['trades'])
+							};
+						}catch(e){
+							Utils.dlog(e);
+						}
+						Utils.dlog(save_detail);
+						me.setState({snapshot_data: save_detail});
+					} else if (error){
+						//do nothing
+					}
+				});
 		}
 		//
-		_render_dates(){
-			var display_options = this.state.dates.map(function(item){
-				return <Item label={item.caption} value={item.id} key={Math.random()}/>;
-			});
-			return display_options;
-		}
+		onChangeMarket(newMarket) {
+      if (newMarket != this.state.tierGroup){
+        this.setState({tierGroup: newMarket}, ()=>{
+  				this._load_snaphot_market();
+  				this._load_data();
+          setTimeout(() => {
+    				this.setState({loading_indicator_state: false});  //stop loading all
+    			}, C_Const.MAX_WAIT_RESPONSE);
+  			});
+      }
+	  }
+		//
 		_open_more_data(){
 			if (this.state.loading_indicator_state){
 				return;
@@ -104,7 +135,7 @@ class ForeignExchange extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Qualified Foreign Exchange</Text>
+									<Text style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -112,8 +143,48 @@ class ForeignExchange extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
-								<View style={[common_styles.view_align_center, common_styles.padding_5]}>
-									<Text style={common_styles.darkGrayColor}>Companies listed on a Qualified Foreign Exchange can leverage OTCQX or OTCQB to access an efficient and cost-effective secondary market in the U.S.</Text>
+								<View>
+  								<Picker
+  									mode="dropdown"
+  									iosHeader="Select Market"
+  									iosIcon={<Icon name="ios-arrow-down" />}
+  									style={{ width: undefined }}
+  									selectedValue={this.state.tierGroup}
+  									onValueChange={this.onChangeMarket.bind(this)}
+  								>
+  									<Item label="All Markets" value="ALL" />
+  									<Item label="OTCQX" value="QX" />
+  									<Item label="OTCQB" value="DQ" />
+  									<Item label="Pink" value="PS" />
+  									<Item label="Grey" value="OO" />
+  								</Picker>
+								</View>
+								<View style={common_styles.margin_10}>
+									<Card>
+				            <CardItem>
+				              <Body>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text>
+                            <Text>{this.state.snapshot_data['dollarVolume']}</Text>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text>
+                            <Text>{this.state.snapshot_data['shareVolume']}</Text>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <Text style={[common_styles.darkGrayColor]}>TRADES</Text>
+                            <Text>{this.state.snapshot_data['trades']}</Text>
+                          </View>
+												</View>
+				              </Body>
+				            </CardItem>
+				          </Card>
+								</View>
+								<View style={common_styles.view_align_center}>
+									<Text style={common_styles.darkGrayColor}>{this.state.snapshot_data['lastUpdated']}</Text>
 								</View>
                 {/*  */}
                 <View style={common_styles.margin_b_20} />
@@ -148,4 +219,4 @@ class ForeignExchange extends BaseScreen {
 		}
 }
 
-export default ForeignExchange;
+export default BrokerDealer;
