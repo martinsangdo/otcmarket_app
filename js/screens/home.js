@@ -104,7 +104,6 @@ class Home extends BaseScreen {
 					//get from server
           RequestData.sentGetRequest(url, (detail, error) => {
               if (detail){
-                Utils.xlog('000', detail);
                 var save_detail = {
                   dollarVolume: Utils.format_currency_thousand(detail['dollarVolume']),
                   shareVolume: Utils.format_currency_thousand(detail['shareVolume']),
@@ -112,7 +111,6 @@ class Home extends BaseScreen {
                   advancers: Utils.format_currency_thousand(detail['advancers']),
                   decliners: Utils.format_currency_thousand(detail['decliners'])
                 };
-                Utils.xlog('111', save_detail);
                 me.setState({snapshot_data: save_detail});
                 store.update(url, {d:save_detail});
                 store.update(API_URI.CURRENT_MARKET.SNAPSHOT.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});

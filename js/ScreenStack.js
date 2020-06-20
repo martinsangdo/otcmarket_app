@@ -21,6 +21,7 @@ import StockFinder from "./screens/stock_finder";
 import StockFinderControls from "./screens/stock_finder_controls";
 import NewsReports from "./screens/news_reports";
 import ComplianceStatistic from "./screens/compliance_statistic";
+import ShortInterest from "./screens/short_interest";
 
 import Splash from "./screens/splash";
 
@@ -30,10 +31,11 @@ const Drawer = createDrawerNavigator(
     CurrentMarket: { screen: CurrentMarket },
     StockFinder: {screen: StockFinder},
     NewsReports: {screen: NewsReports},
-    ComplianceStatistic: {screen: ComplianceStatistic}
+    ComplianceStatistic: {screen: ComplianceStatistic},
+    ShortInterest: {screen: ShortInterest}
   },
   {
-    initialRouteName: "ComplianceStatistic",
+    initialRouteName: "ShortInterest",
     contentOptions: {
       activeTintColor: "#81af68"
     },

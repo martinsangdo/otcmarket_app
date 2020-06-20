@@ -38,7 +38,7 @@ const datas = [
   },
   {
     name: "Short Interest Data",
-    route: "Home",
+    route: "ShortInterest",
     icon: "ios-book"
   },
   {

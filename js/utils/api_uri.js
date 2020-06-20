@@ -86,5 +86,8 @@ export const API_URI = {
 		},
 		SEC_FILLING_DETAIL: setting.HOMEPAGE + 'filing/html?id=<id>&guid=<guid>',
     PROMO_DATA: setting.BACKEND_SERVER + 'stock/promo-data', //compliance_statistic
-
+    SHORT_SALE: {
+      DATES: setting.BACKEND_SERVER + 'stock/short-sale/dates',
+      LIST: setting.BACKEND_SERVER + 'stock/short-sale?date=<date>&page=<page_index>&pageSize=25'
+    }
 };
