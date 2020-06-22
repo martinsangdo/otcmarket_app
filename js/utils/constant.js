@@ -22,7 +22,7 @@ export const C_Const = {
 	MONTH_YEAR_FORMAT: 'MMM-YYYY',   //Jun 2020
 	YEAR_FORMAT: 'YYYY',
 	DATE_US: 'YYYY/MM/DD',
-	TIME_FORMAT: 'YYYY/MM/DD HH:mm:ss',
+	TIME_FORMAT: 'YYYY/MM/DD HH:mm a',
 	PAGE_LEN: 25, //default item number in one page, should large enough to load more item
 	EMPTY_DATETIME: '0000-00-00 00:00:00',
 	EMPTY_DATE: '0000-00-00',

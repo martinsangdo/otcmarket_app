@@ -22,18 +22,18 @@ class BrokerDealer extends BaseScreen {
 			this.state = {
         loading_indicator_state: false,
 				tierGroup: 'ALL',	//ALL, QX, DQ, PS, OO
+        snapshot_data: {},
 				current_type: 'EXCECUTED_VOLUME',	//EXCECUTED_VOLUME/EXCECUTED_LINK_VOLUME/TOTAL_LINK_VOLUME/RESPONSE_QUALITY
 				current_page: 1,
 				list_data: [],
 				totalRecords: 0,
-				can_load_more: true,
-				snapshot_data: {}
+				can_load_more: true
 			};
 		}
 		//
 		componentDidMount() {
 			this._load_snaphot_market();
-			// this._load_data();
+			this._load_data();
 			setTimeout(() => {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
@@ -52,10 +52,9 @@ class BrokerDealer extends BaseScreen {
 						for (var i=0; i<detail['records'].length; i++){
 							data.push({	//append
 								mpid: detail['records'][i]['mpid'],
-								brokerDealer: detail['records'][i]['brokerDealer'],
-								l1AvgR: Math.floor(detail['records'][i]['l1AvgR']),
-								expiredL1Pct: Utils.number_to_float_2(detail['records'][i]['expiredL1Pct']),
-								qscore: detail['records'][i]['qscore']
+                brokerDealer: detail['records'][i]['brokerDealer'],
+								dollarVolume: Utils.format_currency_thousand(Math.floor(detail['records'][i]['dollarVolume'])),
+								volume: Utils.format_currency_thousand(detail['records'][i]['volume'])
 							});
 						}
             //save it
@@ -69,13 +68,13 @@ class BrokerDealer extends BaseScreen {
       });
     }
     //
-		_keyExtractor = (item) => item.country+Math.random()+'';
+		_keyExtractor = (item) => item.mpid+Math.random()+'';
 		//render the list. MUST use "item" as param
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.country+Math.random()+''}>
-					<View style={[common_styles.width_25p]}><Text>{item.country}</Text></View>
-					<View style={[common_styles.width_50p]}><Text style={common_styles.font_12}>{item.name}</Text></View>
-          <View style={[common_styles.width_25p]}><Text>{item.tier}</Text></View>
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.mpid+Math.random()+''}>
+					<View style={[common_styles.width_40p]}><Text>{item.brokerDealer}</Text></View>
+					<View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.dollarVolume}</Text></View>
+          <View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.volume}</Text></View>
 				</View>
 		);
 		//general info
@@ -92,9 +91,7 @@ class BrokerDealer extends BaseScreen {
 								trades: Utils.format_currency_thousand(detail['trades'])
 							};
 						}catch(e){
-							Utils.dlog(e);
 						}
-						Utils.dlog(save_detail);
 						me.setState({snapshot_data: save_detail});
 					} else if (error){
 						//do nothing
@@ -104,7 +101,10 @@ class BrokerDealer extends BaseScreen {
 		//
 		onChangeMarket(newMarket) {
       if (newMarket != this.state.tierGroup){
-        this.setState({tierGroup: newMarket}, ()=>{
+        this.setState({tierGroup: newMarket, current_page: 1,
+				list_data: [],
+				totalRecords: 0,
+				can_load_more: true}, ()=>{
   				this._load_snaphot_market();
   				this._load_data();
           setTimeout(() => {
@@ -189,9 +189,9 @@ class BrokerDealer extends BaseScreen {
                 {/*  */}
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>COUNTRY</Text></View>
-                  <View style={common_styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>STOCK EXCHANGE</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>EXCHANGE TIER</Text></View>
+                  <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
+                  <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+                  <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHARE VOL</Text></View>
                 </View>
                 <View>
 									<FlatList
