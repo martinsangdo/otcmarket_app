@@ -43,29 +43,44 @@ class BrokerDealer extends BaseScreen {
 		//
     _load_data(){
       var me = this;
-      me.setState({loading_indicator_state: true}, ()=>{
-				var url = API_URI.BROKER_DEALER[this.state.current_type].
-						replace(/<page_index>/g, this.state.current_page).replace(/<tierGroup>/g, this.state.tierGroup);
-        RequestData.sentGetRequest(url, (detail, error) => {
-          if (detail){
-            var data = me.state.list_data;
-						for (var i=0; i<detail['records'].length; i++){
-							data.push({	//append
-								mpid: detail['records'][i]['mpid'],
-                brokerDealer: detail['records'][i]['brokerDealer'],
-								dollarVolume: Utils.format_currency_thousand(Math.floor(detail['records'][i]['dollarVolume'])),
-								volume: Utils.format_currency_thousand(detail['records'][i]['volume'])
-							});
-						}
-            //save it
-            me.setState({list_data: data, totalRecords: detail['totalRecords'],
-								can_load_more:detail['totalRecords'] > data.length});
-          } else if (error){
-            //do nothing
-          }
-          me.setState({loading_indicator_state: false});
+      setTimeout(()=>{
+        me.setState({loading_indicator_state: true}, ()=>{
+  				var url = API_URI.BROKER_DEALER[this.state.current_type].
+  						replace(/<page_index>/g, this.state.current_page).replace(/<tierGroup>/g, this.state.tierGroup);
+          RequestData.sentGetRequest(url, (detail, error) => {
+            if (detail){
+              var data = me.state.list_data;
+              if (me.state.current_type == 'RESPONSE_QUALITY'){
+                for (var i=0; i<detail['records'].length; i++){
+    							data.push({	//append
+    								mpid: detail['records'][i]['mpid'],
+                    brokerDealer: detail['records'][i]['brokerDealer'],
+    								l1AvgR: detail['records'][i]['l1AvgR']<1?'<1s':Math.floor(detail['records'][i]['l1AvgR'])+'s',
+    								expiredL1Pct: Utils.number_to_float_2(detail['records'][i]['expiredL1Pct'])==''?'0.0':Utils.number_to_float_2(detail['records'][i]['expiredL1Pct']),
+                    saturationPct: Utils.number_to_float_2(detail['records'][i]['saturationPct'])==''?'0.0':Utils.number_to_float_2(detail['records'][i]['saturationPct']),
+                    qscore: Utils.number_to_float_2(detail['records'][i]['expiredL1Pct'])
+    							});
+    						}
+              } else {
+                for (var i=0; i<detail['records'].length; i++){
+    							data.push({	//append
+    								mpid: detail['records'][i]['mpid'],
+                    brokerDealer: detail['records'][i]['brokerDealer'],
+    								dollarVolume: Utils.format_currency_thousand(Math.floor(detail['records'][i]['dollarVolume'])),
+    								volume: Utils.format_currency_thousand(detail['records'][i]['volume'])
+    							});
+    						}
+              }
+              //save it
+              me.setState({list_data: data, totalRecords: detail['totalRecords'],
+  								can_load_more:detail['totalRecords'] > data.length});
+            } else if (error){
+              //do nothing
+            }
+            me.setState({loading_indicator_state: false});
+          });
         });
-      });
+      }, 500);
     }
     //
 		_keyExtractor = (item) => item.mpid+Math.random()+'';
@@ -75,6 +90,15 @@ class BrokerDealer extends BaseScreen {
 					<View style={[common_styles.width_40p]}><Text>{item.brokerDealer}</Text></View>
 					<View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.dollarVolume}</Text></View>
           <View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.volume}</Text></View>
+				</View>
+		);
+    _renderItemResponseQuality = ({item}) => (
+				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.mpid+Math.random()+''}>
+					<View style={[common_styles.width_40p]}><Text>{item.brokerDealer}</Text></View>
+					<View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.l1AvgR}</Text></View>
+          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.expiredL1Pct}%</Text></View>
+          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.saturationPct}%</Text></View>
+          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.qscore}</Text></View>
 				</View>
 		);
 		//general info
@@ -106,6 +130,20 @@ class BrokerDealer extends BaseScreen {
 				totalRecords: 0,
 				can_load_more: true}, ()=>{
   				this._load_snaphot_market();
+  				this._load_data();
+          setTimeout(() => {
+    				this.setState({loading_indicator_state: false});  //stop loading all
+    			}, C_Const.MAX_WAIT_RESPONSE);
+  			});
+      }
+	  }
+    //
+		onChangeType(newType) {
+      if (newType != this.state.current_type){
+        this.setState({current_type: newType, current_page: 1,
+				list_data: [],
+				totalRecords: 0,
+				can_load_more: true}, ()=>{
   				this._load_data();
           setTimeout(() => {
     				this.setState({loading_indicator_state: false});  //stop loading all
@@ -186,23 +224,68 @@ class BrokerDealer extends BaseScreen {
 								<View style={common_styles.view_align_center}>
 									<Text style={common_styles.darkGrayColor}>{this.state.snapshot_data['lastUpdated']}</Text>
 								</View>
+                <View>
+  								<Picker
+  									mode="dropdown"
+  									iosHeader="Select Volume"
+  									iosIcon={<Icon name="ios-arrow-down" />}
+  									style={{ width: undefined }}
+  									selectedValue={this.state.current_type}
+  									onValueChange={this.onChangeType.bind(this)}
+  								>
+  									<Item label="Executed Volume" value="EXCECUTED_VOLUME" />
+  									<Item label="Executed Link Volume" value="EXCECUTED_LINK_VOLUME" />
+  									<Item label="Total Link Volume" value="TOTAL_LINK_VOLUME" />
+  									<Item label="Response Statistics" value="RESPONSE_QUALITY" />
+  								</Picker>
+								</View>
                 {/*  */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
-                  <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
-                  <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHARE VOL</Text></View>
-                </View>
-                <View>
-									<FlatList
-												data={this.state.list_data}
-												renderItem={this._renderItem}
-												refreshing={false}
-												keyExtractor={this._keyExtractor}
-												initialNumToRender={10}
-												extraData={this.state}
-											/>
-								</View>
+                {
+                  this.state.current_type != 'RESPONSE_QUALITY' &&
+                  <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+                    <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
+                    <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+                    <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHARE VOL</Text></View>
+                  </View>
+                }
+                {
+                  this.state.current_type != 'RESPONSE_QUALITY' &&
+                  <View>
+  									<FlatList
+  												data={this.state.list_data}
+  												renderItem={this._renderItem}
+  												refreshing={false}
+  												keyExtractor={this._keyExtractor}
+  												initialNumToRender={10}
+  												extraData={this.state}
+  											/>
+  								</View>
+                }
+                {
+                  this.state.current_type == 'RESPONSE_QUALITY' &&
+                  <View style={[common_styles.fetch_row, common_styles.padding_5]}>
+                    <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
+                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>L1 AVG R</Text></View>
+                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>*EXP L1%</Text></View>
+                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>**SAT L1%</Text></View>
+                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SCORE</Text></View>
+                  </View>
+                }
+                {
+                  this.state.current_type == 'RESPONSE_QUALITY' &&
+                  <View>
+  									<FlatList
+  												data={this.state.list_data}
+  												renderItem={this._renderItemResponseQuality}
+  												refreshing={false}
+  												keyExtractor={this._keyExtractor}
+  												initialNumToRender={10}
+  												extraData={this.state}
+  											/>
+  								</View>
+                }
+
 								{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_10]}>
 										<TouchableOpacity onPress={() => this._open_more_data()}>
 											<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
@@ -213,6 +296,13 @@ class BrokerDealer extends BaseScreen {
 									<Text style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</Text>
 								</View>
 								<View style={common_styles.margin_b_20} />
+                <View style={[common_styles.view_align_center, common_styles.margin_5]}>
+									<Text style={common_styles.darkGrayColor}>* Percent of expired L1 trade messages, per total L1 trade messages</Text>
+								</View>
+                <View style={[common_styles.view_align_center, common_styles.margin_5]}>
+									<Text style={common_styles.darkGrayColor}>** Percent of Saturation events, per total liability trade messages</Text>
+								</View>
+                <View style={common_styles.margin_b_20} />
 							</Content>
 						</Container>
 				);
