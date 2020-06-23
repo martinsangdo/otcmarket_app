@@ -176,6 +176,7 @@ export default {
 		width_40p: {width: '40%'},
     width_50p: {width: '50%'},
     width_60p: {width: '60%'},
+    width_70p: {width: '70%'},
 		width_75p: {width: '75%'},
     height_30: {height:30},
 

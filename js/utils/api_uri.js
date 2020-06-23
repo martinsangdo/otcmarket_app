@@ -96,5 +96,10 @@ export const API_URI = {
       EXCECUTED_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/executed-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
       EXCECUTED_LINK_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/executed-link-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
       TOTAL_LINK_VOLUME: setting.BACKEND_SERVER + 'market-activity/broker-dealer/total-link-volume?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=DESC&sortOn=dollarVolume',
-      RESPONSE_QUALITY: setting.BACKEND_SERVER + 'market-activity/broker-dealer/response-quality?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=ASC&sortOn=l1AvgR'    }
+      RESPONSE_QUALITY: setting.BACKEND_SERVER + 'market-activity/broker-dealer/response-quality?tierGroup=<tierGroup>&page=<page_index>&pageSize=20&sortDir=ASC&sortOn=l1AvgR'
+		},
+		CORPORATE_ACTIONS: {
+			FILTERS: setting.BACKEND_SERVER + 'corp-actions/filters',
+			ROUTE: setting.BACKEND_SERVER + 'corp-actions/<route>?route=<route>&page=<page_index>&pageSize=25&retainPageSize=true'
+		}
 };

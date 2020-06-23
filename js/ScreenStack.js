@@ -24,6 +24,7 @@ import ComplianceStatistic from "./screens/compliance_statistic";
 import ShortInterest from "./screens/short_interest";
 import ForeignExchange from "./screens/foreign_exchange";
 import BrokerDealer from "./screens/broker_dealer";
+import CorporateActions from "./screens/corporate_actions";
 
 import Splash from "./screens/splash";
 
@@ -36,10 +37,11 @@ const Drawer = createDrawerNavigator(
     ComplianceStatistic: {screen: ComplianceStatistic},
     ShortInterest: {screen: ShortInterest},
     ForeignExchange: {screen: ForeignExchange},
-    BrokerDealer: {screen: BrokerDealer}
+    BrokerDealer: {screen: BrokerDealer},
+    CorporateActions: {screen: CorporateActions}
   },
   {
-    initialRouteName: "BrokerDealer",
+    initialRouteName: "CorporateActions",
     contentOptions: {
       activeTintColor: "#81af68"
     },

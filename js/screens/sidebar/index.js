@@ -53,7 +53,7 @@ const datas = [
   },
   {
     name: "Corporate Actions",
-    route: "Home",
+    route: "CorporateActions",
     icon: "md-brush"
   },
   {
