@@ -95,6 +95,9 @@ exports.my_fetch = function(url, method, body){
 };
 //
 exports.formatDate = function(date){
+  if (date == null || date == '' || date === undefined){
+    return '';
+  }
   Moment.locale('en');
   return Moment(date).format(C_Const.DATE_US);
 };

@@ -15,6 +15,73 @@ import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Item = Picker.Item;
+//define display format
+const extra_info_scheme = {
+  'symbol-changes':[
+    {key: 'oldSymbol', label: 'OLD SYMBOL'},
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'typeName', label: 'SPLIT TYPE'},
+    {key: 'splitFactor', label: 'SPLIT FACTOR'}
+  ],
+  'venue-changes':[
+    {key: 'oldSymbol', label: 'OLD SYMBOL'},
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'oldVenueName', label: 'OLD VENUE'},
+    {key: 'newVenueName', label: 'NEW VENUE'}
+  ],
+  'name-changes':[
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'oldName', label: 'OLD NAME'}
+  ],
+  'symbol-name-changes':[
+    {key: 'oldSymbol', label: 'OLD SYMBOL'},
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'oldName', label: 'OLD NAME'},
+    {key: 'typeName', label: 'SPLIT TYPE'},
+    {key: 'splitFactor', label: 'SPLIT FACTOR'}
+  ],
+  'splits':[
+    {key: 'oldSymbol', label: 'OLD SYMBOL'},
+    {key: 'effectiveDate', label: 'EFFECTIVE DATE', formatDate: true},
+    {key: 'recordDate', label: 'RECORD DATE', formatDate: true},
+    {key: 'payDate', label: 'PAYMENT DATE', formatDate: true},
+    {key: 'typeName', label: 'SPLIT TYPE'},
+    {key: 'splitFactor', label: 'SPLIT FACTOR'}
+  ],
+  'deletions':[
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'isDeletion', label: 'STATUS', boolean: true, trueLabel: 'Deleted', falseLabel: 'Reactivated'},
+    {key: 'comments', label: 'COMMENTS'}
+  ],
+  'halts':[
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'name', label: 'STATUS'} //status
+  ],
+  'piggyback-qualified':[
+    {key: 'className', label: 'SECURITY TYPE'}
+  ],
+  'piggyback-anticipated':[
+    {key: 'className', label: 'SECURITY TYPE'}
+  ],
+  'ex-dividends':[
+    {key: 'securityType', label: 'SECURITY TYPE'},
+    {key: 'typeName', label: 'TYPE'},
+    {key: 'cashAmount', label: 'CASH AMOUNT'}
+  ],
+  'sch-dividends':[
+    {key: 'securityType', label: 'SECURITY TYPE'},
+    {key: 'typeName', label: 'TYPE'},
+    {key: 'cashAmount', label: 'CASH AMOUNT'}
+  ],
+  'tier-changes':[
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'oldTierName', label: 'OLD TIER'}
+  ],
+  'ce-changes':[
+    {key: 'className', label: 'SECURITY TYPE'},
+    {key: 'isCaveatEmptor', label: 'STATUS', boolean: true, trueLabel: 'Added', falseLabel: 'Removed'}
+  ]
+}
 
 class CorporateActions extends BaseScreen {
 		constructor(props) {
@@ -61,24 +128,37 @@ class CorporateActions extends BaseScreen {
           if (!Utils.isEmpty(this.state.security_type)){
             url += '&securityTypeId=' + this.state.security_type;
           }
-          Utils.dlog(url);
+          // Utils.dlog(url);
           RequestData.sentGetRequest(url, (detail, error) => {
             if (detail){
               var data = me.state.list_data;
-              var item;
+              var item, extra_info_meta_data;
               for (var i=0; i<detail['records'].length; i++){
                 //mandatory fields
                 item = {
-                  changeDate: Utils.formatDate(detail['records'][i]['changeDate']),
-                  symbol: detail['records'][i]['symbol'],
+                  changeDate: Utils.formatDate(detail['records'][i]['changeDate'] || detail['records'][i]['eligibleDate']),
+                  symbol: detail['records'][i]['symbol'], //new symbol
                   tierName: detail['records'][i]['tierName'],
-                  companyName: detail['records'][i]['companyName']
+                  companyName: detail['records'][i]['companyName'] || detail['records'][i]['newName'],
+                  className: Utils.getNullableString(detail['records'][i]['className'] || detail['records'][i]['securityType'])
                 };
                 //optional fields
-
-
+                extra_info_meta_data = extra_info_scheme[me.state.route];
+                if (extra_info_meta_data != null){
+                  for (var j=0; j<extra_info_meta_data.length; j++){
+                    if (extra_info_meta_data[j]['formatDate']){
+                      item[extra_info_meta_data[j]['key']] = Utils.formatDate(Utils.getNullableString(detail['records'][i][extra_info_meta_data[j]['key']]));
+                    } else if (extra_info_meta_data[j]['boolean']){
+                      item[extra_info_meta_data[j]['key']] = detail['records'][i][extra_info_meta_data[j]['key']]?
+                          extra_info_meta_data[j]['trueLabel']:extra_info_meta_data[j]['falseLabel'];
+                    } else {
+                      item[extra_info_meta_data[j]['key']] = Utils.getNullableString(detail['records'][i][extra_info_meta_data[j]['key']]);
+                    }
+                  }
+                }
                 data.push(item);
               }
+              // Utils.xlog('data', data);
               //save it
               me.setState({list_data: data, totalRecords: detail['totalRecords'],
   								can_load_more:detail['totalRecords'] > data.length});
@@ -94,7 +174,8 @@ class CorporateActions extends BaseScreen {
 		_keyExtractor = (item) => item.symbol+Math.random()+'';
 		//render the list. MUST use "item" as param
 		_renderItem = ({item}) => (
-				<View style={[styles.list_item, common_styles.flex_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.symbol+Math.random()+''}>
+      <View style={[common_styles.border_b_gray]}>
+				<View style={[styles.list_item, common_styles.flex_row, common_styles.padding_b_5]} key={item.symbol+Math.random()+''}>
 					<View style={[common_styles.width_25p]}><Text>{item.changeDate}</Text></View>
 					<View style={[common_styles.width_20p]}>
             <TouchableOpacity
@@ -126,6 +207,21 @@ class CorporateActions extends BaseScreen {
             </TouchableOpacity>
           </View>
 				</View>
+        {/* sub info */}
+        {
+          this.state.showing_detail_symbols[item.symbol] &&
+          <View>
+            {extra_info_scheme[this.state.route].map(function(extra_info){
+              if (!Utils.isEmpty(item[extra_info['key']]))
+                return <View style={[common_styles.fetch_row, common_styles.margin_5]} key={Math.random()+''}>
+                  <Text style={[common_styles.width_45p, common_styles.darkGrayColor, common_styles.bold]}>{extra_info['label']}</Text>
+                  <Text style={[common_styles.width_55p]}>{item[extra_info['key']]}</Text>
+                </View>
+            })
+            }
+          </View>
+        }
+      </View>
 		);
 		//filters in picker
 		_load_filters(){
@@ -259,7 +355,7 @@ class CorporateActions extends BaseScreen {
                       <Item label="Piggyback Qualified" value="piggyback-qualified" />
                       <Item label="Anticipated Piggybacks" value="piggyback-anticipated" />
                       <Item label="Ex-Dividends" value="ex-dividends" />
-                      <Item label="Schedulted Dividends" value="sch-dividends" />
+                      <Item label="Scheduled Dividends" value="sch-dividends" />
                       <Item label="Tier Changes" value="tier-changes" />
                       <Item label="Caveat Emptor" value="ce-changes" />
                     </Picker>
@@ -278,6 +374,7 @@ class CorporateActions extends BaseScreen {
                       selectedValue={this.state.security_type}
                       onValueChange={this.onChangeType.bind(this)}
                     >
+                      <Item label="All" value="" key={Math.random()}/>
                       {this._render_security_types()}
                     </Picker>
                   </View>
@@ -295,6 +392,7 @@ class CorporateActions extends BaseScreen {
                       selectedValue={this.state.tierGroup}
                       onValueChange={this.onChangeMarket.bind(this)}
                     >
+                      <Item label="All" value="" key={Math.random()}/>
                       {this._render_markets()}
                     </Picker>
                   </View>
