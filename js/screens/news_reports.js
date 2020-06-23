@@ -256,7 +256,7 @@ class NewsReports extends BaseScreen {
   									mode="dropdown"
   									iosHeader="Select Market"
   									iosIcon={<Icon name="ios-arrow-down" />}
-  									style={{ width: undefined }}
+  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}
   								>

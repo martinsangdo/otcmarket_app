@@ -540,7 +540,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
                     mode="dropdown"
                     iosHeader="Duration"
-                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
                     selectedValue={this.state.options.pc}
                     onValueChange={(newval)=>{this._toogle_options_value('pc', newval)}}
                   >
@@ -557,7 +558,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Penny Stock"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.penny}
 										onValueChange={(newval)=>{this._toogle_options_value('penny', newval)}}
 									>
@@ -583,7 +585,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Market Index"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.perf_index}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_index', newval)}}
 									>
@@ -602,7 +605,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Duration"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.perf_duration}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_duration', newval)}}
 										>
@@ -618,7 +622,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Min change"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.perf_pricePctMin}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_pricePctMin', newval)}}
 									>
@@ -636,7 +641,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Max change"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.perf_pricePctMax}
 										onValueChange={(newval)=>{this._toogle_options_value('perf_pricePctMax', newval)}}
 										>
@@ -657,7 +663,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Min change"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.volChgMin}
 										onValueChange={(newval)=>{this._toogle_options_value('volChgMin', newval)}}
 									>
@@ -674,7 +681,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Max change"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.volChgMax}
 										onValueChange={(newval)=>{this._toogle_options_value('volChgMax', newval)}}
 										>
@@ -708,7 +716,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Min"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.shinMin}
 										onValueChange={(newval)=>{this._toogle_options_value('shinMin', newval)}}
 									>
@@ -723,7 +732,8 @@ class StockFinderControls extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Max"
-										iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+										style={{ width: undefined, backgroundColor: '#ddd', paddingRight:10 }}
+                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -5, marginRight:10 }}/>}
 										selectedValue={this.state.options.shinMax}
 										onValueChange={(newval)=>{this._toogle_options_value('shinMax', newval)}}
 										>

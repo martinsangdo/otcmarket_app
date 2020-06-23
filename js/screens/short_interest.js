@@ -139,7 +139,7 @@ class ShortInterest extends BaseScreen {
   									mode="dropdown"
   									iosHeader="Select Date"
   									iosIcon={<Icon name="ios-arrow-down" />}
-  									style={{ width: undefined }}
+  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.current_date}
   									onValueChange={(newval)=>{this.onChangeDate(newval)}}
   								>
