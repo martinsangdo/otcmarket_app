@@ -201,8 +201,10 @@ export default {
 				justifyContent: "center",
 				alignItems: 'center',
 				paddingHorizontal: 20,
+        paddingVertical: 10,
 				width: 150,
-				backgroundColor: '#0097de'
+				backgroundColor: '#0097de',
+        borderRadius: 10
 		},
 		//
 		border_b_active: {

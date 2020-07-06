@@ -322,7 +322,6 @@ class CorporateActions extends BaseScreen {
 										<Icon name="menu" style={common_styles.greenColor}/>
 									</TouchableOpacity>
 								</Left>
-
 								<Body style={styles.headerBody}>
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</Text>
 								</Body>

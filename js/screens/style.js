@@ -67,5 +67,6 @@ export default {
   chkbox: {width:20,height:20, margin:10},
   finder_options_sub_container: {height: 260, backgroundColor:'#eee'},
   finder_textbox_container: {height:36, padding:5, width: 150},
-  positivePriceColor: {color: '#049F17'}
+  positivePriceColor: {color: '#049F17'},
+  contact_email: {height:36, padding:5, width: '95%'},
 };

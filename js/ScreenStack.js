@@ -25,6 +25,7 @@ import ShortInterest from "./screens/short_interest";
 import ForeignExchange from "./screens/foreign_exchange";
 import BrokerDealer from "./screens/broker_dealer";
 import CorporateActions from "./screens/corporate_actions";
+import Contact from "./screens/contact";
 
 import Splash from "./screens/splash";
 
@@ -38,10 +39,11 @@ const Drawer = createDrawerNavigator(
     ShortInterest: {screen: ShortInterest},
     ForeignExchange: {screen: ForeignExchange},
     BrokerDealer: {screen: BrokerDealer},
-    CorporateActions: {screen: CorporateActions}
+    CorporateActions: {screen: CorporateActions},
+    Contact: {screen: Contact}
   },
   {
-    initialRouteName: "CorporateActions",
+    initialRouteName: "Contact",
     contentOptions: {
       activeTintColor: "#81af68"
     },

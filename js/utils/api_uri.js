@@ -101,5 +101,6 @@ export const API_URI = {
 		CORPORATE_ACTIONS: {
 			FILTERS: setting.BACKEND_SERVER + 'corp-actions/filters',
 			ROUTE: setting.BACKEND_SERVER + 'corp-actions/<route>?route=<route>&page=<page_index>&pageSize=25&retainPageSize=true'
-		}
+		},
+    SEND_CONTACT: 'http://localhost:3001/contact'  //https://otcmarket.herokuapp.com
 };

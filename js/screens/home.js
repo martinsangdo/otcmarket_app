@@ -245,7 +245,7 @@ class Home extends BaseScreen {
 					<View style={common_styles.width_40p}><Text>{item.description}</Text></View>
 					<View style={common_styles.width_20p}><Text style={common_styles.float_right}>{item.lastSale}</Text></View>
 					<View style={common_styles.width_20p}><Text style={[common_styles.float_right, styles.positivePriceColor, item.change < 0 && common_styles.redColor]}>{item.change}</Text></View>
-					<View style={common_styles.width_20p}><Text style={common_styles.float_right}>{item.percentChange}%</Text></View>
+					<View style={common_styles.width_20p}><Text style={[common_styles.float_right, styles.positivePriceColor, item.percentChange < 0 && common_styles.redColor]}>{item.percentChange}%</Text></View>
 				</View>
 		);
 	 //==========

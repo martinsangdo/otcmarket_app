@@ -56,14 +56,14 @@ const datas = [
     route: "CorporateActions",
     icon: "md-brush"
   },
-  {
-    name: "Fees",
-    route: "Home",
-    icon: "md-card"
-  },
+  // {
+  //   name: "Fees",
+  //   route: "Home",
+  //   icon: "md-card"
+  // },
   {
     name: "Contact",  //Terms of Service
-    route: "Home",
+    route: "Contact",
     icon: "md-mail"
   }
 ];
