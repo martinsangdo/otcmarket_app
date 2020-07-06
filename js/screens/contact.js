@@ -16,6 +16,7 @@ import {API_URI} from '../utils/api_uri';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {C_Const} from '../utils/constant';
 import CheckBox from '@react-native-community/checkbox';
+import DeviceInfo from 'react-native-device-info';
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height - 50;
@@ -57,7 +58,13 @@ class Contact extends BaseScreen {
 		var params = {
 			email: this.state.email,
 			message: this.state.message,
-			options: JSON.stringify(this.state.options)
+			options: JSON.stringify(this.state.options),
+			device_info: JSON.stringify({
+				app_version: DeviceInfo.getVersion(),
+				device_id: DeviceInfo.getUniqueId(),
+				device_name: DeviceInfo.getDeviceId(),
+				device_version: Platform.OS + ' ' + DeviceInfo.getSystemVersion()
+			})
 		};
 		//validate input
 		if (Utils.isEmpty(this.state.email) || !Utils.validateEmail(this.state.email)){
