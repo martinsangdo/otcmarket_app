@@ -44,7 +44,7 @@ class StockDetailQuote extends BaseScreen {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
 				}
-			}, C_Const.MAX_WAIT_RESPONSE);
+			}, 3000);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -53,6 +53,7 @@ class StockDetailQuote extends BaseScreen {
 			//check if any param is updated, load data again
       if (prevPropParams.getParam('symbol') != newPropParams['symbol']){
         this.setState({
+          loading_indicator_state: true,
           symbol: newPropParams['symbol'],
           current_detail_part: 'quote',
           current_quote: 'bid',
@@ -64,6 +65,11 @@ class StockDetailQuote extends BaseScreen {
         }, ()=>{
           this._load_quote();
         });
+        setTimeout(() => {
+  				if (this.state.loading_indicator_state){
+  					this.setState({loading_indicator_state: false});  //stop loading
+  				}
+  			}, 3000);
       }
 		}
     //
@@ -291,7 +297,7 @@ class StockDetailQuote extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 {/* general data */}
                 <View style={common_styles.margin_10}>
                   <Card>

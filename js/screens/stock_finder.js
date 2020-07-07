@@ -33,13 +33,8 @@ class StockFinder extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-      this._load_data();
       this._load_controls();
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
+      this._load_data();
 		}
     //
     _load_data(){
@@ -89,6 +84,11 @@ class StockFinder extends BaseScreen {
             me.setState({loading_indicator_state: false});
           });
       });
+      setTimeout(() => {
+				if (this.state.loading_indicator_state){
+					this.setState({loading_indicator_state: false});  //stop loading
+				}
+			}, C_Const.MAX_WAIT_RESPONSE);
     }
     //
     _load_controls(){
@@ -97,14 +97,12 @@ class StockFinder extends BaseScreen {
           API_URI.STOCK_FINDER.GET_FILTERS.URL, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
-					Utils.xlog('cached data', cache_data);
 					me.setState({controls: cache_data, is_loaded_controls: true});
 				} else {
           //load from server
           RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
             if (detail){
               var rawDataJson = JSON.parse(detail);
-              // Utils.xlog('controls', rawDataJson);
               store.update(API_URI.STOCK_FINDER.GET_FILTERS.CACHE_TIME_KEY, {t: Utils.get_current_timestamp()});
               store.update(API_URI.STOCK_FINDER.GET_FILTERS.URL, {d: rawDataJson});
               me.setState({controls: rawDataJson, is_loaded_controls: true});
@@ -211,7 +209,6 @@ class StockFinder extends BaseScreen {
     }
     //called from another page
     _on_search_advance=(new_options)=>{
-      Utils.xlog('new_options', new_options);
       if (this.state.advanced_options != new_options){
         this.setState({advanced_options: new_options, current_page: 0}, ()=>{
           this._load_data();
@@ -249,7 +246,7 @@ class StockFinder extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>

@@ -41,7 +41,7 @@ class StockDetailSecurity extends BaseScreen {
 				if (this.state.loading_indicator_state){
 					this.setState({loading_indicator_state: false});  //stop loading
 				}
-			}, C_Const.MAX_WAIT_RESPONSE);
+			}, 3000);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -58,6 +58,11 @@ class StockDetailSecurity extends BaseScreen {
         }, ()=>{
           this._load_data();
         });
+        setTimeout(() => {
+  				if (this.state.loading_indicator_state){
+  					this.setState({loading_indicator_state: false});  //stop loading
+  				}
+  			}, 3000);
       }
 		}
     //
@@ -199,7 +204,7 @@ class StockDetailSecurity extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
                 <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>DIVIDENDS & SPLITS</Text></View>

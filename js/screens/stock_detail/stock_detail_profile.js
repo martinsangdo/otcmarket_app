@@ -22,7 +22,7 @@ class StockDetailProfile extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        loading_indicator_state: true,
         symbol:'',  //current stock
         current_detail_part: 'company_profile',
         general: {}
@@ -36,12 +36,6 @@ class StockDetailProfile extends BaseScreen {
         this._load_data();
 			});
       //todo: check bookmark
-			//
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -116,6 +110,12 @@ class StockDetailProfile extends BaseScreen {
         } else if (error){
           //do nothing
         }
+        me.setState({loading_indicator_state: false});
+        setTimeout(() => {
+  				if (me.state.loading_indicator_state){
+  					me.setState({loading_indicator_state: false});  //stop loading
+  				}
+  			}, C_Const.MAX_WAIT_RESPONSE);
       });
     }
     //when user wants to see another part of stock detail
@@ -220,7 +220,7 @@ class StockDetailProfile extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content style={common_styles.padding_10}>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 {/* general data */}
                 <View style={common_styles.margin_b_10} />
                 <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>{this.state.general['name']}</Text></View>
@@ -233,7 +233,7 @@ class StockDetailProfile extends BaseScreen {
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 <View><Text>{this.state.general['businessDesc']}</Text></View>
                 {this.state.general['hasLogo'] && !Utils.isEmpty(this.state.general['companyLogoUrl']) &&
-                  <Image source={{uri: setting.BACKEND_SERVER_URI + this.state.general['companyLogoUrl']}} style={{width:72, height:40}}/>
+                  <Image source={{uri: setting.BACKEND_SERVER_URI + this.state.general['companyLogoUrl']}} style={{maxWidth:170, height:40}}/>
                 }
                 {
                   !Utils.isEmpty(this.state.general['address1']) &&

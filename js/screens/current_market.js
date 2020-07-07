@@ -87,7 +87,7 @@ class CurrentMarket extends BaseScreen {
 		//
 		onChangeMarket(newMarket) {
       if (newMarket != this.state.tierGroup){
-  	    this.setState({tierGroup: newMarket, current_page:0, data_list:{}}, ()=>{
+  	    this.setState({tierGroup: newMarket, current_page:0, data_list:{records: [],totalRecords: 0}}, ()=>{
   				this._load_snaphot_market();
   				this._open_more_data();
   				setTimeout(() => {
@@ -135,7 +135,7 @@ class CurrentMarket extends BaseScreen {
 			Utils.get_data_from_cache(cache_time_key, cache_duration, url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
 					//parse cached data
-					Utils.xlog('cached data', cache_data);
+					// Utils.xlog('cached data', cache_data);
 					//append to list
 					var current_data = me.state.data_list;
 					if (current_data['records'] == null){
@@ -147,7 +147,7 @@ class CurrentMarket extends BaseScreen {
 					}
 				} else {
 					//get from server
-					Utils.xlog('get data from server', url);
+					// Utils.xlog('get data from server', url);
 					me.setState({loading_indicator_state: true}, () => {
 						RequestData.sentGetRequest(url, (detail, error) => {
 								if (detail){
@@ -178,7 +178,7 @@ class CurrentMarket extends BaseScreen {
 		//
 		_change_sortOn(newSortOn){
       var me = this;
-			this.setState({sortOn: newSortOn, current_page:1, data_list:{}}, ()=>{
+			this.setState({sortOn: newSortOn, current_page:1, data_list:{records: [],totalRecords: 0}}, ()=>{
         var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
           '&sortOn=' + newSortOn+'&page=1&pageSize='+C_Const.PAGE_LEN;
         this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
@@ -187,7 +187,7 @@ class CurrentMarket extends BaseScreen {
 		//
 		_change_advancers_priceMin(newPriceMin){
       var me = this;
-			this.setState({advancer_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
+			this.setState({advancer_priceMin: newPriceMin, current_page:1, data_list:{records: [],totalRecords: 0}}, ()=>{
         var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
           '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
         this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
@@ -196,7 +196,7 @@ class CurrentMarket extends BaseScreen {
 		//
 		_change_decliners_priceMin(newPriceMin){
       var me = this;
-			this.setState({decliner_priceMin: newPriceMin, current_page:1, data_list:{}}, ()=>{
+			this.setState({decliner_priceMin: newPriceMin, current_page:1, data_list:{records: [],totalRecords: 0}}, ()=>{
         var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
           '&priceMin=' + newPriceMin+'&page=1&pageSize='+C_Const.PAGE_LEN;
         this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
@@ -253,7 +253,7 @@ class CurrentMarket extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
 								{/* Snap shot */}
 								<View>
 									<Picker

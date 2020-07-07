@@ -97,6 +97,11 @@ class StockDetailFinancial extends BaseScreen {
         }, ()=>{
           this._load_data();
         });
+        setTimeout(() => {
+  				if (this.state.loading_indicator_state){
+  					this.setState({loading_indicator_state: false});  //stop loading
+  				}
+  			}, C_Const.MAX_WAIT_RESPONSE);
       }
 		}
     //
@@ -227,7 +232,7 @@ class StockDetailFinancial extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_type('income-statement')}>

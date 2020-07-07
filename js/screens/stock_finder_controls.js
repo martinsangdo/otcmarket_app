@@ -57,18 +57,6 @@ class StockFinderControls extends BaseScreen {
 			controls: this.props.navigation.state.params.controls,
 			is_loaded_controls:true
 		});
-		// var me = this;
-		// RequestData.sentGetRequest(API_URI.STOCK_FINDER.GET_FILTERS.URL, (detail, error) => {
-		// 	if (detail){
-		// 		var rawDataJson = JSON.parse(detail);
-		// 		Utils.xlog('controls', rawDataJson);
-		// 		me.setState({controls: rawDataJson, is_loaded_controls:true}, ()=>{
-		// 			// me._render_markets();
-		// 		});
-		// 	} else {
-		// 		//error
-		// 	}
-		// });
   }
 	//begin searching
 	_apply_options(){
@@ -744,7 +732,11 @@ class StockFinderControls extends BaseScreen {
 										<PickerItem label="100%" value="100" />
 									</Picker>
 								</View>
-
+								<View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
+									<TouchableOpacity style={[common_styles.default_button]} onPress={() => this._apply_options()}>
+										<Text style={common_styles.whiteColor}>Apply</Text>
+									</TouchableOpacity>
+								</View>
 								<View style={common_styles.margin_b_20} />
 							</Content>
 						</Container>

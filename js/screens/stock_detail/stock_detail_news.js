@@ -71,29 +71,32 @@ class StockDetailNews extends BaseScreen {
       var me = this;
       var url = API_URI.STOCK_DETAIL.NEWS.replace(/<symbol>/g, this.state.symbol) + this.state.current_page;
       //
-      RequestData.sentGetRequest(url, (detail, error) => {
-        if (detail){
-          var records = detail['records'];
-          if (records != null){
-            var list_data = me.state.list_data;
-            for (var i=0; i<records.length; i++){
-              list_data.push({
-                id: records[i]['id'] + '',
-                title: records[i]['title'],
-                newsTypeDescript: records[i]['newsTypeDescript'],
-                displayDateTime: records[i]['displayDateTime']
-              });
+      this.setState({loading_indicator_state: true}, ()=>{
+        RequestData.sentGetRequest(url, (detail, error) => {
+          if (detail){
+            var records = detail['records'];
+            if (records != null){
+              var list_data = me.state.list_data;
+              for (var i=0; i<records.length; i++){
+                list_data.push({
+                  id: records[i]['id'] + '',
+                  title: records[i]['title'],
+                  newsTypeDescript: records[i]['newsTypeDescript'],
+                  displayDateTime: records[i]['displayDateTime']
+                });
+              }
             }
+            // Utils.dlog(list_data);
+            me.setState({list_data: list_data, totalRecords: detail['totalRecords']}, ()=>{
+              if (me.state.list_data.length >= detail['totalRecords']){
+                me.setState({can_load_more: false});
+              }
+            });
+          } else if (error){
+            //do nothing
           }
-          // Utils.dlog(list_data);
-          me.setState({list_data: list_data, totalRecords: detail['totalRecords']}, ()=>{
-            if (me.state.list_data.length >= detail['totalRecords']){
-              me.setState({can_load_more: false});
-            }
-          });
-        } else if (error){
-          //do nothing
-        }
+          me.setState({loading_indicator_state: false});
+        });
       });
     }
     //when user wants to see another part of stock detail
@@ -203,7 +206,7 @@ class StockDetailNews extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
                 <View style={[common_styles.margin_10]}><Text style={[common_styles.heading_1]}>NEWS DOCUMENTS</Text></View>

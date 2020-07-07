@@ -43,7 +43,7 @@ const Drawer = createDrawerNavigator(
     Contact: {screen: Contact}
   },
   {
-    initialRouteName: "Contact",
+    initialRouteName: "Home",
     contentOptions: {
       activeTintColor: "#81af68"
     },
