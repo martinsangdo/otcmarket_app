@@ -330,7 +330,7 @@ class CorporateActions extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={[common_styles.flex_row, common_styles.padding_5]}>
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
                     <Text>Action</Text>

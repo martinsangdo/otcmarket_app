@@ -238,7 +238,7 @@ class NewsReports extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_category('news')}>

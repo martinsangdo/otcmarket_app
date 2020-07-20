@@ -111,7 +111,7 @@ class ForeignExchange extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
 								<View style={[common_styles.view_align_center, common_styles.padding_5]}>
 									<Text style={common_styles.darkGrayColor}>Companies listed on a Qualified Foreign Exchange can leverage OTCQX or OTCQB to access an efficient and cost-effective secondary market in the U.S.</Text>
 								</View>

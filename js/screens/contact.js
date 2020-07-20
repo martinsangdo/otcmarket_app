@@ -111,7 +111,7 @@ class Contact extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-								<Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+								<Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
 								<View style={[common_styles.margin_10]}>
 									<Text>What I want is (*):</Text>
 								</View>

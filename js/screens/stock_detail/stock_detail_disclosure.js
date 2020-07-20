@@ -265,7 +265,7 @@ class StockDetailDisclosure extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content>
-                <Spinner visible={false} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
                 <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>Financial Reports</Text></View>

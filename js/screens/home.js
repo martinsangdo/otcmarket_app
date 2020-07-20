@@ -274,7 +274,7 @@ class Home extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.view_align_center}>
 									<Text style={common_styles.darkGrayColor}>All data in this app delayed 15 minutes</Text>
 								</View>

@@ -220,7 +220,7 @@ class StockDetailProfile extends BaseScreen {
 							</Header>
 							{/* END header */}
               <Content style={common_styles.padding_10}>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 {/* general data */}
                 <View style={common_styles.margin_b_10} />
                 <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>{this.state.general['name']}</Text></View>

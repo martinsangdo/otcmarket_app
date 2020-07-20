@@ -109,7 +109,7 @@ class WebViewer extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-								<Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+								<Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
 								<View>
 									{
 										this.state.pure_link &&

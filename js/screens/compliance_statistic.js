@@ -263,7 +263,7 @@ class ComplianceStatistic extends BaseScreen {
 							</Header>
 							{/* END header */}
 							<Content>
-                <Spinner visible={this.state.loading_indicator_state} textStyle={common_styles.whiteColor} />
+                <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 {/* Stock Promotions */}
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>STOCK PROMOTIONS</Text></View>

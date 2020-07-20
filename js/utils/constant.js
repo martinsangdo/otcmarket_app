@@ -38,5 +38,6 @@ export const C_Const = {
 		USER_INFO: 'USER_INFO',   //include: user_id, jwt
 		CATEGORY_LIST: 'CATEGORY_LIST'
 	},
-	ACTIVE_COLOR: '#008da9'
+	ACTIVE_COLOR: '#008da9',
+	SPINNER_COLOR: '#fff'
 };
