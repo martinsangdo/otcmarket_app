@@ -318,7 +318,7 @@ class CorporateActions extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</Text>
+									<Text style={[common_styles.bold, common_styles.default_font_color]}>Corporate Actions</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>

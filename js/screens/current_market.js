@@ -137,29 +137,32 @@ class CurrentMarket extends BaseScreen {
 				} else {
 					//get from server
 					// Utils.xlog('get data from server', url);
-					me.setState({loading_indicator_state: true}, () => {
-						RequestData.sentGetRequest(url, (detail, error) => {
-								if (detail){
-									var save_detail = {
-										totalRecords: detail['totalRecords'],
-										records: detail['records']
-									};
-									//append to list
-									var current_data = me.state.data_list;
-									if (current_data['records'] == null){
-										me.setState({data_list: save_detail});	//first time load
-									} else {
-										current_data['records'].push(...detail['records']);
-										current_data['totalRecords'] = detail['totalRecords'];
-										me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length});		//append & save back
-									}
-									store.update(url, {d:save_detail});
-									store.update(cache_time_key, {t: Utils.get_current_timestamp()});
-								} else if (error){
-									//do nothing
-								}
-							});
-					});
+          setTimeout(()=>{
+            me.setState({loading_indicator_state: true}, () => {
+  						RequestData.sentGetRequest(url, (detail, error) => {
+  								if (detail){
+  									var save_detail = {
+  										totalRecords: detail['totalRecords'],
+  										records: detail['records']
+  									};
+  									//append to list
+  									var current_data = me.state.data_list;
+  									if (current_data['records'] == null){
+  										me.setState({data_list: save_detail});	//first time load
+  									} else {
+  										current_data['records'].push(...detail['records']);
+  										current_data['totalRecords'] = detail['totalRecords'];
+  										me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length});		//append & save back
+  									}
+  									store.update(url, {d:save_detail});
+  									store.update(cache_time_key, {t: Utils.get_current_timestamp()});
+  								} else if (error){
+  									//do nothing
+  								}
+  							});
+                me.setState({loading_indicator_state:false});
+  					});
+          }, C_Const.DELAY_LOAD_SPINNER);
 				}
 				me.setState({loading_indicator_state:false});
 			});
@@ -197,25 +200,27 @@ class CurrentMarket extends BaseScreen {
 				return;
 			}
 			var me = this;
-			this.setState({loading_indicator_state: true, current_page: this.state.current_page+1}, ()=>{
-				switch (me.state.active_part) {
-					case 'MOST ACTIVE':
-						var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
-							'&sortOn=' + me.state.sortOn+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-						this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
-						break;
-						case 'ADVANCERS':
-							var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
-								'&priceMin=' + me.state.advancer_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-							this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
-							break;
-							case 'DECLINERS':
-								var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
-									'&priceMin=' + me.state.decliner_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
-								this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
-								break;
-				}
-			});
+      setTimeout(()=>{
+        me.setState({loading_indicator_state: true, current_page: this.state.current_page+1}, ()=>{
+  				switch (me.state.active_part) {
+  					case 'MOST ACTIVE':
+  						var url = API_URI.CURRENT_MARKET.MOST_ACTIVE.URI + 'tierGroup=' + me.state.tierGroup +
+  							'&sortOn=' + me.state.sortOn+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
+  						this._load_data(url, API_URI.CURRENT_MARKET.MOST_ACTIVE.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
+  						break;
+  						case 'ADVANCERS':
+  							var url = API_URI.CURRENT_MARKET.ADVANCERS.URI + 'tierGroup=' + me.state.tierGroup +
+  								'&priceMin=' + me.state.advancer_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
+  							this._load_data(url, API_URI.CURRENT_MARKET.ADVANCERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
+  							break;
+  							case 'DECLINERS':
+  								var url = API_URI.CURRENT_MARKET.DECLINERS.URI + 'tierGroup=' + me.state.tierGroup +
+  									'&priceMin=' + me.state.decliner_priceMin+'&page='+me.state.current_page+'&pageSize='+C_Const.PAGE_LEN;
+  								this._load_data(url, API_URI.CURRENT_MARKET.DECLINERS.CACHE_TIME_KEY, API_URI.CACHE_STOCK_PRICE_DURATION);
+  								break;
+  				}
+  			});
+      }, C_Const.DELAY_LOAD_SPINNER);
 		}
 	 //==========
 		render() {
