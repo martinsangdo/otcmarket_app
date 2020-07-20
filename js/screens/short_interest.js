@@ -46,28 +46,30 @@ class ShortInterest extends BaseScreen {
     //
     _load_data(){
       var me = this;
-      me.setState({loading_indicator_state: true}, ()=>{
-				var url = API_URI.SHORT_SALE.LIST.replace(/<date>/g, this.state.current_date).
-							replace(/<page_index>/g, this.state.current_page);
-        RequestData.sentGetRequest(url, (detail, error) => {
-          if (detail){
-            var data = me.state.list_data;
-						for (var i=0; i<detail['records'].length; i++){
-							data.push({	//append
-								symbol: detail['records'][i]['symbol'],
-								securityName: detail['records'][i]['securityName'],
-								shortInterest: Utils.format_currency_thousand(detail['records'][i]['shortInterest'])
-							});
-						}
-            //save it
-            me.setState({list_data: data, totalRecords: detail['totalRecords'],
-								can_load_more:detail['totalRecords'] > data.length});
-          } else if (error){
-            //do nothing
-          }
-          me.setState({loading_indicator_state: false});
-        });
-      });
+			setTimeout(()=>{
+	      me.setState({loading_indicator_state: true}, ()=>{
+					var url = API_URI.SHORT_SALE.LIST.replace(/<date>/g, this.state.current_date).
+								replace(/<page_index>/g, this.state.current_page);
+	        RequestData.sentGetRequest(url, (detail, error) => {
+	          if (detail){
+	            var data = me.state.list_data;
+							for (var i=0; i<detail['records'].length; i++){
+								data.push({	//append
+									symbol: detail['records'][i]['symbol'],
+									securityName: detail['records'][i]['securityName'],
+									shortInterest: Utils.format_currency_thousand(detail['records'][i]['shortInterest'])
+								});
+							}
+	            //save it
+	            me.setState({list_data: data, totalRecords: detail['totalRecords'],
+									can_load_more:detail['totalRecords'] > data.length});
+	          } else if (error){
+	            //do nothing
+	          }
+	          me.setState({loading_indicator_state: false});
+	        });
+	      });
+			}, C_Const.DELAY_LOAD_SPINNER);
     }
     //
 		_keyExtractor = (item) => item.symbol+Math.random()+'';

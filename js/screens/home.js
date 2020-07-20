@@ -45,13 +45,15 @@ class Home extends BaseScreen {
 		//
 		onChangeMarket(newMarket) {
       if (newMarket != this.state.tierGroup){
-        this.setState({tierGroup: newMarket, is_loading_most_active: true,
-            is_loading_advancers: true, is_loading_decliners: true}, ()=>{
-  				this._load_snaphot_market();
-  				this._load_most_active();
-  				this._load_advancers();
-  				this._load_decliners();
-  			});
+        setTimeout(()=>{
+          this.setState({tierGroup: newMarket, is_loading_most_active: true,
+              is_loading_advancers: true, is_loading_decliners: true}, ()=>{
+    				this._load_snaphot_market();
+    				this._load_most_active();
+    				this._load_advancers();
+    				this._load_decliners();
+    			});
+        }, C_Const.DELAY_LOAD_SPINNER);
       }
 	  }
     //

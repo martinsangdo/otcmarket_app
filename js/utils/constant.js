@@ -39,5 +39,6 @@ export const C_Const = {
 		CATEGORY_LIST: 'CATEGORY_LIST'
 	},
 	ACTIVE_COLOR: '#008da9',
-	SPINNER_COLOR: '#fff'
+	SPINNER_COLOR: '#fff',
+	DELAY_LOAD_SPINNER: 500	//to prevent error load forever
 };

@@ -138,7 +138,7 @@ class StockDetailProfile extends BaseScreen {
       }
     }
     //
-		_keyExtractorOfficers = (item) => item.name + item.title;
+		_keyExtractorOfficers = (item) => item.name + item.title+Math.random();
 		//render the list. MUST use "item" as param
 		_renderOfficers = ({item}) => (
       <View style={[common_styles.margin_b_10]}>
@@ -147,7 +147,7 @@ class StockDetailProfile extends BaseScreen {
       </View>
 		);
     //
-		_keyExtractorAuditors = (item) => item.name + item.id;
+		_keyExtractorAuditors = (item) => item.name + item.id+Math.random();
 		//render the list. MUST use "item" as param
 		_renderAuditors = ({item}) => (
       <View style={[common_styles.margin_b_10]}>

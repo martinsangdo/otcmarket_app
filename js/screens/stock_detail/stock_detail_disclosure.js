@@ -28,11 +28,13 @@ class StockDetailDisclosure extends BaseScreen {
           reports: {
             current_page: 1,
             list: [],
+            totalRecords: 0,
             can_load_more: true
           },
           insiders: {
             current_page: 1,
             list: [],
+            totalRecords: 0,
             can_load_more: true
           }
         }
@@ -64,14 +66,10 @@ class StockDetailDisclosure extends BaseScreen {
               totalRecords: 0,
               can_load_more: true
             },
-            fillings: {
-              current_page: 1,
-              list: [],
-              can_load_more: true
-            },
             insiders: {
               current_page: 1,
               list: [],
+              totalRecords: 0,
               can_load_more: true
             }
           }
@@ -206,11 +204,11 @@ class StockDetailDisclosure extends BaseScreen {
             this._load_reports();
           });
           break;
-          case 'fillings':
+          case 'insiders':
             var data = this.state.data;
-            data['fillings']['current_page'] += 1;
+            data['insiders']['current_page'] += 1;
             this.setState({data: data}, ()=>{
-              this._load_sec_fillings();
+              this._load_insiders();
             });
             break;
         default:
