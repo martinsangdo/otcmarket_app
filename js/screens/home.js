@@ -41,9 +41,6 @@ class Home extends BaseScreen {
 			this._load_most_active();
 			this._load_advancers();
 			this._load_decliners();
-			setTimeout(() => {
-        this.setState({is_loading_most_active: false, is_loading_advancers: false, is_loading_decliners: false});  //stop loading all
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//
 		onChangeMarket(newMarket) {
@@ -54,9 +51,6 @@ class Home extends BaseScreen {
   				this._load_most_active();
   				this._load_advancers();
   				this._load_decliners();
-          setTimeout(() => {
-    				this.setState({is_loading_most_active: false, is_loading_advancers: false, is_loading_decliners: false});  //stop loading all
-    			}, C_Const.MAX_WAIT_RESPONSE);
   			});
       }
 	  }

@@ -40,12 +40,6 @@ class StockDetailNews extends BaseScreen {
         this._load_data();
 			});
       //todo: check bookmark
-			//
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){

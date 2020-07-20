@@ -20,7 +20,7 @@ class StockFinder extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        loading_indicator_state: true,
         current_page: 0,
         totalRecords: 0,
         data_list:[],
@@ -84,11 +84,6 @@ class StockFinder extends BaseScreen {
             me.setState({loading_indicator_state: false});
           });
       });
-      setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
     }
     //
     _load_controls(){

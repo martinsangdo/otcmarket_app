@@ -36,12 +36,6 @@ class StockDetailSecurity extends BaseScreen {
         this._load_data();
 			});
       //todo: check bookmark
-			//
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, 3000);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -58,11 +52,6 @@ class StockDetailSecurity extends BaseScreen {
         }, ()=>{
           this._load_data();
         });
-        setTimeout(() => {
-  				if (this.state.loading_indicator_state){
-  					this.setState({loading_indicator_state: false});  //stop loading
-  				}
-  			}, 3000);
       }
 		}
     //
@@ -141,7 +130,7 @@ class StockDetailSecurity extends BaseScreen {
       this.setState({is_dividend: is_dividend});
     }
     //
-		_keyExtractorDividend = (item) => item.changeDate + '-' + item.payDate;
+		_keyExtractorDividend = (item) => item.changeDate + '-' + item.payDate+Math.random();
 		//render the list. MUST use "item" as param
 		_renderItemDividend = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.changeDate + '-' + item.payDate}>
@@ -152,7 +141,7 @@ class StockDetailSecurity extends BaseScreen {
 				</View>
 		);
     //
-		_keyExtractorSplit = (item) => item.changeDate + '-' + item.payDate;
+		_keyExtractorSplit = (item) => item.changeDate + '-' + item.payDate+Math.random();
 		//render the list. MUST use "item" as param
 		_renderItemSplit = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.changeDate + '-' + item.payDate}>

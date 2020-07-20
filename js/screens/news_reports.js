@@ -22,7 +22,7 @@ class NewsReports extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        loading_indicator_state: true,
         tierGroup: 'ALL',
         current_category: 'news',   //news, reports, secs
         data: {
@@ -52,11 +52,6 @@ class NewsReports extends BaseScreen {
       this._load_data('news');
       this._load_data('reports');
       this._load_data('secs');
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
     //
     _load_data(category){
@@ -212,9 +207,6 @@ class NewsReports extends BaseScreen {
           this._load_data('news');
           this._load_data('reports');
           this._load_data('secs');
-          setTimeout(() => {
-    				this.setState({loading_indicator_state: false});  //stop loading all
-    			}, C_Const.MAX_WAIT_RESPONSE);
   			});
       }
 	  }

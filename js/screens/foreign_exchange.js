@@ -17,7 +17,7 @@ class ForeignExchange extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        loading_indicator_state: true,
 				current_page: 1,
 				list_data: [],
 				totalRecords: 0,
@@ -27,11 +27,6 @@ class ForeignExchange extends BaseScreen {
 		//
 		componentDidMount() {
 			this._load_data();
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//
     _load_data(){

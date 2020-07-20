@@ -20,7 +20,7 @@ class StockDetailQuote extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: false,
+        loading_indicator_state: true,
         symbol:'',  //current stock
         current_detail_part: 'quote',
         current_quote: 'bid',
@@ -39,12 +39,6 @@ class StockDetailQuote extends BaseScreen {
         this._load_quote();
 			});
       //todo: check bookmark
-			//
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, 3000);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -65,11 +59,6 @@ class StockDetailQuote extends BaseScreen {
         }, ()=>{
           this._load_quote();
         });
-        setTimeout(() => {
-  				if (this.state.loading_indicator_state){
-  					this.setState({loading_indicator_state: false});  //stop loading
-  				}
-  			}, 3000);
       }
 		}
     //
@@ -142,6 +131,7 @@ class StockDetailQuote extends BaseScreen {
         } else if (error){
           //do nothing
         }
+        me.setState({loading_indicator_state: false});
       });
       //Real time level 2
       var urlQuote = API_URI.STOCK_DETAIL.QUOTE.REAL_TIME_LEVEL_2.replace(/<symbol>/g, this.state.symbol);

@@ -111,11 +111,6 @@ class StockDetailProfile extends BaseScreen {
           //do nothing
         }
         me.setState({loading_indicator_state: false});
-        setTimeout(() => {
-  				if (me.state.loading_indicator_state){
-  					me.setState({loading_indicator_state: false});  //stop loading
-  				}
-  			}, C_Const.MAX_WAIT_RESPONSE);
       });
     }
     //when user wants to see another part of stock detail

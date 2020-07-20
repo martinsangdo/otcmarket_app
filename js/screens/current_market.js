@@ -47,12 +47,6 @@ class CurrentMarket extends BaseScreen {
 				this._load_snaphot_market();
 				this._open_more_data();
 			});
-			//
-			setTimeout(() => {
-				if (this.state.loading_indicator_state){
-					this.setState({loading_indicator_state: false});  //stop loading
-				}
-			}, C_Const.MAX_WAIT_RESPONSE);
 		}
 		//called when open this page again
 		componentDidUpdate(prevProps){
@@ -90,11 +84,6 @@ class CurrentMarket extends BaseScreen {
   	    this.setState({tierGroup: newMarket, current_page:0, data_list:{records: [],totalRecords: 0}}, ()=>{
   				this._load_snaphot_market();
   				this._open_more_data();
-  				setTimeout(() => {
-  					if (this.state.loading_indicator_state){
-  						this.setState({loading_indicator_state: false});  //stop loading
-  					}
-  				}, C_Const.MAX_WAIT_RESPONSE);
   			});
       }
 	  }
