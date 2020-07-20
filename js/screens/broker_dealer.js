@@ -75,7 +75,7 @@ class BrokerDealer extends BaseScreen {
             me.setState({loading_indicator_state: false});
           });
         });
-      }, 500);
+      }, C_Const.DELAY_LOAD_SPINNER);
     }
     //
 		_keyExtractor = (item) => item.mpid+Math.random()+'';
