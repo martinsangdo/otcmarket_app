@@ -35,7 +35,7 @@ class PDFViewer extends BaseScreen {
 	}
 	//
 	_check_login(){
-
+		this._navigateCanBackTo('Contact');
 	}
 	 //==========
 		render() {

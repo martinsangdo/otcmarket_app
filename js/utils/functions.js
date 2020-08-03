@@ -241,3 +241,11 @@ exports.validateEmail = function(email){
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 };
+//
+exports.cloneObj = function (original_obj) {
+  var dest_obj = {};
+  Object.keys(original_obj).forEach(function(key) {
+      dest_obj[key] = original_obj[key];
+  });
+  return dest_obj;
+};

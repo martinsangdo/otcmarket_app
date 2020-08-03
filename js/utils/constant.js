@@ -36,7 +36,8 @@ export const C_Const = {
 	//store/Preference keys
 	STORE_KEY: {
 		USER_INFO: 'USER_INFO',   //include: user_id, jwt
-		CATEGORY_LIST: 'CATEGORY_LIST'
+		CATEGORY_LIST: 'CATEGORY_LIST',
+		BOOKMARKED_SYMBOLS: 'BOOKMARKED_SYMBOLS'  //save bookmarked stocks
 	},
 	ACTIVE_COLOR: '#008da9',
 	SPINNER_COLOR: '#fff',

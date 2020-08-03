@@ -264,7 +264,7 @@ class Home extends BaseScreen {
 										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
 									</TouchableOpacity>
                   <TouchableOpacity>
-										<Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.greenColor]}/>
+										<Icon name="star" style={[common_styles.header_icon, common_styles.greenColor]}/>
 									</TouchableOpacity>
 								</Right>
 							</Header>
