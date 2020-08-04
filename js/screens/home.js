@@ -271,8 +271,8 @@ class Home extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} color={C_Const.SPINNER_COLOR} />
-                <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>All data in this app delayed 15 minutes</Text>
+                <View style={[common_styles.view_align_center, common_styles.margin_t_5]}>
+									<Text style={common_styles.darkGrayColor}>All data in this app are delayed in 15 minutes</Text>
 								</View>
                 {/* Index snapshot */}
 								<View style={common_styles.margin_b_10} />

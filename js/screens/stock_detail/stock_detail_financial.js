@@ -25,7 +25,7 @@ class StockDetailFinancial extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: true,
+        loading_indicator_state: false,
         current_detail_part: 'financials',
         symbol:'',  //current stock
         data: {
@@ -45,6 +45,7 @@ class StockDetailFinancial extends BaseScreen {
             quarterly: []
           }
         },
+        bookmarked_symbols:{},
         current_type: 'income-statement', //balance-sheet, cash-flow
         current_duration: 'annual', //semi-annual, quarterly
         current_time_index: 0 //0 -> 3
@@ -55,6 +56,7 @@ class StockDetailFinancial extends BaseScreen {
       this.setState({
         symbol:this.props.navigation.state.params.symbol
       }, ()=>{
+        this._load_bookmarked_state();
         this._load_data();
 			});
       //todo: check bookmark
@@ -85,14 +87,27 @@ class StockDetailFinancial extends BaseScreen {
               quarterly: []
             }
           },
+          bookmarked_symbols:{},
           current_type: 'income-statement',
           current_duration: 'annual',
           current_time_index: 0
         }, ()=>{
+          this._load_bookmarked_state();
           this._load_data();
         });
       }
 		}
+    //
+    _load_bookmarked_state(){
+      var me = this;
+			store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
+			.then(saved_symbols => {
+				// Utils.xlog('saved_symbols', saved_symbols.d);
+				if (saved_symbols!=null && saved_symbols.d!=null){
+					me.setState({bookmarked_symbols: saved_symbols.d});
+				}
+			});
+    }
     //
     _load_data(){
       if (this.state.data[this.state.current_type][this.state.current_duration].length == 0){
@@ -103,7 +118,6 @@ class StockDetailFinancial extends BaseScreen {
             replace('<current_type>', this.state.current_type).
               replace('<current_duration>', this.state.current_duration);
         //
-        this.setState({loading_indicator_state: true}, ()=>{
           RequestData.sentGetRequest(url, (detail, error) => {
             if (detail){
               var data = me.state.data;
@@ -112,9 +126,7 @@ class StockDetailFinancial extends BaseScreen {
             } else if (error){
               //do nothing
             }
-            me.setState({loading_indicator_state: false});
           });
-        });
       }
     }
     //when user wants to see another part of stock detail
@@ -176,8 +188,16 @@ class StockDetailFinancial extends BaseScreen {
       if (display_time.length > 0){
         return display_time;
       } else {
-        return <Text>Data is unavailable at this time.</Text>;
+        return <Text style={common_styles.grayColor}>Data is unavailable at this time.</Text>;
       }
+    }
+    //turn on/off bookmark of this symbol
+    _toggle_bookmark(){
+      var bookmarked_symbols = Utils.cloneObj(this.state.bookmarked_symbols);
+			bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
+			//save back to store
+			store.update(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS, {d:bookmarked_symbols});
+			this.setState({bookmarked_symbols: bookmarked_symbols});
     }
 	 //==========
 		render() {
@@ -200,8 +220,13 @@ class StockDetailFinancial extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
-                  <TouchableOpacity>
-                    <Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
+                  <TouchableOpacity onPress={() => this._toggle_bookmark()}>
+                    {this.state.bookmarked_symbols[this.state.symbol] &&
+                      <Icon name="star" style={[common_styles.header_icon, common_styles.margin_b_10, common_styles.greenColor]}/>
+                    }
+                    {!this.state.bookmarked_symbols[this.state.symbol] &&
+                      <Icon name="star-outline" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
+                    }
                   </TouchableOpacity>
                   <Picker
                     mode="dropdown"

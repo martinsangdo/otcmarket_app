@@ -25,7 +25,8 @@ class StockDetailSecurity extends BaseScreen {
         current_detail_part: 'security_details',
         dividend_data: [],
         splits_data: [],
-        is_dividend: true
+        is_dividend: true,
+        bookmarked_symbols:{}
 			};
 		}
 		//
@@ -33,6 +34,7 @@ class StockDetailSecurity extends BaseScreen {
       this.setState({
         symbol:this.props.navigation.state.params.symbol
       }, ()=>{
+        this._load_bookmarked_state();
         this._load_data();
 			});
       //todo: check bookmark
@@ -48,12 +50,25 @@ class StockDetailSecurity extends BaseScreen {
           current_detail_part: 'security_details',
           dividend_data: [],
           splits_data: [],
-          is_dividend: true
+          is_dividend: true,
+          bookmarked_symbols:{}
         }, ()=>{
+          this._load_bookmarked_state();
           this._load_data();
         });
       }
 		}
+    //
+    _load_bookmarked_state(){
+      var me = this;
+			store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
+			.then(saved_symbols => {
+				// Utils.xlog('saved_symbols', saved_symbols.d);
+				if (saved_symbols!=null && saved_symbols.d!=null){
+					me.setState({bookmarked_symbols: saved_symbols.d});
+				}
+			});
+    }
     //
     _load_data(){
       var me = this;
@@ -151,6 +166,14 @@ class StockDetailSecurity extends BaseScreen {
           <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.payDate}</Text></View>
 				</View>
 		);
+    //turn on/off bookmark of this symbol
+    _toggle_bookmark(){
+      var bookmarked_symbols = Utils.cloneObj(this.state.bookmarked_symbols);
+			bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
+			//save back to store
+			store.update(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS, {d:bookmarked_symbols});
+			this.setState({bookmarked_symbols: bookmarked_symbols});
+    }
 	 //==========
 		render() {
 				return (
@@ -172,8 +195,13 @@ class StockDetailSecurity extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
-                  <TouchableOpacity>
-                    <Icon name="md-bookmark" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
+                  <TouchableOpacity onPress={() => this._toggle_bookmark()}>
+                    {this.state.bookmarked_symbols[this.state.symbol] &&
+                      <Icon name="star" style={[common_styles.header_icon, common_styles.margin_b_10, common_styles.greenColor]}/>
+                    }
+                    {!this.state.bookmarked_symbols[this.state.symbol] &&
+                      <Icon name="star-outline" style={[common_styles.header_icon, common_styles.margin_b_10]}/>
+                    }
                   </TouchableOpacity>
                   <Picker
                     mode="dropdown"

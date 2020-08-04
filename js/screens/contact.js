@@ -153,7 +153,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('daily_report', !this.state.options['daily_report'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Daily stock/market report</Text></View>
+									<View style={common_styles.justifyCenter}><Text>Receive daily stock/market reports</Text></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -163,7 +163,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('connect_api', !this.state.options['connect_api'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Connect our API endpoint</Text></View>
+									<View style={common_styles.justifyCenter}><Text>Connect API endpoints</Text></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -176,7 +176,7 @@ class Contact extends BaseScreen {
 									<View style={common_styles.justifyCenter}><Text>Others</Text></View>
 								</View>
 								<View style={[common_styles.margin_10]}>
-									<Text>Email (*):</Text>
+									<Text>Your Email (*):</Text>
 									<Form style={common_styles.margin_t_5}>
 										<Item style={styles.contact_email} regular>
 											<Input ref='email' returnKeyType = {"done"} onSubmitEditing={Keyboard.dismiss}
