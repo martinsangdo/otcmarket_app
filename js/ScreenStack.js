@@ -26,9 +26,11 @@ import ForeignExchange from "./screens/foreign_exchange";
 import BrokerDealer from "./screens/broker_dealer";
 import CorporateActions from "./screens/corporate_actions";
 import Contact from "./screens/contact";
+import SymbolList from "./screens/symbol_list";
 
 import Splash from "./screens/splash";
 
+//pages in menu
 const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
@@ -50,7 +52,7 @@ const Drawer = createDrawerNavigator(
     contentComponent: props => <SideBar {...props} />
   }
 );
-
+//skeleton pages
 const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },
@@ -65,7 +67,8 @@ const AppNavigator = createStackNavigator(
     StockDetailDisclosure: { screen: StockDetailDisclosure },
     PDFViewer: { screen: PDFViewer },
     WebViewer: {screen: WebViewer},
-    StockFinderControls: { screen: StockFinderControls }
+    StockFinderControls: { screen: StockFinderControls },
+    SymbolList: {screen: SymbolList}
   },
   {
     initialRouteName: "Splash",

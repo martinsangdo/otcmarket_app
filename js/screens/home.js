@@ -260,7 +260,7 @@ class Home extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Market Update</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
-									<TouchableOpacity style={common_styles.margin_r_20}>
+									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._navigateCanBackTo('SymbolList')}>
 										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
 									</TouchableOpacity>
                   <TouchableOpacity>

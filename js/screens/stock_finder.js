@@ -20,7 +20,7 @@ class StockFinder extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: true,
+        loading_indicator_state: false,
         current_page: 0,
         totalRecords: 0,
         data_list:[],

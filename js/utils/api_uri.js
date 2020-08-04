@@ -102,5 +102,11 @@ export const API_URI = {
 			FILTERS: setting.BACKEND_SERVER + 'corp-actions/filters',
 			ROUTE: setting.BACKEND_SERVER + 'corp-actions/<route>?route=<route>&page=<page_index>&pageSize=25&retainPageSize=true'
 		},
+		SYMBOL_LIST: {
+			MAX_ITEM_LEN: 100,	//max symbols to show
+			URL: setting.HOMEPAGE + 'data/symbols',	//get all symbols
+			CACHE_TIME_KEY: 'SYMBOL_LIST_CACHE_TIME_KEY',
+			CACHE_TIME_DURATION: 7*24*60*60*1000  //7 days in timestamp
+		},
     SEND_CONTACT: 'https://otcmarket.herokuapp.com/contact'  //https://otcmarket.herokuapp.com
 };
