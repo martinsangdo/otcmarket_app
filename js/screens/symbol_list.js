@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {Image, View, TouchableOpacity, FlatList, YellowBox} from "react-native";
+import {Image, View, TouchableOpacity, FlatList, YellowBox, TextInput} from "react-native";
 
-import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Card,
-  CardItem, Picker} from "native-base";
+import {Container, Content, Button, Text, Header, Title, Body, Left, Right, Icon, Form, Item, Input} from "native-base";
 
 import BaseScreen from "../base/BaseScreen.js";
 import common_styles from "../../css/common";
@@ -14,15 +13,15 @@ import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-const Item = Picker.Item;
-
 class SymbolList extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
         loading_indicator_state: false,
         full_data_list:[],    //all symbols
-        display_data_list: []
+        display_data_list: [],
+        keyword: '',
+        no_result_found: false
 			};
 		}
 		//
@@ -95,6 +94,27 @@ class SymbolList extends BaseScreen {
         </View>
       </View>
 		);
+    //search symbol by name or symbol code
+    _search_symbol(){
+      var keyword = Utils.trim(this.state.keyword);
+      if (Utils.isEmpty(keyword) || keyword.length == 1){
+        return;
+      }
+      keyword = keyword.toLowerCase();
+      var full_data_list = this.state.full_data_list;
+      var len = full_data_list.length;
+      var result_list = [];
+      for (var i=0; i<len; i++){
+        if (result_list.length == 50){  //show max 50 results
+          break;
+        }
+        if (full_data_list[i]['symbol'].toLowerCase().indexOf(keyword) > -1 || full_data_list[i]['name'].toLowerCase().indexOf(keyword) > -1){
+          //found it
+          result_list.push(full_data_list[i]);
+        }
+      }
+      this.setState({no_result_found: result_list.length == 0, display_data_list: result_list});
+    }
 	 //==========
 		render() {
 				return (
@@ -121,6 +141,20 @@ class SymbolList extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
+                <View style={common_styles.margin_b_20} />
+                <Form style={[common_styles.flex_row, common_styles.space_around]}>
+									<Item style={styles.symbol_finder_textbox_container} regular>
+										<TextInput placeholder="Type to search" onChange={(event) => this.setState({keyword : event.nativeEvent.text})} value={this.state.keyword}/>
+									</Item>
+                  <TouchableOpacity style={[common_styles.default_button]} onPress={() => this._search_symbol()}>
+										<Text style={common_styles.whiteColor}>Search</Text>
+									</TouchableOpacity>
+								</Form>
+                {this.state.no_result_found &&
+                  <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
+  									<Text style={common_styles.darkGrayColor}>No results found</Text>
+  								</View>
+                }
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
