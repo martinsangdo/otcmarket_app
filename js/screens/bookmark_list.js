@@ -25,16 +25,11 @@ class BookmarkList extends BaseScreen {
 		}
 		//
 		componentDidMount() {
-      this._load_bookmarked_state();
+      this._load_bookmarked_list();
 		}
     //
 		componentDidUpdate() {
       var me = this;
-      store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
-      .then(saved_symbols => {
-        Utils.xlog('saved_symbols 111', saved_symbols.d);
-
-      });
 		}
     //
     _load_data(){
@@ -69,13 +64,13 @@ class BookmarkList extends BaseScreen {
       });
     }
     //
-    _load_bookmarked_state(){
+    _load_bookmarked_list(){
       var me = this;
       store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
       .then(saved_symbols => {
-        Utils.xlog('saved_symbols', saved_symbols.d);
         if (saved_symbols!=null && saved_symbols.d!=null){
           var bookmarked_symbols = saved_symbols.d;
+					// Utils.xlog('bookmarked_symbols', bookmarked_symbols);
           me.setState({ bookmarked_symbols : bookmarked_symbols}, ()=>{
             Utils.get_data_from_cache(API_URI.SYMBOL_LIST.CACHE_TIME_KEY, API_URI.SYMBOL_LIST.CACHE_TIME_DURATION,
       				API_URI.SYMBOL_LIST.URL, (has_cache_data, cache_data)=>{
@@ -134,6 +129,9 @@ class BookmarkList extends BaseScreen {
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Bookmark</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
+									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._load_bookmarked_list()}>
+										<Icon name="ios-refresh" style={[common_styles.header_icon, common_styles.greenColor]}/>
+									</TouchableOpacity>
 								</Right>
 							</Header>
 							{/* END header */}

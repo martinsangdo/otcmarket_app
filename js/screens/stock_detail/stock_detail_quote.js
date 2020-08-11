@@ -265,7 +265,7 @@ class StockDetailQuote extends BaseScreen {
       var bookmarked_symbols = Utils.cloneObj(this.state.bookmarked_symbols);
       if (bookmarked_symbols[this.state.symbol]){
         //bookmarked
-        delete bookmarked_symbols[this.state.symbol];
+        bookmarked_symbols[this.state.symbol] = false;
       } else {
         bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
       }			//save back to store

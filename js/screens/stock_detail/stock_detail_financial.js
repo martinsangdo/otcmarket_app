@@ -196,11 +196,10 @@ class StockDetailFinancial extends BaseScreen {
       var bookmarked_symbols = Utils.cloneObj(this.state.bookmarked_symbols);
       if (bookmarked_symbols[this.state.symbol]){
         //bookmarked
-        bookmarked_symbols.remove(this.state.symbol);
+        bookmarked_symbols[this.state.symbol] = false;
       } else {
         bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
-      }
-			//save back to store
+      }			//save back to store
 			store.update(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS, {d:bookmarked_symbols});
 			this.setState({bookmarked_symbols: bookmarked_symbols});
     }

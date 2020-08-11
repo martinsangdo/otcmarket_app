@@ -169,8 +169,12 @@ class StockDetailSecurity extends BaseScreen {
     //turn on/off bookmark of this symbol
     _toggle_bookmark(){
       var bookmarked_symbols = Utils.cloneObj(this.state.bookmarked_symbols);
-			bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
-			//save back to store
+      if (bookmarked_symbols[this.state.symbol]){
+        //bookmarked
+        bookmarked_symbols[this.state.symbol] = false;
+      } else {
+        bookmarked_symbols[this.state.symbol] = !bookmarked_symbols[this.state.symbol];
+      }			//save back to store
 			store.update(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS, {d:bookmarked_symbols});
 			this.setState({bookmarked_symbols: bookmarked_symbols});
     }
