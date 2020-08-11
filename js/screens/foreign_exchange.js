@@ -17,7 +17,7 @@ class ForeignExchange extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: true,
+        loading_indicator_state: false,
 				current_page: 1,
 				list_data: [],
 				totalRecords: 0,

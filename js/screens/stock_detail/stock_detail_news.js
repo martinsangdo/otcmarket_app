@@ -53,7 +53,7 @@ class StockDetailNews extends BaseScreen {
           symbol: newPropParams['symbol'],
           current_detail_part: 'news',
           dividend_data: [],
-          news_data: [],
+          list_data: [],
           current_page: 1,
           can_load_more: true,
           totalRecords: 0,
@@ -250,7 +250,7 @@ class StockDetailNews extends BaseScreen {
 											/>
 								</View>
                 {
-                  this.state.can_load_more &&
+                  this.state.can_load_more && this.state.list_data.length > 0 && 
                     <View style={common_styles.view_align_center}>
     									<TouchableOpacity onPress={() => this._open_more_page()}>
     										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>

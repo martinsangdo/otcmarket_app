@@ -22,7 +22,7 @@ class NewsReports extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
-        loading_indicator_state: true,
+        loading_indicator_state: false,
         tierGroup: 'ALL',
         current_category: 'news',   //news, reports, secs
         data: {
