@@ -263,9 +263,6 @@ class Home extends BaseScreen {
 									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._navigateCanBackTo('SymbolList')}>
 										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
 									</TouchableOpacity>
-                  <TouchableOpacity>
-										<Icon name="star" style={[common_styles.header_icon, common_styles.greenColor]}/>
-									</TouchableOpacity>
 								</Right>
 							</Header>
 							{/* END header */}

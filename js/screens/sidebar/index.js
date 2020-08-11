@@ -22,6 +22,11 @@ const datas = [
     icon: 'home'
   },
   {
+    name: "Bookmarked symbols",
+    route: "BookmarkList",
+    icon: "star"
+  },
+  {
     name: "Stock Finder",
     route: "StockFinder",
     icon: "ios-search"

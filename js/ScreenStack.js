@@ -27,6 +27,7 @@ import BrokerDealer from "./screens/broker_dealer";
 import CorporateActions from "./screens/corporate_actions";
 import Contact from "./screens/contact";
 import SymbolList from "./screens/symbol_list";
+import BookmarkList from "./screens/bookmark_list";
 
 import Splash from "./screens/splash";
 
@@ -42,7 +43,8 @@ const Drawer = createDrawerNavigator(
     ForeignExchange: {screen: ForeignExchange},
     BrokerDealer: {screen: BrokerDealer},
     CorporateActions: {screen: CorporateActions},
-    Contact: {screen: Contact}
+    Contact: {screen: Contact},
+    BookmarkList: {screen: BookmarkList}
   },
   {
     initialRouteName: "Home",

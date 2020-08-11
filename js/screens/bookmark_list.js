@@ -13,38 +13,28 @@ import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-class SymbolList extends BaseScreen {
+class BookmarkList extends BaseScreen {
 		constructor(props) {
 			super(props);
 			this.state = {
         loading_indicator_state: false,
-        full_data_list:[],    //all symbols
+        full_data_list: [],
         display_data_list: [],
-        keyword: '',
-        no_result_found: false
+        bookmarked_symbols: {}
 			};
 		}
 		//
 		componentDidMount() {
+      this._load_bookmarked_state();
+		}
+    //
+		componentDidUpdate() {
       var me = this;
-			Utils.get_data_from_cache(API_URI.SYMBOL_LIST.CACHE_TIME_KEY, API_URI.SYMBOL_LIST.CACHE_TIME_DURATION,
-				API_URI.SYMBOL_LIST.URL, (has_cache_data, cache_data)=>{
-				if (has_cache_data){
-					//parse cached data
-          var display_data_list = [];
-          for (var i=0; i<API_URI.SYMBOL_LIST.MAX_ITEM_LEN; i++){
-            display_data_list.push({
-              symbol: cache_data[i]['symbol'],
-              name: cache_data[i]['name']
-            });
-          }
-					me.setState({full_data_list: cache_data, display_data_list: display_data_list});
-				} else {
-          // Utils.dlog('load all symbol list from server');
-					//get from server
-          me._load_data();
-				}
-			});
+      store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
+      .then(saved_symbols => {
+        Utils.xlog('saved_symbols 111', saved_symbols.d);
+
+      });
 		}
     //
     _load_data(){
@@ -52,18 +42,20 @@ class SymbolList extends BaseScreen {
       this.setState({loading_indicator_state: true}, ()=>{
         RequestData.sentGetRequest(API_URI.SYMBOL_LIST.URL, (list, error) => {
             if (list){
+              var bookmarked_symbols = me.state.bookmarked_symbols;
               var full_data_list = [], display_data_list = [];
               for (var i=0; i<list.length; i++){
-                full_data_list.push({
-                  symbol: list[i]['s'],
-                  name: list[i]['c']
-                });
-                if (i<API_URI.SYMBOL_LIST.MAX_ITEM_LEN){
+                if (bookmarked_symbols[list[i]['s']]){
+                  //saved in bookmarks
                   display_data_list.push({
                     symbol: list[i]['s'],
                     name: list[i]['c']
                   });
                 }
+                full_data_list.push({
+                  symbol: list[i]['s'],
+                  name: list[i]['c']
+                });
               }
               me.setState({full_data_list: full_data_list, display_data_list: display_data_list});
               //save cache
@@ -74,6 +66,38 @@ class SymbolList extends BaseScreen {
             }
             me.setState({loading_indicator_state: false});
           });
+      });
+    }
+    //
+    _load_bookmarked_state(){
+      var me = this;
+      store.get(C_Const.STORE_KEY.BOOKMARKED_SYMBOLS)
+      .then(saved_symbols => {
+        Utils.xlog('saved_symbols', saved_symbols.d);
+        if (saved_symbols!=null && saved_symbols.d!=null){
+          var bookmarked_symbols = saved_symbols.d;
+          me.setState({ bookmarked_symbols : bookmarked_symbols}, ()=>{
+            Utils.get_data_from_cache(API_URI.SYMBOL_LIST.CACHE_TIME_KEY, API_URI.SYMBOL_LIST.CACHE_TIME_DURATION,
+      				API_URI.SYMBOL_LIST.URL, (has_cache_data, cache_data)=>{
+      				if (has_cache_data){
+      					//parse cached data
+                var display_data_list = [];
+                for (var i=0; i<cache_data.length; i++){
+                  if (bookmarked_symbols[cache_data[i]['symbol']]){
+                    display_data_list.push({
+                      symbol: cache_data[i]['symbol'],
+                      name: cache_data[i]['name']
+                    });
+                  }
+                }
+      					me.setState({full_data_list: cache_data, display_data_list: display_data_list});
+      				} else {
+      					//get from server
+                me._load_data();
+      				}
+      			});
+          });;
+        }
       });
     }
     //
@@ -94,46 +118,20 @@ class SymbolList extends BaseScreen {
         </View>
       </View>
 		);
-    //search symbol by name or symbol code
-    _search_symbol(){
-      var keyword = Utils.trim(this.state.keyword);
-      if (Utils.isEmpty(keyword) || keyword.length == 1){
-        return;
-      }
-      keyword = keyword.toLowerCase();
-      var full_data_list = this.state.full_data_list;
-      var len = full_data_list.length;
-      var result_list = [];
-      for (var i=0; i<len; i++){
-        if (result_list.length == 50){  //show max 50 results
-          break;
-        }
-        if (full_data_list[i]['symbol'].toLowerCase().indexOf(keyword) > -1 || full_data_list[i]['name'].toLowerCase().indexOf(keyword) > -1){
-          //found it
-          result_list.push(full_data_list[i]);
-        }
-      }
-      this.setState({no_result_found: result_list.length == 0, display_data_list: result_list});
-    }
 	 //==========
 		render() {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
 								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
-                  <TouchableOpacity onPress={() => this._on_go_back()}>
-                    <View style={styles.left_row}>
-                      <View style={[common_styles.float_center]}>
-                        <Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
-                      </View>
-                      <View style={[common_styles.margin_l_10, common_styles.float_center]}>
-                        <Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
-                      </View>
-                    </View>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.openDrawer()}
+                  >
+                    <Icon name="menu" style={common_styles.greenColor}/>
                   </TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</Text>
+									<Text style={[common_styles.bold, common_styles.default_font_color]}>Bookmark</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -141,20 +139,6 @@ class SymbolList extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
-                <View style={common_styles.margin_b_20} />
-                <Form style={[common_styles.flex_row, common_styles.space_around]}>
-									<Item style={styles.symbol_finder_textbox_container} regular>
-										<TextInput placeholder="Type to search" onChange={(event) => this.setState({keyword : event.nativeEvent.text})} value={this.state.keyword}/>
-									</Item>
-                  <TouchableOpacity style={[common_styles.default_button]} onPress={() => this._search_symbol()}>
-										<Text style={common_styles.whiteColor}>Search</Text>
-									</TouchableOpacity>
-								</Form>
-                {this.state.no_result_found &&
-                  <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
-  									<Text style={common_styles.darkGrayColor}>No results found</Text>
-  								</View>
-                }
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
                   <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
@@ -170,10 +154,6 @@ class SymbolList extends BaseScreen {
 												extraData={this.state}
 											/>
 								</View>
-                <View style={common_styles.margin_b_10} />
-                <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.display_data_list.length} of {Utils.format_currency_thousand(this.state.full_data_list.length)} items</Text>
-								</View>
 								<View style={common_styles.margin_b_30} />
 							</Content>
 						</Container>
@@ -181,4 +161,4 @@ class SymbolList extends BaseScreen {
 		}
 }
 
-export default SymbolList;
+export default BookmarkList;
