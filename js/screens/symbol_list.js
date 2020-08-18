@@ -144,7 +144,7 @@ class SymbolList extends BaseScreen {
                 <View style={common_styles.margin_b_20} />
                 <Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.symbol_finder_textbox_container} regular>
-										<TextInput placeholder="Type to search" onChange={(event) => this.setState({keyword : event.nativeEvent.text})} value={this.state.keyword}/>
+										<TextInput style={{padding:2}} placeholder="Type to search" onChange={(event) => this.setState({keyword : event.nativeEvent.text})} value={this.state.keyword}/>
 									</Item>
                   <TouchableOpacity style={[common_styles.default_button]} onPress={() => this._search_symbol()}>
 										<Text style={common_styles.whiteColor}>Search</Text>

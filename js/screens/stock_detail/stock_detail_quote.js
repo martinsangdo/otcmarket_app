@@ -13,6 +13,7 @@ import {C_Const} from '../../utils/constant';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 
@@ -220,11 +221,11 @@ class StockDetailQuote extends BaseScreen {
 		_renderItemQuote = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.mmId}>
 					<View style={[common_styles.width_25p]}>
-            <Text>{item.mmId}</Text>
+            <MyText>{item.mmId}</MyText>
           </View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.priceDisplay}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.sizeDisplay}</Text></View>
-          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.transTimeDisplay}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.priceDisplay}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.sizeDisplay}</MyText></View>
+          <View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.transTimeDisplay}</MyText></View>
 				</View>
 		);
     //
@@ -232,10 +233,10 @@ class StockDetailQuote extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemTradeData = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.eventTimestamp}>
-					<View style={[common_styles.width_25p]}><Text>{item.tradeDate}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.tradeTime}</Text></View>
-					<View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.lastPrice}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.lastVolume}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.tradeDate}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.tradeTime}</MyText></View>
+					<View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.lastPrice}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.lastVolume}</MyText></View>
           <View>
             {item.tradeDirection == 'Down' &&
               <Icon name="md-arrow-dropdown" style={common_styles.redColor}/>
@@ -254,10 +255,10 @@ class StockDetailQuote extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemShortInterest = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.positionDate}>
-					<View style={[common_styles.width_25p]}><Text>{item.positionDateDisplay}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.shortInterest}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right, styles.positivePriceColor, item.pctChgVolume < 0 && common_styles.redColor]}>{item.pctChgVolume}</Text></View>
-          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.avgDailyVolume}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.positionDateDisplay}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.shortInterest}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right, styles.positivePriceColor, item.pctChgVolume < 0 && common_styles.redColor]}>{item.pctChgVolume}</MyText></View>
+          <View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.avgDailyVolume}</MyText></View>
 				</View>
 		);
     //turn on/off bookmark of this symbol
@@ -277,22 +278,22 @@ class StockDetailQuote extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.2}]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
-								<Right style={[common_styles.headerRight, {flex:0.5}]}>
+								<Right style={[common_styles.headerRight, {flex:0.6}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
                     {this.state.bookmarked_symbols[this.state.symbol] &&
                       <Icon name="star" style={[common_styles.header_icon, common_styles.margin_b_10, common_styles.greenColor]}/>
@@ -327,62 +328,62 @@ class StockDetailQuote extends BaseScreen {
                       <Body>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>OPEN</Text>
-                            <Text>{this.state.general['open']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>OPEN</MyText>
+                            <MyText>{this.state.general['open']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>DAILY RANGE</Text>
-                            <Text>{this.state.general['daily_range']}</Text>
-                          </View>
-                        </View>
-                        <View style={[common_styles.flex_row]}>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>VOLUME</Text>
-                            <Text>{this.state.general['volume']}</Text>
-                          </View>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>DEVIDEND</Text>
-                            <Text>{this.state.general['dividend']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>DAILY RANGE</MyText>
+                            <MyText>{this.state.general['daily_range']}</MyText>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>PREV CLOSE</Text>
-                            <Text>{this.state.general['prev_close']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>VOLUME</MyText>
+                            <MyText>{this.state.general['volume']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>52WK RANGE</Text>
-                            <Text>{this.state.general['wk_range']}</Text>
-                          </View>
-                        </View>
-                        <View style={[common_styles.flex_row]}>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>AVERAGE VOL (30D)</Text>
-                            <Text>{this.state.general['average_vol']}</Text>
-                          </View>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>NET DIVIDENT YIELD</Text>
-                            <Text>{this.state.general['net_dividend']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>DEVIDEND</MyText>
+                            <MyText>{this.state.general['dividend']}</MyText>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>BEST BID</Text>
-                            <Text>{this.state.general['best_bid']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>PREV CLOSE</MyText>
+                            <MyText>{this.state.general['prev_close']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>BEST ASK</Text>
-                            <Text>{this.state.general['best_ask']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>52WK RANGE</MyText>
+                            <MyText>{this.state.general['wk_range']}</MyText>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>MARKET CAP</Text>
-                            <Text>{this.state.general['market_cap']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>AVERAGE VOL (30D)</MyText>
+                            <MyText>{this.state.general['average_vol']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>SHARES OUT</Text>
-                            <Text>{this.state.general['shares_out']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>NET DIVIDENT YIELD</MyText>
+                            <MyText>{this.state.general['net_dividend']}</MyText>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>BEST BID</MyText>
+                            <MyText>{this.state.general['best_bid']}</MyText>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>BEST ASK</MyText>
+                            <MyText>{this.state.general['best_ask']}</MyText>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>MARKET CAP</MyText>
+                            <MyText>{this.state.general['market_cap']}</MyText>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>SHARES OUT</MyText>
+                            <MyText>{this.state.general['shares_out']}</MyText>
                           </View>
                         </View>
                       </Body>
@@ -391,13 +392,13 @@ class StockDetailQuote extends BaseScreen {
                 </View>
                 <View style={common_styles.margin_b_10} />
                 {/* Trade data */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>TRADE DATA</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>TRADE DATA</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIMESTAMP</Text></View>
-									<View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOLUME</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIMESTAMP</MyText></View>
+									<View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+									<View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOLUME</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -411,13 +412,13 @@ class StockDetailQuote extends BaseScreen {
 								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* Short Interest */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SHORT INTEREST</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>SHORT INTEREST</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab, common_styles.margin_l_5, common_styles.margin_r_5]} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHORT INTEREST</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>AVG. DAILY SHARE VOL</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHORT INTEREST</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</MyText></View>
+									<View style={[common_styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>AVG. DAILY SHARE VOL</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -431,20 +432,20 @@ class StockDetailQuote extends BaseScreen {
 								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* real time level 2 data */}
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>REAL-TIME LEVEL 2 QUOTE</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>REAL-TIME LEVEL 2 QUOTE</MyText></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_quote('bid')}>
-				          	<View style={[common_styles.padding_5, common_styles.margin_r_20, this.state.current_quote=='bid'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>BID</Text></View>
+				          	<View style={[common_styles.padding_5, common_styles.margin_r_20, this.state.current_quote=='bid'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>BID</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_quote('ask')}>
-										<View style={[common_styles.padding_5, this.state.current_quote=='ask'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>ASK</Text></View>
+										<View style={[common_styles.padding_5, this.state.current_quote=='ask'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>ASK</MyText></View>
 									</TouchableOpacity>
 				        </View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>MPID</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SIZE</Text></View>
-									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIME</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>MPID</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SIZE</MyText></View>
+									<View style={[common_styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIME</MyText></View>
 								</View>
 								<View>
 									<FlatList

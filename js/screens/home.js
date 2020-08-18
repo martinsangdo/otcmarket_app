@@ -249,14 +249,14 @@ class Home extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.2}]}>
 									<TouchableOpacity
 										onPress={() => this.props.navigation.openDrawer()}
 									>
 										<Icon name="menu" style={common_styles.greenColor}/>
 									</TouchableOpacity>
 								</Left>
-								<Body style={styles.headerBody}>
+								<Body>
 									<Text style={[common_styles.bold, common_styles.default_font_color]}>Market Update</Text>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>

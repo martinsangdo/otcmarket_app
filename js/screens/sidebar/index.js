@@ -97,6 +97,7 @@ class SideBar extends Component {
             keyExtractor={item => item.name}
             renderRow={data =>
               <ListItem
+                style={{height: 44, paddingTop: 5}}
                 button
                 noBorder
                 onPress={() => this.props.navigation.navigate(data.route)}
@@ -112,21 +113,6 @@ class SideBar extends Component {
                     {data.name}
                   </Text>
                 </Left>
-                {data.types &&
-                  <Right style={{ flex: 1 }}>
-                    <Badge
-                      style={{
-                        borderRadius: 3,
-                        height: 25,
-                        width: 72,
-                        backgroundColor: data.bg
-                      }}
-                    >
-                      <Text
-                        style={styles.badgeText}
-                      >{`${data.types} Types`}</Text>
-                    </Badge>
-                  </Right>}
               </ListItem>}
           />
         </View>

@@ -59,7 +59,7 @@ export default {
 				flex: 1, flexDirection: 'row'
 		},
 		headerBody: {
-				left: -90
+				justifyContent: 'center'
 		},
 		headerRight: {
 				width: 30
@@ -228,6 +228,6 @@ export default {
 		text_input: {width: '100%', fontSize: 18},
     space_around: {justifyContent: 'space-around'},
     fetch_row: {flexDirection: 'row', justifyContent: 'space-between'},
-    heading_1: {fontWeight: 'bold', fontSize: 20, color:'#008da9'},
+    heading_1: {fontWeight: 'bold', fontSize: 16, color:'#008da9'},
 		view_wrap: {width: 0, flexGrow: 1}
 };
