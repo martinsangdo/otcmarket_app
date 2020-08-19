@@ -13,6 +13,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 
@@ -138,16 +139,16 @@ class StockFinder extends BaseScreen {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.price}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right]}>{item.pct1Day}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.price}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.pct1Day}</MyText></View>
 					<View style={[common_styles.width_20p]}>
             <TouchableOpacity
               onPress={() => this._toogle_showing_detail(item.symbol)}
             >
-              <Text style={common_styles.float_right}>{item.volume}</Text>
+              <MyText style={common_styles.float_right}>{item.volume}</MyText>
             </TouchableOpacity>
           </View>
           <View style={[common_styles.width_5p, common_styles.margin_l_5, common_styles.margin_r_5]}>
@@ -169,27 +170,27 @@ class StockFinder extends BaseScreen {
           this.state.showing_detail_symbols[item.symbol] &&
           <View>
             <View style={[common_styles.fetch_row, common_styles.margin_5]}>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>NAME</Text>
-              <Text style={common_styles.width_75p}>{item.securityName}</Text>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>NAME</MyText>
+              <MyText style={common_styles.width_75p}>{item.securityName}</MyText>
             </View>
             <View style={[common_styles.fetch_row, common_styles.margin_5]}>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>MARKET</Text>
-              <Text style={common_styles.width_75p}>{item.market}</Text>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>MARKET</MyText>
+              <MyText style={common_styles.width_75p}>{item.market}</MyText>
             </View>
             <View style={[common_styles.fetch_row, common_styles.margin_5]}>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>SEC TYPE</Text>
-              <Text style={common_styles.width_75p}>{item.securityType}</Text>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>SEC TYPE</MyText>
+              <MyText style={common_styles.width_75p}>{item.securityType}</MyText>
             </View>
             <View style={[common_styles.fetch_row, common_styles.margin_5]}>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>COUNTRY</Text>
-              <Text style={common_styles.width_50p}>{item.country}</Text>
-              <View style={[common_styles.width_25p, common_styles.flex_row]}><Text style={[common_styles.bold, common_styles.margin_r_10]}>BANK</Text><Text>{item.isBank}</Text></View>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>COUNTRY</MyText>
+              <MyText style={common_styles.width_50p}>{item.country}</MyText>
+              <View style={[common_styles.width_25p, common_styles.flex_row]}><MyText style={[common_styles.bold, common_styles.margin_r_10]}>BANK</MyText><MyText>{item.isBank}</MyText></View>
             </View>
             <View style={[common_styles.fetch_row, common_styles.margin_5]}>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>SHORT INT</Text>
-              <Text style={common_styles.width_25p}>{item.shortInterest}</Text>
-              <Text style={[common_styles.width_25p, common_styles.bold]}>SHORT %</Text>
-              <Text style={common_styles.width_25p}>{item.shortInterestRatio}</Text>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>SHORT INT</MyText>
+              <MyText style={common_styles.width_25p}>{item.shortInterest}</MyText>
+              <MyText style={[common_styles.width_25p, common_styles.bold]}>SHORT %</MyText>
+              <MyText style={common_styles.width_25p}>{item.shortInterestRatio}</MyText>
             </View>
           </View>
         }
@@ -223,7 +224,7 @@ class StockFinder extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={common_styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
                   {
@@ -244,10 +245,10 @@ class StockFinder extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOL</Text></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOL</MyText></View>
                   <View style={[common_styles.width_5p]}></View>
                 </View>
                 <View>
@@ -262,13 +263,13 @@ class StockFinder extends BaseScreen {
 								</View>
   							{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
   									<TouchableOpacity onPress={() => this._open_more_data()}>
-  										<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+  										<MyText style={common_styles.darkGrayColor}>LOAD MORE >></MyText>
   									</TouchableOpacity>
   								</View>
                 }
                 <View style={common_styles.margin_b_10} />
                 <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data_list.length} of {this.state.totalRecords} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.data_list.length} of {this.state.totalRecords} items</MyText>
 								</View>
 								<View style={common_styles.margin_b_30} />
 							</Content>

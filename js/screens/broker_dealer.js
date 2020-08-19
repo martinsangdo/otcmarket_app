@@ -13,6 +13,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 
@@ -82,18 +83,18 @@ class BrokerDealer extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItem = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.mpid+Math.random()+''}>
-					<View style={[common_styles.width_40p]}><Text>{item.brokerDealer}</Text></View>
-					<View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.dollarVolume}</Text></View>
-          <View style={[common_styles.width_30p]}><Text style={common_styles.float_right}>{item.volume}</Text></View>
+					<View style={[common_styles.width_40p]}><MyText>{item.brokerDealer}</MyText></View>
+					<View style={[common_styles.width_30p]}><MyText style={common_styles.float_right}>{item.dollarVolume}</MyText></View>
+          <View style={[common_styles.width_30p]}><MyText style={common_styles.float_right}>{item.volume}</MyText></View>
 				</View>
 		);
     _renderItemResponseQuality = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.mpid+Math.random()+''}>
-					<View style={[common_styles.width_40p]}><Text>{item.brokerDealer}</Text></View>
-					<View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.l1AvgR}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.expiredL1Pct}%</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.saturationPct}%</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.qscore}</Text></View>
+					<View style={[common_styles.width_40p]}><MyText>{item.brokerDealer}</MyText></View>
+					<View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.l1AvgR}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.expiredL1Pct}%</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.saturationPct}%</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.qscore}</MyText></View>
 				</View>
 		);
 		//general info
@@ -168,7 +169,7 @@ class BrokerDealer extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -198,18 +199,18 @@ class BrokerDealer extends BaseScreen {
 				              <Body>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text>
-                            <Text>{this.state.snapshot_data['dollarVolume']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>$ VOLUME</MyText>
+                            <MyText>{this.state.snapshot_data['dollarVolume']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text>
-                            <Text>{this.state.snapshot_data['shareVolume']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>SHARE VOLUME</MyText>
+                            <MyText>{this.state.snapshot_data['shareVolume']}</MyText>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>TRADES</Text>
-                            <Text>{this.state.snapshot_data['trades']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>TRADES</MyText>
+                            <MyText>{this.state.snapshot_data['trades']}</MyText>
                           </View>
 												</View>
 				              </Body>
@@ -217,7 +218,7 @@ class BrokerDealer extends BaseScreen {
 				          </Card>
 								</View>
 								<View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>{this.state.snapshot_data['lastUpdated']}</Text>
+									<MyText style={common_styles.darkGrayColor}>{this.state.snapshot_data['lastUpdated']}</MyText>
 								</View>
                 <View>
   								<Picker
@@ -239,9 +240,9 @@ class BrokerDealer extends BaseScreen {
                 {
                   this.state.current_type != 'RESPONSE_QUALITY' &&
                   <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                    <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
-                    <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
-                    <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHARE VOL</Text></View>
+                    <View style={common_styles.width_40p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</MyText></View>
+                    <View style={common_styles.width_30p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</MyText></View>
+                    <View style={common_styles.width_30p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHARE VOL</MyText></View>
                   </View>
                 }
                 {
@@ -260,11 +261,11 @@ class BrokerDealer extends BaseScreen {
                 {
                   this.state.current_type == 'RESPONSE_QUALITY' &&
                   <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                    <View style={common_styles.width_40p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</Text></View>
-                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>L1 AVG R</Text></View>
-                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>*EXP L1%</Text></View>
-                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>**SAT L1%</Text></View>
-                    <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SCORE</Text></View>
+                    <View style={common_styles.width_40p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>BROKER DEALER</MyText></View>
+                    <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>L1 AVG R</MyText></View>
+                    <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>*EXP L1%</MyText></View>
+                    <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>**SAT L1%</MyText></View>
+                    <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SCORE</MyText></View>
                   </View>
                 }
                 {
@@ -283,19 +284,19 @@ class BrokerDealer extends BaseScreen {
 
 								{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_10]}>
 										<TouchableOpacity onPress={() => this._open_more_data()}>
-											<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+											<MyText style={common_styles.darkGrayColor}>LOAD MORE >></MyText>
 										</TouchableOpacity>
 									</View>
 								}
 								<View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</MyText>
 								</View>
 								<View style={common_styles.margin_b_20} />
                 <View style={[common_styles.view_align_center, common_styles.margin_5]}>
-									<Text style={common_styles.darkGrayColor}>* Percent of expired L1 trade messages, per total L1 trade messages</Text>
+									<MyText style={common_styles.darkGrayColor}>* Percent of expired L1 trade messages, per total L1 trade messages</MyText>
 								</View>
                 <View style={[common_styles.view_align_center, common_styles.margin_5]}>
-									<Text style={common_styles.darkGrayColor}>** Percent of Saturation events, per total liability trade messages</Text>
+									<MyText style={common_styles.darkGrayColor}>** Percent of Saturation events, per total liability trade messages</MyText>
 								</View>
                 <View style={common_styles.margin_b_20} />
 							</Content>

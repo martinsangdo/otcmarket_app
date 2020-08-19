@@ -13,6 +13,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 //define display format
@@ -171,20 +172,20 @@ class CorporateActions extends BaseScreen {
 		_renderItem = ({item}) => (
       <View style={[common_styles.border_b_gray]}>
 				<View style={[styles.list_item, common_styles.flex_row, common_styles.padding_b_5]} key={item.symbol+Math.random()+''}>
-					<View style={[common_styles.width_25p]}><Text>{item.changeDate}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.changeDate}</MyText></View>
 					<View style={[common_styles.width_20p]}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-              <Text style={common_styles.default_font_color}>{item.symbol}</Text>
+              <MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_30p]}><Text>{item.companyName}</Text></View>
+          <View style={[common_styles.width_30p]}><MyText>{item.companyName}</MyText></View>
           <View style={common_styles.width_20p}>
             <TouchableOpacity
               onPress={() => this._toogle_showing_detail(item.symbol)}
             >
-              <Text style={common_styles.font_12}>{item.tierName}</Text>
+              <MyText style={common_styles.font_12}>{item.tierName}</MyText>
             </TouchableOpacity>
           </View>
           <View style={[common_styles.width_5p, common_styles.margin_l_5, common_styles.margin_r_5]}>
@@ -209,8 +210,8 @@ class CorporateActions extends BaseScreen {
             {extra_info_scheme[this.state.route].map(function(extra_info){
               if (!Utils.isEmpty(item[extra_info['key']]))
                 return <View style={[common_styles.fetch_row, common_styles.margin_5]} key={Math.random()+''}>
-                  <Text style={[common_styles.width_45p, common_styles.darkGrayColor, common_styles.bold]}>{extra_info['label']}</Text>
-                  <Text style={[common_styles.width_55p]}>{item[extra_info['key']]}</Text>
+                  <MyText style={[common_styles.width_45p, common_styles.darkGrayColor, common_styles.bold]}>{extra_info['label']}</MyText>
+                  <MyText style={[common_styles.width_55p]}>{item[extra_info['key']]}</MyText>
                 </View>
             })
             }
@@ -318,7 +319,7 @@ class CorporateActions extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Corporate Actions</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Corporate Actions</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -328,7 +329,7 @@ class CorporateActions extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={[common_styles.flex_row, common_styles.padding_5]}>
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
-                    <Text>Action</Text>
+                    <MyText>Action</MyText>
                   </View>
                   <View style={common_styles.width_75p}>
                     <Picker
@@ -357,7 +358,7 @@ class CorporateActions extends BaseScreen {
                 </View>
                 <View style={[common_styles.flex_row, common_styles.padding_5]}>
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
-                    <Text>Security Type</Text>
+                    <MyText>Security Type</MyText>
                   </View>
                   <View style={common_styles.width_75p}>
                     <Picker
@@ -375,7 +376,7 @@ class CorporateActions extends BaseScreen {
                 </View>
                 <View style={[common_styles.flex_row, common_styles.padding_5]}>
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
-                    <Text>Market</Text>
+                    <MyText>Market</MyText>
                   </View>
                   <View style={common_styles.width_75p}>
                     <Picker
@@ -394,10 +395,10 @@ class CorporateActions extends BaseScreen {
                 {/*  */}
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.flex_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_30p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>COMPANY NAME</Text></View>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>MARKET</Text></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_30p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>COMPANY NAME</MyText></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>MARKET</MyText></View>
                   <View style={[common_styles.width_5p]}></View>
                 </View>
                 <View>
@@ -412,12 +413,12 @@ class CorporateActions extends BaseScreen {
                 </View>
 								{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_10]}>
 										<TouchableOpacity onPress={() => this._open_more_data()}>
-											<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+											<MyText style={common_styles.darkGrayColor}>LOAD MORE >></MyText>
 										</TouchableOpacity>
 									</View>
 								}
 								<View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</MyText>
 								</View>
                 <View style={common_styles.margin_b_20} />
 							</Content>

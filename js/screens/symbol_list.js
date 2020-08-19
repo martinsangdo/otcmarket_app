@@ -12,6 +12,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 class SymbolList extends BaseScreen {
 		constructor(props) {
@@ -87,10 +88,10 @@ class SymbolList extends BaseScreen {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_75p]}><Text>{item.name}</Text></View>
+					<View style={[common_styles.width_75p]}><MyText>{item.name}</MyText></View>
         </View>
       </View>
 		);
@@ -127,13 +128,13 @@ class SymbolList extends BaseScreen {
                         <Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
                       </View>
                       <View style={[common_styles.margin_l_10, common_styles.float_center]}>
-                        <Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+                        <MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
                       </View>
                     </View>
                   </TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -147,18 +148,18 @@ class SymbolList extends BaseScreen {
 										<TextInput style={{padding:2}} placeholder="Type to search" onChange={(event) => this.setState({keyword : event.nativeEvent.text})} value={this.state.keyword}/>
 									</Item>
                   <TouchableOpacity style={[common_styles.default_button]} onPress={() => this._search_symbol()}>
-										<Text style={common_styles.whiteColor}>Search</Text>
+										<MyText style={common_styles.whiteColor}>Search</MyText>
 									</TouchableOpacity>
 								</Form>
                 {this.state.no_result_found &&
                   <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
-  									<Text style={common_styles.darkGrayColor}>No results found</Text>
+  									<MyText style={common_styles.darkGrayColor}>No results found</MyText>
   								</View>
                 }
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={[common_styles.width_75p]}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>NAME</Text></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={[common_styles.width_75p]}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>NAME</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -172,7 +173,7 @@ class SymbolList extends BaseScreen {
 								</View>
                 <View style={common_styles.margin_b_10} />
                 <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.display_data_list.length} of {Utils.format_currency_thousand(this.state.full_data_list.length)} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.display_data_list.length} of {Utils.format_currency_thousand(this.state.full_data_list.length)} items</MyText>
 								</View>
 								<View style={common_styles.margin_b_30} />
 							</Content>

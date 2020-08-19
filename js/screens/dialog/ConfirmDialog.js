@@ -41,6 +41,7 @@ import PropTypes from 'prop-types';
 
 import Dialog from './Dialog'
 import TouchableEffect from './TouchableEffect';
+import MyText from '../../component/MyText';
 
 class ConfirmDialog extends Component {
 
@@ -50,7 +51,7 @@ class ConfirmDialog extends Component {
         const textAlign = "center";
 
         if (message)
-            return (<Text style={[{ textAlign, color: "#00000089", fontSize: 18 }, messageStyle]}>{message}</Text>)
+            return (<MyText style={[{ textAlign, color: "#00000089", fontSize: 18 }, messageStyle]}>{message}</MyText>)
     }
 
     renderButton(button, positive) {
@@ -82,7 +83,7 @@ class ConfirmDialog extends Component {
                     <View style={[containerStyle, style]}>
                         <Text
                             style={[textStyle, titleStyle]}
-                        >{title}</Text>
+                        >{title}</MyText>
                     </View>
                 </TouchableEffect>
             )

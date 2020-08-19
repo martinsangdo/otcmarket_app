@@ -12,6 +12,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 class BookmarkList extends BaseScreen {
 		constructor(props) {
@@ -106,10 +107,10 @@ class BookmarkList extends BaseScreen {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_75p]}><Text>{item.name}</Text></View>
+					<View style={[common_styles.width_75p]}><MyText>{item.name}</MyText></View>
         </View>
       </View>
 		);
@@ -126,7 +127,7 @@ class BookmarkList extends BaseScreen {
                   </TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Bookmark</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Bookmark</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._load_bookmarked_list()}>
@@ -139,8 +140,8 @@ class BookmarkList extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={[common_styles.width_75p]}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>NAME</Text></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={[common_styles.width_75p]}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>NAME</MyText></View>
                 </View>
                 <View>
 									<FlatList

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text } from "native-base";
 import common_styles from "../../../css/common";
 import styles from "../style";
+import MyText from '../../component/MyText';
 
 export default class FinancialCashFlow extends Component {
   constructor(props) {
@@ -36,95 +37,95 @@ export default class FinancialCashFlow extends Component {
       <View style={[common_styles.margin_l_10, common_styles.margin_r_10]}>
         {/* Operating Activities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Operating Activities</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Operating Activities</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Net Income</Text>
-          <Text style={common_styles.bold}>{this.state.data['netIncome']}</Text>
+          <MyText style={common_styles.bold}>Net Income</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['netIncome']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Depreciation</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Depreciation</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Adjustments to Net Income</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Adjustments to Net Income</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Changes in Liabilities</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Changes in Liabilities</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Changes in Accounts Receivables</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Changes in Accounts Receivables</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Changes in Inventories</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Changes in Inventories</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text style={common_styles.font_13}>Changes in Other Operating Activities</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText style={common_styles.font_13}>Changes in Other Operating Activities</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.font_13}>Total Cash Flow From Operating Activities</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalCashFlowFromOperatingActivities']}</Text>
+          <MyText style={common_styles.font_13}>Total Cash Flow From Operating Activities</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalCashFlowFromOperatingActivities']}</MyText>
         </View>
         {/* Investing Activities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Investing Activities</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Investing Activities</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Capital Expenditures</Text>
-          <Text>{this.state.data['capitalExpenditures']}</Text>
+          <MyText>Capital Expenditures</MyText>
+          <MyText>{this.state.data['capitalExpenditures']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Investments</Text>
-          <Text>{this.state.data['investments']}</Text>
+          <MyText>Investments</MyText>
+          <MyText>{this.state.data['investments']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text style={common_styles.font_13}>Other Cash Flows From Investing Activities</Text>
-          <Text>{this.state.data['otherCashFlowFromInvestingActivities']}</Text>
+          <MyText style={common_styles.font_13}>Other Cash Flows From Investing Activities</MyText>
+          <MyText>{this.state.data['otherCashFlowFromInvestingActivities']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.font_13}>Total Cash Flow From Investing Activities</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalCashFlowFromInvestingActivities']}</Text>
+          <MyText style={common_styles.font_13}>Total Cash Flow From Investing Activities</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalCashFlowFromInvestingActivities']}</MyText>
         </View>
         {/* Financing Activities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Financing Activities</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Financing Activities</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Dividends Paid</Text>
-          <Text>{this.state.data['dividendsPaid']}</Text>
+          <MyText>Dividends Paid</MyText>
+          <MyText>{this.state.data['dividendsPaid']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Sale/Purchase of Stock</Text>
-          <Text>{this.state.data['salePurchaseOfStock']}</Text>
+          <MyText>Sale/Purchase of Stock</MyText>
+          <MyText>{this.state.data['salePurchaseOfStock']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Net Borrowings</Text>
-          <Text>{this.state.data['netBorrowings']}</Text>
+          <MyText>Net Borrowings</MyText>
+          <MyText>{this.state.data['netBorrowings']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text style={common_styles.font_13}>Other Cash Flows From Financing Activities</Text>
-          <Text>{this.state.data['otherCashFlowsFromFinancingActivities']}</Text>
+          <MyText style={common_styles.font_13}>Other Cash Flows From Financing Activities</MyText>
+          <MyText>{this.state.data['otherCashFlowsFromFinancingActivities']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.font_13}>Total Cash Flow From Financing Activities</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalCashFlowsFromFinancingActivities']}</Text>
+          <MyText style={common_styles.font_13}>Total Cash Flow From Financing Activities</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalCashFlowsFromFinancingActivities']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Effect of Exchange Rate Changes</Text>
-          <Text>{this.state.data['effectOfExchangeRateChanges']}</Text>
+          <MyText>Effect of Exchange Rate Changes</MyText>
+          <MyText>{this.state.data['effectOfExchangeRateChanges']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text></Text>
-          <Text></Text>
+          <MyText></MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Change in Cash and Cash Equivalents</Text>
-          <Text style={common_styles.bold}>{this.state.data['changeInCashAndEquities']}</Text>
+          <MyText style={common_styles.bold}>Change in Cash and Cash Equivalents</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['changeInCashAndEquities']}</MyText>
         </View>
       </View>
     );

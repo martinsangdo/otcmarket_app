@@ -17,6 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {C_Const} from '../utils/constant';
 import CheckBox from '@react-native-community/checkbox';
 import DeviceInfo from 'react-native-device-info';
+import MyText from '../component/MyText';
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height - 50;
@@ -104,7 +105,7 @@ class Contact extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Contact</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Contact</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -113,7 +114,7 @@ class Contact extends BaseScreen {
 							<Content>
 								<Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
 								<View style={[common_styles.margin_10]}>
-									<Text>What I want is (*):</Text>
+									<MyText>What I want is (*):</MyText>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -123,7 +124,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('download_report', !this.state.options['download_report'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Download Reports</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Download Reports</MyText></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -133,7 +134,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('download_sec_filling', !this.state.options['download_sec_filling'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Download SEC Fillings</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Download SEC Fillings</MyText></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -143,7 +144,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('newsletter', !this.state.options['newsletter'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Newsletter (1 mail per week)</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Newsletter (1 mail per week)</MyText></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -153,7 +154,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('daily_report', !this.state.options['daily_report'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Receive daily stock/market reports</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Receive daily stock/market reports</MyText></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -163,7 +164,7 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('connect_api', !this.state.options['connect_api'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Connect API endpoints</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Connect API endpoints</MyText></View>
 								</View>
 								<View style={[common_styles.flex_row, common_styles.margin_5]}>
 									<CheckBox
@@ -173,10 +174,10 @@ class Contact extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => this._toogle_options_value('other', !this.state.options['other'])}
 									/>
-									<View style={common_styles.justifyCenter}><Text>Others</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>Others</MyText></View>
 								</View>
 								<View style={[common_styles.margin_10]}>
-									<Text>Your Email (*):</Text>
+									<MyText>Your Email (*):</MyText>
 									<Form style={common_styles.margin_t_5}>
 										<Item style={styles.contact_email} regular>
 											<Input ref='email' returnKeyType = {"done"} onSubmitEditing={Keyboard.dismiss}
@@ -185,17 +186,17 @@ class Contact extends BaseScreen {
 									</Form>
 								</View>
 								<View style={[common_styles.margin_10]}>
-									<Text>Message content (*):</Text>
+									<MyText>Message content (*):</MyText>
 									<Textarea ref='message' rowSpan={5} bordered onChange={(event) => this.setState({message : event.nativeEvent.text})} value={this.state.message}/>
 								</View>
 								<View style={[common_styles.view_align_center]}>
 									<TouchableOpacity style={[common_styles.default_button]} onPress={() => this._send_contact()}>
-										<Text style={common_styles.whiteColor}>Send</Text>
+										<MyText style={common_styles.whiteColor}>Send</MyText>
 									</TouchableOpacity>
 								</View>
 								{this.state.is_done_sending &&
 									<View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
-										<Text style={common_styles.greenColor}>Thank you! We will contact you shortly</Text>
+										<MyText style={common_styles.greenColor}>Thank you! We will contact you shortly</MyText>
 									</View>
 								}
 							</Content>

@@ -14,6 +14,7 @@ import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {setting} from '../../utils/config.js';
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 
@@ -183,13 +184,13 @@ class StockDetailDisclosure extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemReports = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
-					<View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
+					<View style={[styles.width_25p]}><MyText style={common_styles.padding_5}>{item.releaseDate}</MyText></View>
           <View style={[styles.width_50p, common_styles.view_wrap]}>
             <TouchableOpacity onPress={()=>this._open_pdf_viewer(API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, item.id))}>
-              <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</Text>
+              <MyText style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.name}</MyText>
               </TouchableOpacity>
           </View>
-          <View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.periodDate}</Text></View>
+          <View style={[styles.width_25p]}><MyText style={common_styles.padding_5}>{item.periodDate}</MyText></View>
 				</View>
 		);
     //
@@ -197,13 +198,13 @@ class StockDetailDisclosure extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemInsider = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.id}>
-        <View style={[styles.width_25p]}><Text style={common_styles.padding_5}>{item.releaseDate}</Text></View>
+        <View style={[styles.width_25p]}><MyText style={common_styles.padding_5}>{item.releaseDate}</MyText></View>
         <View style={[styles.width_50p, common_styles.view_wrap]}>
           <TouchableOpacity onPress={()=>this._open_pdf_viewer(API_URI.STOCK_DETAIL.DISCLOSURE.REPORT_DOWNLOAD.replace(/<symbol>/g, item.id))}>
-            <Text style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.title}</Text>
+            <MyText style={[common_styles.padding_5, common_styles.font_15, common_styles.underline]}>{item.title}</MyText>
             </TouchableOpacity>
         </View>
-        <View style={[styles.width_25p, common_styles.view_wrap]}><Text style={common_styles.padding_5}>{item.typeName}</Text></View>
+        <View style={[styles.width_25p, common_styles.view_wrap]}><MyText style={common_styles.padding_5}>{item.typeName}</MyText></View>
 			</View>
 		);
     //
@@ -254,13 +255,13 @@ class StockDetailDisclosure extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -292,12 +293,12 @@ class StockDetailDisclosure extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>Financial Reports</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>Financial Reports</MyText></View>
                 <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>PUBLIST DATE</Text></View>
-									<View style={styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TITLE</Text></View>
-									<View style={[styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PERIOD END DATE</Text></View>
+									<View style={styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>PUBLIST DATE</MyText></View>
+									<View style={styles.width_50p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TITLE</MyText></View>
+									<View style={[styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PERIOD END DATE</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -312,21 +313,21 @@ class StockDetailDisclosure extends BaseScreen {
                   this.state.data['reports']['can_load_more'] &&
                     <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
     									<TouchableOpacity onPress={() => this._open_more_page('reports')}>
-    										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+    										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
     									</TouchableOpacity>
     								</View>
                 }
                 <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data['reports']['list'].length} of {this.state.data['reports']['totalRecords']} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.data['reports']['list'].length} of {this.state.data['reports']['totalRecords']} items</MyText>
 								</View>
                 <View style={common_styles.margin_b_20} />
                 {/* insider */}
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>INSIDER</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>INSIDER</MyText></View>
                 <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-									<View style={styles.width_50p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>TITLE</Text></View>
-                  <View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>TYPE</Text></View>
+									<View style={styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+									<View style={styles.width_50p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>TITLE</MyText></View>
+                  <View style={styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>TYPE</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -341,12 +342,12 @@ class StockDetailDisclosure extends BaseScreen {
                     this.state.data['insiders']['can_load_more'] &&
                       <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
       									<TouchableOpacity onPress={() => this._open_more_page('insiders')}>
-      										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+      										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
       									</TouchableOpacity>
       								</View>
                   }
                   <View style={common_styles.view_align_center}>
-  									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data['insiders']['list'].length} of {this.state.data['insiders']['totalRecords']} items</Text>
+  									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.data['insiders']['list'].length} of {this.state.data['insiders']['totalRecords']} items</MyText>
   								</View>
                 <View style={common_styles.margin_b_20} />
               </Content>

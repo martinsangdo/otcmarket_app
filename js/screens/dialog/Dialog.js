@@ -35,6 +35,7 @@ import {
 const { OS } = Platform;
 
 import PropTypes from 'prop-types';
+import MyText from '../../component/MyText';
 
 class Dialog extends Component {
 
@@ -59,7 +60,7 @@ class Dialog extends Component {
 
         if (title)
             return (
-                <Text style={[{
+                <MyText style={[{
                     textAlign,
                     color: "#000000DD",
                     fontSize: 20,
@@ -67,7 +68,7 @@ class Dialog extends Component {
                     marginBottom: 0
                 }, titleStyle]}>
                     {title}
-                </Text>
+                </MyText>
             )
     }
 

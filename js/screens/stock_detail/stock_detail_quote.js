@@ -237,7 +237,7 @@ class StockDetailQuote extends BaseScreen {
 					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.tradeTime}</MyText></View>
 					<View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.lastPrice}</MyText></View>
           <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.lastVolume}</MyText></View>
-          <View>
+          <View style={[common_styles.width_10p]}>
             {item.tradeDirection == 'Down' &&
               <Icon name="md-arrow-dropdown" style={common_styles.redColor}/>
             }
@@ -399,6 +399,7 @@ class StockDetailQuote extends BaseScreen {
 									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>TIMESTAMP</MyText></View>
 									<View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
 									<View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>VOLUME</MyText></View>
+                  <View style={[common_styles.width_10p]}></View>
 								</View>
 								<View>
 									<FlatList

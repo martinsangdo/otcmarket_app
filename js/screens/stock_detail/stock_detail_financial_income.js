@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text } from "native-base";
 import common_styles from "../../../css/common";
 import styles from "../style";
+import MyText from '../../component/MyText';
 
 export default class FinancialIncome extends Component {
   constructor(props) {
@@ -36,123 +37,123 @@ export default class FinancialIncome extends Component {
       <View style={[common_styles.margin_l_10, common_styles.margin_r_10]}>
         {/* Revenue */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Revenues</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Revenues</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Total Revenue</Text>
-          <Text>{this.state.data['totalRevenue']}</Text>
+          <MyText>Total Revenue</MyText>
+          <MyText>{this.state.data['totalRevenue']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Cost of Revenue</Text>
-          <Text>{this.state.data['costOfRevenue']}</Text>
+          <MyText>Cost of Revenue</MyText>
+          <MyText>{this.state.data['costOfRevenue']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Gross Profit</Text>
-          <Text style={common_styles.bold}>{this.state.data['grossProfit']}</Text>
+          <MyText style={common_styles.bold}>Gross Profit</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['grossProfit']}</MyText>
         </View>
         {/* Operating Expenses */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Operating Expenses</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Operating Expenses</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Research & Development</Text>
-          <Text>{this.state.data['researchAndDevelopment']}</Text>
+          <MyText>Research & Development</MyText>
+          <MyText>{this.state.data['researchAndDevelopment']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Sales, General and Admin</Text>
-          <Text>{this.state.data['salesGeneralAndAdmin']}</Text>
+          <MyText>Sales, General and Admin</MyText>
+          <MyText>{this.state.data['salesGeneralAndAdmin']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Non-Recurring Items</Text>
-          <Text></Text>
+          <MyText>Non-Recurring Items</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Other</Text>
-          <Text></Text>
+          <MyText>Other</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Total Expenses</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalExpenses']}</Text>
+          <MyText style={common_styles.bold}>Total Expenses</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalExpenses']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Operating Income</Text>
-          <Text style={common_styles.bold}>{this.state.data['operatingIncome']}</Text>
+          <MyText style={common_styles.bold}>Operating Income</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['operatingIncome']}</MyText>
         </View>
         {/* Operating Expenses */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Income from Continuing Operations</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Income from Continuing Operations</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Additional Income / Expense Items</Text>
-          <Text>{this.state.data['additionalIncomeExpenseItems']}</Text>
+          <MyText>Additional Income / Expense Items</MyText>
+          <MyText>{this.state.data['additionalIncomeExpenseItems']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Earnings Before Interest and Taxes</Text>
-          <Text>{this.state.data['earningsBeforeInterestTaxes']}</Text>
+          <MyText>Earnings Before Interest and Taxes</MyText>
+          <MyText>{this.state.data['earningsBeforeInterestTaxes']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Interest Expense</Text>
-          <Text>{this.state.data['interestExpense']}</Text>
+          <MyText>Interest Expense</MyText>
+          <MyText>{this.state.data['interestExpense']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Earnings Before Tax</Text>
-          <Text>{this.state.data['earningsBeforeTax']}</Text>
+          <MyText>Earnings Before Tax</MyText>
+          <MyText>{this.state.data['earningsBeforeTax']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Income Tax</Text>
-          <Text>{this.state.data['incomeTax']}</Text>
+          <MyText>Income Tax</MyText>
+          <MyText>{this.state.data['incomeTax']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Minority Interest</Text>
-          <Text></Text>
+          <MyText>Minority Interest</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Equity Earnings</Text>
-          <Text></Text>
+          <MyText>Equity Earnings</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Net Income Cont. Operations</Text>
-          <Text style={common_styles.bold}>{this.state.data['netIncomeOperations']}</Text>
+          <MyText style={common_styles.bold}>Net Income Cont. Operations</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['netIncomeOperations']}</MyText>
         </View>
         {/* Non-Recurring Events */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Non-Recurring Events</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Non-Recurring Events</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Discontinued Operations</Text>
-          <Text></Text>
+          <MyText>Discontinued Operations</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Extraordinary Operations</Text>
-          <Text></Text>
+          <MyText>Extraordinary Operations</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Effect of Accounting Changes</Text>
-          <Text></Text>
+          <MyText>Effect of Accounting Changes</MyText>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Net Income</Text>
-          <Text style={common_styles.bold}>{this.state.data['netIncome']}</Text>
+          <MyText style={common_styles.bold}>Net Income</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['netIncome']}</MyText>
         </View>
         {/* Key Financial Ratios */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Key Financial Ratios</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Key Financial Ratios</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Earnings Per Share</Text>
-          <Text>{this.state.data['earningsperShare']}</Text>
+          <MyText>Earnings Per Share</MyText>
+          <MyText>{this.state.data['earningsperShare']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Price/Earnings</Text>
-          <Text>{this.state.data['priceEarnings']}</Text>
+          <MyText>Price/Earnings</MyText>
+          <MyText>{this.state.data['priceEarnings']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Gross Margin</Text>
-          <Text>{this.state.data['grossMargin']}</Text>
+          <MyText>Gross Margin</MyText>
+          <MyText>{this.state.data['grossMargin']}</MyText>
         </View>
         <View style={[styles.financial_item]}>
-          <Text>Operating Margin</Text>
-          <Text>{this.state.data['operatingMargin']}</Text>
+          <MyText>Operating Margin</MyText>
+          <MyText>{this.state.data['operatingMargin']}</MyText>
         </View>
       </View>
     );

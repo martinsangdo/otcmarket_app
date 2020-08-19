@@ -15,6 +15,7 @@ import Utils from "../utils/functions";
 import {API_URI} from '../utils/api_uri';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {C_Const} from '../utils/constant';
+import MyText from '../component/MyText';
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height - 50;
@@ -96,13 +97,13 @@ class WebViewer extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Viewer</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Viewer</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
 								</Right>

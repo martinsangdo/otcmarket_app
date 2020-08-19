@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text } from "native-base";
 import common_styles from "../../../css/common";
 import styles from "../style";
+import MyText from '../../component/MyText';
 
 export default class FinancialBalance extends Component {
   constructor(props) {
@@ -36,154 +37,154 @@ export default class FinancialBalance extends Component {
       <View style={[common_styles.margin_l_10, common_styles.margin_r_10]}>
         {/* Assets */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Assets</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Assets</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_master_item]}>
-          <Text style={common_styles.bold}>Current Assets</Text>
+          <MyText style={common_styles.bold}>Current Assets</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Cash and Cash Equivalents</Text>
-          <Text>{this.state.data['cashAndCashEquivalents']}</Text>
+          <MyText>Cash and Cash Equivalents</MyText>
+          <MyText>{this.state.data['cashAndCashEquivalents']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Short Term Investments</Text>
-          <Text>{this.state.data['shortTermInvestments']}</Text>
+          <MyText>Short Term Investments</MyText>
+          <MyText>{this.state.data['shortTermInvestments']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Net Receivables</Text>
-          <Text>{this.state.data['netReceivables']}</Text>
+          <MyText>Net Receivables</MyText>
+          <MyText>{this.state.data['netReceivables']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Inventory</Text>
-          <Text>{this.state.data['inventory']}</Text>
+          <MyText>Inventory</MyText>
+          <MyText>{this.state.data['inventory']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Other Current Assets</Text>
-          <Text>{this.state.data['otherCurrentAssets']}</Text>
+          <MyText>Other Current Assets</MyText>
+          <MyText>{this.state.data['otherCurrentAssets']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last, common_styles.margin_l_20]}>
-          <Text style={common_styles.bold}>Total Current Assets</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalCurrentAssets']}</Text>
+          <MyText style={common_styles.bold}>Total Current Assets</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalCurrentAssets']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_master_item]}>
-          <Text style={common_styles.bold}>Long Term Assets</Text>
+          <MyText style={common_styles.bold}>Long Term Assets</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Long Term Investments</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Long Term Investments</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Property Plant and Equipment</Text>
-          <Text>{this.state.data['propertyPlantAndEquipment']}</Text>
+          <MyText>Property Plant and Equipment</MyText>
+          <MyText>{this.state.data['propertyPlantAndEquipment']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Goodwill</Text>
-          <Text>{this.state.data['goodwill']}</Text>
+          <MyText>Goodwill</MyText>
+          <MyText>{this.state.data['goodwill']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Intangible Assets</Text>
-          <Text>{this.state.data['intangibleAssets']}</Text>
+          <MyText>Intangible Assets</MyText>
+          <MyText>{this.state.data['intangibleAssets']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Other Assets</Text>
-          <Text>{this.state.data['otherAssets']}</Text>
+          <MyText>Other Assets</MyText>
+          <MyText>{this.state.data['otherAssets']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Deferred Long Term Asset Charges</Text>
-          <Text>{this.state.data['deferredLongTermAssetsCharges']}</Text>
+          <MyText>Deferred Long Term Asset Charges</MyText>
+          <MyText>{this.state.data['deferredLongTermAssetsCharges']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Total Assets</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalAssets']}</Text>
+          <MyText style={common_styles.bold}>Total Assets</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalAssets']}</MyText>
         </View>
         {/* Liabilities */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Liabilities</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Liabilities</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_master_item]}>
-          <Text style={common_styles.bold}>Current Liabilities</Text>
+          <MyText style={common_styles.bold}>Current Liabilities</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Accounts Payable</Text>
-          <Text>{this.state.data['accountPayable']}</Text>
+          <MyText>Accounts Payable</MyText>
+          <MyText>{this.state.data['accountPayable']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text style={common_styles.font_15}>Short Term and Current Long Term Debt</Text>
-          <Text>{this.state.data['shortTermAndCurrentLongTermDebt']}</Text>
+          <MyText style={common_styles.font_15}>Short Term and Current Long Term Debt</MyText>
+          <MyText>{this.state.data['shortTermAndCurrentLongTermDebt']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Other Liabilities</Text>
-          <Text>{this.state.data['otherLiabilities']}</Text>
+          <MyText>Other Liabilities</MyText>
+          <MyText>{this.state.data['otherLiabilities']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last, common_styles.margin_l_20]}>
-          <Text style={common_styles.bold}>Total Current Liabilities</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalCurrentLiabilities']}</Text>
+          <MyText style={common_styles.bold}>Total Current Liabilities</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalCurrentLiabilities']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_master_item]}>
-          <Text style={common_styles.bold}>Long Term Liabilities</Text>
+          <MyText style={common_styles.bold}>Long Term Liabilities</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Long Term Debt</Text>
-          <Text>{this.state.data['longTermDebt']}</Text>
+          <MyText>Long Term Debt</MyText>
+          <MyText>{this.state.data['longTermDebt']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Other Liabilities</Text>
-          <Text>{this.state.data['otherLiabilitiesWithContingencies']}</Text>
+          <MyText>Other Liabilities</MyText>
+          <MyText>{this.state.data['otherLiabilitiesWithContingencies']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text style={common_styles.font_15}>Deferred Long Term Liability Charges</Text>
-          <Text>{this.state.data['deferredLongTermLiabilityCharges']}</Text>
+          <MyText style={common_styles.font_15}>Deferred Long Term Liability Charges</MyText>
+          <MyText>{this.state.data['deferredLongTermLiabilityCharges']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Minority Interest</Text>
-          <Text>{this.state.data['minorityInterest']}</Text>
+          <MyText>Minority Interest</MyText>
+          <MyText>{this.state.data['minorityInterest']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Total Liabilities</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalLiabilities']}</Text>
+          <MyText style={common_styles.bold}>Total Liabilities</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalLiabilities']}</MyText>
         </View>
         {/* Stockholders' Equity */}
         <View style={[styles.financial_header]}>
-          <Text style={[common_styles.default_font_color, common_styles.bold]}>Stockholders' Equity</Text>
+          <MyText style={[common_styles.default_font_color, common_styles.bold]}>Stockholders' Equity</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Preferred Stock</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Preferred Stock</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Common Stock</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Common Stock</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Retained Earnings</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Retained Earnings</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Treasury Stock</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Treasury Stock</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Capital Surplus</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Capital Surplus</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text>Other Stockholder Equity</Text>
-          <Text>{this.state.data['']}</Text>
+          <MyText>Other Stockholder Equity</MyText>
+          <MyText>{this.state.data['']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Total Stockholder Equity</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalStockholderEquity']}</Text>
+          <MyText style={common_styles.bold}>Total Stockholder Equity</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalStockholderEquity']}</MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={[common_styles.font_15]}>Total Liabilities and Stockholders' Equity</Text>
-          <Text style={common_styles.bold}>{this.state.data['totalLiablitiesAndStockholderEquity']}</Text>
+          <MyText style={[common_styles.font_15]}>Total Liabilities and Stockholders' Equity</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['totalLiablitiesAndStockholderEquity']}</MyText>
         </View>
         <View style={[styles.financial_item, common_styles.margin_l_20]}>
-          <Text></Text>
+          <MyText></MyText>
         </View>
         <View style={[styles.financial_item, styles.financial_item_last]}>
-          <Text style={common_styles.bold}>Net Tangible Assets</Text>
-          <Text style={common_styles.bold}>{this.state.data['netTangibleAssets']}</Text>
+          <MyText style={common_styles.bold}>Net Tangible Assets</MyText>
+          <MyText style={common_styles.bold}>{this.state.data['netTangibleAssets']}</MyText>
         </View>
       </View>
     );

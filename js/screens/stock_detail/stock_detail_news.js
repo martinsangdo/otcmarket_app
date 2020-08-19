@@ -15,6 +15,7 @@ import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {setting} from '../../utils/config.js';
 import Toast from 'react-native-simple-toast';
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 const deviceWidth = Dimensions.get("window").width;
@@ -141,10 +142,10 @@ class StockDetailNews extends BaseScreen {
       <View style={[styles.list_item]} key={item.id}>
 					<View>
             <TouchableOpacity onPress={()=>this._download_detail(item.id)}>
-              <Text style={[common_styles.bold]}>{item.title}</Text>
+              <MyText style={[common_styles.bold]}>{item.title}</MyText>
             </TouchableOpacity>
           </View>
-          <View><Text style={common_styles.font_15}>{item.newsTypeDescript} | {item.displayDateTime}</Text></View>
+          <View><MyText style={common_styles.font_15}>{item.newsTypeDescript} | {item.displayDateTime}</MyText></View>
           <View style={[common_styles.margin_b_5, common_styles.margin_t_10, common_styles.border_b_gray]} />
 			</View>
 		);
@@ -199,13 +200,13 @@ class StockDetailNews extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -237,9 +238,9 @@ class StockDetailNews extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
-                <View style={[common_styles.margin_10]}><Text style={[common_styles.heading_1]}>NEWS DOCUMENTS</Text></View>
+                <View style={[common_styles.margin_10]}><MyText style={[common_styles.heading_1]}>NEWS DOCUMENTS</MyText></View>
                 <View style={[common_styles.margin_l_10, common_styles.margin_r_10, common_styles.border_b_tab]} />
-                <View><Text style={[common_styles.font_15, common_styles.margin_10, common_styles.darkGrayColor]}>Tap title to view</Text></View>
+                <View><MyText style={[common_styles.font_15, common_styles.margin_10, common_styles.darkGrayColor]}>Tap title to view</MyText></View>
 
 								<View>
 									<FlatList
@@ -250,10 +251,10 @@ class StockDetailNews extends BaseScreen {
 											/>
 								</View>
                 {
-                  this.state.can_load_more && this.state.list_data.length > 0 && 
+                  this.state.can_load_more && this.state.list_data.length > 0 &&
                     <View style={common_styles.view_align_center}>
     									<TouchableOpacity onPress={() => this._open_more_page()}>
-    										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+    										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
     									</TouchableOpacity>
     								</View>
                 }

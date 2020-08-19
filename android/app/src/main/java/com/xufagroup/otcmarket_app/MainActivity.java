@@ -1,4 +1,4 @@
-package xufagroup;
+package com.xufagroup.otcmarket_app;
 
 import com.facebook.react.ReactActivity;
 

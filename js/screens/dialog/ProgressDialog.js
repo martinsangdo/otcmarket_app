@@ -30,7 +30,8 @@ import {
     Text
 } from 'react-native';
 
-import Dialog from './Dialog'
+import Dialog from './Dialog';
+import MyText from '../../component/MyText';
 
 class ProgressDialog extends Component {
     render() {
@@ -42,7 +43,7 @@ class ProgressDialog extends Component {
             <Dialog {...this.props} >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }} >
                     <ActivityIndicator animating={true} color={activityIndicatorColor} size={activityIndicatorSize} style={activityIndicatorStyle} />
-                    <Text style={[{ marginLeft: 20, fontSize: 18, color: "#00000089" }, messageStyle]}>{message}</Text>
+                    <MyText style={[{ marginLeft: 20, fontSize: 18, color: "#00000089" }, messageStyle]}>{message}</MyText>
                 </View>
             </Dialog>
         )

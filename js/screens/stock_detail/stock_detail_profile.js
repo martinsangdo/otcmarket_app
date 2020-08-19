@@ -15,6 +15,7 @@ import {setting} from '../../utils/config.js';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 
@@ -157,8 +158,8 @@ class StockDetailProfile extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderOfficers = ({item}) => (
       <View style={[common_styles.margin_b_10]}>
-        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</Text>
-        <Text>{item.title}</Text>
+        <MyText style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</MyText>
+        <MyText>{item.title}</MyText>
       </View>
 		);
     //
@@ -166,11 +167,11 @@ class StockDetailProfile extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderAuditors = ({item}) => (
       <View style={[common_styles.margin_b_10]}>
-        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.typeName}</Text>
-        <Text style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</Text>
-        <Text style={[common_styles.margin_b_10]}>{item.address1}</Text>
-        <Text style={[common_styles.margin_b_10]}>{item.city + ' ' +item.zip}</Text>
-        <Text>{item.country}</Text>
+        <MyText style={[common_styles.margin_b_10, common_styles.bold]}>{item.typeName}</MyText>
+        <MyText style={[common_styles.margin_b_10, common_styles.bold]}>{item.name}</MyText>
+        <MyText style={[common_styles.margin_b_10]}>{item.address1}</MyText>
+        <MyText style={[common_styles.margin_b_10]}>{item.city + ' ' +item.zip}</MyText>
+        <MyText>{item.country}</MyText>
       </View>
 		);
     //turn on/off bookmark of this symbol
@@ -191,14 +192,14 @@ class StockDetailProfile extends BaseScreen {
       let company_notes = this.state.general['notes'];
       if (company_notes !== undefined && company_notes != null){
         display_company_notes = company_notes.map(function(item){
-          return <View key={Math.random()}><Text style={[common_styles.margin_b_10]}> {item} </Text></View>;
+          return <View key={Math.random()}><MyText style={[common_styles.margin_b_10]}> {item} </MyText></View>;
         });
       }
       let display_securities_notes = [];
       let securities_notes = this.state.general['security_notes'];
       if (securities_notes !== undefined && securities_notes != null){
         display_securities_notes = securities_notes.map(function(item){
-          return <View key={Math.random()}><Text style={[common_styles.margin_b_10]}>{item}</Text></View>;
+          return <View key={Math.random()}><MyText style={[common_styles.margin_b_10]}>{item}</MyText></View>;
         });
       }
 
@@ -212,13 +213,13 @@ class StockDetailProfile extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -250,36 +251,36 @@ class StockDetailProfile extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 {/* general data */}
                 <View style={common_styles.margin_b_10} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>{this.state.general['name']}</Text></View>
-                <View style={common_styles.margin_b_10}><Text>{this.state.general['tierDisplayName']}</Text></View>
-                <View style={common_styles.margin_b_20}><Text>Member since {this.state.general['tierStartDate']}</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.bold]}>{this.state.general['name']}</MyText></View>
+                <View style={common_styles.margin_b_10}><MyText>{this.state.general['tierDisplayName']}</MyText></View>
+                <View style={common_styles.margin_b_20}><MyText>Member since {this.state.general['tierStartDate']}</MyText></View>
                 {this.state.general['isProfileVerified'] &&
-                  <View style={common_styles.margin_b_20}><Text>Verified Profile {this.state.general['profileVerifiedAsOfDate']}</Text></View>
+                  <View style={common_styles.margin_b_20}><MyText>Verified Profile {this.state.general['profileVerifiedAsOfDate']}</MyText></View>
                 }
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>DESCRIPTION</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>DESCRIPTION</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
-                <View><Text>{this.state.general['businessDesc']}</Text></View>
+                <View><MyText>{this.state.general['businessDesc']}</MyText></View>
                 {this.state.general['hasLogo'] && !Utils.isEmpty(this.state.general['companyLogoUrl']) &&
                   <Image source={{uri: setting.BACKEND_SERVER_URI + this.state.general['companyLogoUrl']}} style={{maxWidth:170, height:40}}/>
                 }
                 {
                   !Utils.isEmpty(this.state.general['address1']) &&
-                    <View style={common_styles.margin_b_10}><Text>{this.state.general['address1']}</Text></View>
+                    <View style={common_styles.margin_b_10}><MyText>{this.state.general['address1']}</MyText></View>
                 }
                 {
                   !Utils.isEmpty(this.state.general['city']) &&
-                    <View style={common_styles.margin_b_10}><Text>{this.state.general['city']}</Text></View>
+                    <View style={common_styles.margin_b_10}><MyText>{this.state.general['city']}</MyText></View>
                 }
                 {
                   !Utils.isEmpty(this.state.general['country']) &&
-                    <View style={common_styles.margin_b_10}><Text>{this.state.general['country']}</Text></View>
+                    <View style={common_styles.margin_b_10}><MyText>{this.state.general['country']}</MyText></View>
                 }
                 <View style={[common_styles.margin_b_10, common_styles.border_b_gray]} />
                 {
                   !Utils.isEmpty(this.state.general['website']) &&
                   <View style={common_styles.margin_b_10}>
                     <TouchableOpacity onPress={()=>Linking.openURL(this.state.general['website'])}>
-                      <Text>{this.state.general['website']}</Text>
+                      <MyText>{this.state.general['website']}</MyText>
                     </TouchableOpacity>
                   </View>
                 }
@@ -287,7 +288,7 @@ class StockDetailProfile extends BaseScreen {
                   !Utils.isEmpty(this.state.general['phone']) &&
                   <View style={common_styles.margin_b_10}>
                     <TouchableOpacity onPress={()=>Linking.openURL('tel:'+this.state.general['phone'])}>
-                      <Text>{this.state.general['phone']} {this.state.general['zip']}</Text>
+                      <MyText>{this.state.general['phone']} {this.state.general['zip']}</MyText>
                     </TouchableOpacity>
                   </View>
                 }
@@ -295,7 +296,7 @@ class StockDetailProfile extends BaseScreen {
                   !Utils.isEmpty(this.state.general['email']) &&
                   <View style={common_styles.margin_b_10}>
                     <TouchableOpacity onPress={()=>Linking.openURL('mailto:'+this.state.general['email'])}>
-                      <Text>{this.state.general['email']}</Text>
+                      <MyText>{this.state.general['email']}</MyText>
                     </TouchableOpacity>
                   </View>
                 }
@@ -309,25 +310,25 @@ class StockDetailProfile extends BaseScreen {
                   </View>
                 }
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITY DETAILS</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITY DETAILS</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {
                   !Utils.isEmpty(this.state.general['estimatedMarketCap']) &&
                   <View>
-                    <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>Market Cap</Text></View>
+                    <View><MyText style={[common_styles.margin_b_10, common_styles.bold]}>Market Cap</MyText></View>
                     <View style={[common_styles.margin_b_10, common_styles.flex_row]}>
-                      <View style={[common_styles.width_50p]}><Text>{this.state.general['estimatedMarketCap']}</Text></View>
-                      <View style={[common_styles.width_50p]}><Text>{this.state.general['estimatedMarketCapAsOfDate']}</Text></View>
+                      <View style={[common_styles.width_50p]}><MyText>{this.state.general['estimatedMarketCap']}</MyText></View>
+                      <View style={[common_styles.width_50p]}><MyText>{this.state.general['estimatedMarketCapAsOfDate']}</MyText></View>
                     </View>
                   </View>
                 }
                 {
                   !Utils.isEmpty(this.state.general['authorizedShares']) &&
                   <View>
-                    <View><Text style={[common_styles.margin_b_10, common_styles.bold]}>Shares Out</Text></View>
+                    <View><MyText style={[common_styles.margin_b_10, common_styles.bold]}>Shares Out</MyText></View>
                     <View style={[common_styles.margin_b_10, common_styles.flex_row]}>
-                      <View style={[common_styles.width_50p]}><Text>{this.state.general['authorizedShares']}</Text></View>
-                      <View style={[common_styles.width_50p]}><Text>{this.state.general['authorizedSharesAsOfDate']}</Text></View>
+                      <View style={[common_styles.width_50p]}><MyText>{this.state.general['authorizedShares']}</MyText></View>
+                      <View style={[common_styles.width_50p]}><MyText>{this.state.general['authorizedSharesAsOfDate']}</MyText></View>
                     </View>
                   </View>
                 }
@@ -335,47 +336,47 @@ class StockDetailProfile extends BaseScreen {
                   !Utils.isEmpty(this.state.general['estimatedMarketCap']) && !Utils.isEmpty(this.state.general['authorizedShares']) &&
                   <View style={common_styles.view_align_center}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('StockDetailSecurity', {symbol: this.state.symbol})}>
-                      <Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+                      <MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
                     </TouchableOpacity>
                   </View>
                 }
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>FINANCIAL REPORTING</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>FINANCIAL REPORTING</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {!Utils.isEmpty(this.state.general['reportingStandard']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Reporting Status</Text>
-                    <Text>{this.state.general['reportingStandard']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Reporting Status</MyText>
+                    <MyText>{this.state.general['reportingStandard']}</MyText>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['auditedStatusDisplay']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Audited Financials</Text>
-                    <Text>{this.state.general['auditedStatusDisplay']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Audited Financials</MyText>
+                    <MyText>{this.state.general['auditedStatusDisplay']}</MyText>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['latestFilingUrl']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Latest Report</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Latest Report</MyText>
                     <TouchableOpacity onPress={()=>Linking.openURL(setting.BACKEND_SERVER_URI + this.state.general['latestFilingUrl'])}>
-                      <Text style={common_styles.underline}>{this.state.general['latestFilingDate'] + ' ' + this.state.general['latestFilingType']}</Text>
+                      <MyText style={common_styles.underline}>{this.state.general['latestFilingDate'] + ' ' + this.state.general['latestFilingType']}</MyText>
                     </TouchableOpacity>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['cik']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>CIK</Text>
-                    <Text>{this.state.general['cik']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>CIK</MyText>
+                    <MyText>{this.state.general['cik']}</MyText>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['fiscalYearEnd']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Fiscal Year End</Text>
-                    <Text>{this.state.general['fiscalYearEnd']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Fiscal Year End</MyText>
+                    <MyText>{this.state.general['fiscalYearEnd']}</MyText>
                   </View>
                 }
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>OFFICERS</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>OFFICERS</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {
                   this.state.general['officers'] != null && this.state.general['officers'].length > 0 &&
@@ -387,7 +388,7 @@ class StockDetailProfile extends BaseScreen {
 											/>
                 }
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>DIRECTORS</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>DIRECTORS</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {
                   this.state.general['premierDirectorList'] != null && this.state.general['premierDirectorList'].length > 0 &&
@@ -408,7 +409,7 @@ class StockDetailProfile extends BaseScreen {
 											/>
                 }
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SERVICE PROVIDERS</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>SERVICE PROVIDERS</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 <FlatList
                       data={this.state.general['auditors']}
@@ -417,36 +418,36 @@ class StockDetailProfile extends BaseScreen {
                       keyExtractor={this._keyExtractorAuditors}
                 />
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>PROFILE DATA</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>PROFILE DATA</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {!Utils.isEmpty(this.state.general['primarySicCode']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>SIC - Industry Classification</Text>
-                    <Text>{this.state.general['primarySicCode']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>SIC - Industry Classification</MyText>
+                    <MyText>{this.state.general['primarySicCode']}</MyText>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['countryOfIncorporationName']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Incorporated In</Text>
-                    <Text>{this.state.general['countryOfIncorporationName'] + ', ' + this.state.general['yearOfIncorporation']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Incorporated In</MyText>
+                    <MyText>{this.state.general['countryOfIncorporationName'] + ', ' + this.state.general['yearOfIncorporation']}</MyText>
                   </View>
                 }
                 {!Utils.isEmpty(this.state.general['numberOfEmployees']) &&
                   <View style={[common_styles.margin_b_10]}>
-                    <Text style={[common_styles.margin_b_10, common_styles.bold]}>Employees</Text>
-                    <Text>{this.state.general['numberOfEmployees']} as of {this.state.general['numberOfEmployeesAsOf']}</Text>
+                    <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Employees</MyText>
+                    <MyText>{this.state.general['numberOfEmployees']} as of {this.state.general['numberOfEmployeesAsOf']}</MyText>
                   </View>
                 }
                 <View style={[common_styles.margin_b_10]}>
-                  <Text style={[common_styles.margin_b_10, common_styles.bold]}>Shell</Text>
-                  <Text>{this.state.general['isShell']?'Yes':'No'}</Text>
+                  <MyText style={[common_styles.margin_b_10, common_styles.bold]}>Shell</MyText>
+                  <MyText>{this.state.general['isShell']?'Yes':'No'}</MyText>
                 </View>
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>NOTES</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>NOTES</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {display_company_notes}
                 <View style={[common_styles.margin_b_20]} />
-                <View><Text style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITIES NOTES</Text></View>
+                <View><MyText style={[common_styles.margin_b_10, common_styles.heading_1]}>SECURITIES NOTES</MyText></View>
                 <View style={[common_styles.margin_b_10, common_styles.border_b_tab]} />
                 {display_securities_notes}
                 <View style={common_styles.margin_b_20} />

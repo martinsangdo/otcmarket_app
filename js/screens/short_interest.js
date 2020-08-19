@@ -12,6 +12,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 
@@ -80,11 +81,11 @@ class ShortInterest extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_60p]}><Text>{item.securityName}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.shortInterest}</Text></View>
+					<View style={[common_styles.width_60p]}><MyText>{item.securityName}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.shortInterest}</MyText></View>
 				</View>
 		);
 		//
@@ -123,7 +124,7 @@ class ShortInterest extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Short Interest Data</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Short Interest Data</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -144,14 +145,14 @@ class ShortInterest extends BaseScreen {
   								</Picker>
 								</View>
 								<View style={[common_styles.view_align_center, common_styles.padding_5]}>
-									<Text style={common_styles.darkGrayColor}>Short position data for OTC equity securities must be reported by FINRA Member firms (FINRA Rule 4560) twice monthly. The table below groups securities by the settlement date of short interest reporting. Historical details at the symbol level may be found by selecting the symbol link.</Text>
+									<MyText style={common_styles.darkGrayColor}>Short position data for OTC equity securities must be reported by FINRA Member firms (FINRA Rule 4560) twice monthly. The table below groups securities by the settlement date of short interest reporting. Historical details at the symbol level may be found by selecting the symbol link.</MyText>
 								</View>
                 {/* SHORT INTEREST BY SYMBOL */}
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_60p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SECURITY NAME</Text></View>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHORT INTEREST</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_60p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SECURITY NAME</MyText></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>SHORT INTEREST</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -165,12 +166,12 @@ class ShortInterest extends BaseScreen {
 								</View>
 								{this.state.can_load_more && <View style={[common_styles.view_align_center, common_styles.margin_10]}>
 										<TouchableOpacity onPress={() => this._open_more_data()}>
-											<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+											<MyText style={common_styles.darkGrayColor}>LOAD MORE >></MyText>
 										</TouchableOpacity>
 									</View>
 								}
 								<View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.list_data.length} of {this.state.totalRecords} items</MyText>
 								</View>
 								<View style={common_styles.margin_b_20} />
 							</Content>

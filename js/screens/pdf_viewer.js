@@ -9,6 +9,7 @@ import Pdf from 'react-native-pdf';
 import styles from "./style";    //CSS defined here
 import common_styles from "../../css/common";
 import BaseScreen from "../base/BaseScreen.js";
+import MyText from '../component/MyText';
 
 class PDFViewer extends BaseScreen {
 	constructor(props) {
@@ -51,13 +52,13 @@ class PDFViewer extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Viewer</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Viewer</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
 									<TouchableOpacity onPress={() => this._check_login()}>

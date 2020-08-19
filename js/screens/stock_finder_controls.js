@@ -12,6 +12,7 @@ import RequestData from '../utils/https/RequestData';
 import {API_URI} from '../utils/api_uri';
 import Utils from "../utils/functions";
 import CheckBox from '@react-native-community/checkbox';
+import MyText from '../component/MyText';
 
 const market_prefix = 'market_';
 const PickerItem = Picker.Item;
@@ -239,7 +240,7 @@ class StockFinderControls extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => me._toogle_options_array('markets', item.id)}
 									/>
-									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{item.name} ({item.num})</MyText></View>
 								</View>;
 			});
 			return display_options;
@@ -273,7 +274,7 @@ class StockFinderControls extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => me._toogle_options_array('securityTypes', item.name)}
 									/>
-									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{item.name} ({item.num})</MyText></View>
 								</View>;
 			});
 			return display_options;
@@ -307,7 +308,7 @@ class StockFinderControls extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => me._toogle_options_array('countryTotals', item.country)}
 									/>
-									<View style={common_styles.justifyCenter}><Text>{item.country} ({item.num})</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{item.country} ({item.num})</MyText></View>
 								</View>;
 			});
 			return display_options;
@@ -341,7 +342,7 @@ class StockFinderControls extends BaseScreen {
 										onAnimationType={'bounce'}
 										onValueChange={() => me._toogle_options_array('industryTotals', item.sic)}
 									/>
-									<View style={common_styles.justifyCenter}><Text>{item.name} ({item.num})</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{item.name} ({item.num})</MyText></View>
 								</View>;
 			});
 			return display_options;
@@ -359,17 +360,17 @@ class StockFinderControls extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Advanced Settings</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Advanced Settings</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
 									<TouchableOpacity onPress={() => this._apply_options()}>
-										<Text uppercase={false} style={[common_styles.default_font_color]}>Apply</Text>
+										<MyText uppercase={false} style={[common_styles.default_font_color]}>Apply</MyText>
 									</TouchableOpacity>
 								</Right>
 							</Header>
@@ -378,18 +379,18 @@ class StockFinderControls extends BaseScreen {
 								{/* Market */}
 								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
-									<Text style={[common_styles.heading_1]}>MARKETS</Text>
+									<MyText style={[common_styles.heading_1]}>MARKETS</MyText>
 									<View style={[common_styles.float_right]}>
 										<TouchableOpacity onPress={()=>this._on_clear_market()}>
-											<Text>Reset</Text>
+											<MyText>Reset</MyText>
 										</TouchableOpacity>
 									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Markets */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Markets</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Markets</MyText></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market()}>
-									<View style={common_styles.justifyCenter}><Text>{this.state.options['markets'].length==0?'All':this.state.options['markets'].length+' selected'}</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{this.state.options['markets'].length==0?'All':this.state.options['markets'].length+' selected'}</MyText></View>
 									<View>
 										{
 											!this.state.is_show_market &&
@@ -410,9 +411,9 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Security Type */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Security Types</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Security Types</MyText></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type()}>
-									<View style={common_styles.justifyCenter}><Text>{this.state.options['securityTypes'].length==0?'All':this.state.options['securityTypes'].length+' selected'}</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{this.state.options['securityTypes'].length==0?'All':this.state.options['securityTypes'].length+' selected'}</MyText></View>
 									<View>
 										{
 											!this.state.is_show_securityType &&
@@ -433,9 +434,9 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Country */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Countries</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Countries</MyText></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_countries()}>
-									<View style={common_styles.justifyCenter}><Text>{this.state.options['countryTotals'].length==0?'All':this.state.options['countryTotals'].length+' selected'}</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{this.state.options['countryTotals'].length==0?'All':this.state.options['countryTotals'].length+' selected'}</MyText></View>
 									<View>
 										{
 											!this.state.is_show_countries &&
@@ -456,9 +457,9 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								{/* Industry */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Industries</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Industries</MyText></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_industries()}>
-									<View style={common_styles.justifyCenter}><Text>{this.state.options['industryTotals'].length==0?'All':this.state.options['industryTotals'].length+' selected'}</Text></View>
+									<View style={common_styles.justifyCenter}><MyText>{this.state.options['industryTotals'].length==0?'All':this.state.options['industryTotals'].length+' selected'}</MyText></View>
 									<View>
 										{
 											!this.state.is_show_industries &&
@@ -479,7 +480,7 @@ class StockFinderControls extends BaseScreen {
 					        </View>
 								}
 								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
-									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Caveat Emptor</Text></View>
+									<View style={common_styles.justifyCenter}><MyText style={common_styles.bold}>Caveat Emptor</MyText></View>
 									<CheckBox
 										boxType={'square'}
 										value={this.state.options['ce']}
@@ -491,16 +492,16 @@ class StockFinderControls extends BaseScreen {
 								{/* GROWTH */}
 								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
-									<Text style={[common_styles.heading_1]}>GROWTH</Text>
+									<MyText style={[common_styles.heading_1]}>GROWTH</MyText>
 									<View style={[common_styles.float_right]}>
 										<TouchableOpacity onPress={()=>this._on_clear_growth()}>
-											<Text>Reset</Text>
+											<MyText>Reset</MyText>
 										</TouchableOpacity>
 									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Price */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Price</MyText></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min US$" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, priceMin : event.nativeEvent.text}})} value={this.state.options.priceMin}/>
@@ -510,7 +511,7 @@ class StockFinderControls extends BaseScreen {
 									</Item>
 								</Form>
 								{/* Volume */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Volume</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Volume</MyText></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, volMin : event.nativeEvent.text}})} value={this.state.options.volMin}/>
@@ -520,7 +521,7 @@ class StockFinderControls extends BaseScreen {
 									</Item>
 								</Form>
 								{/* Price change */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price change</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Price change</MyText></View>
 								<Form style={[common_styles.flex_row, common_styles.space_around]}>
 									<Item style={styles.finder_textbox_container} regular>
 										<TextInput placeholder="Min %" keyboardType={'decimal-pad'} onChange={(event) => this.setState({options: {...this.state.options, pcPct : event.nativeEvent.text}})} value={this.state.options.pcPct}/>
@@ -542,7 +543,7 @@ class StockFinderControls extends BaseScreen {
 								</Form>
 								{/* Penny Stock Exempt */}
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
-									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Penny Stock Exempt</Text></View>
+									<View style={common_styles.justifyCenter}><MyText style={common_styles.bold}>Penny Stock Exempt</MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Penny Stock"
@@ -559,16 +560,16 @@ class StockFinderControls extends BaseScreen {
 								{/* Performance */}
 								<View style={common_styles.margin_b_10} />
 								<View style={[common_styles.margin_5, common_styles.fetch_row]}>
-									<Text style={[common_styles.heading_1]}>PERFORMANCE</Text>
+									<MyText style={[common_styles.heading_1]}>PERFORMANCE</MyText>
 									<View style={[common_styles.float_right]}>
 										<TouchableOpacity onPress={()=>this._on_clear_performance()}>
-											<Text>Reset</Text>
+											<MyText>Reset</MyText>
 										</TouchableOpacity>
 									</View>
 								</View>
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Penny Stock Exempt */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price Performance</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Price Performance</MyText></View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
 									<Picker
 										mode="dropdown"
@@ -604,9 +605,9 @@ class StockFinderControls extends BaseScreen {
 									</Picker>
 								</View>
 								{/* Price % change */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Price % Change</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Price % Change</MyText></View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
-									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>From: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Min change"
@@ -625,7 +626,7 @@ class StockFinderControls extends BaseScreen {
 									<PickerItem label="-35%" value="-35" />
 									<PickerItem label="< -40%" value="-40" />
 									</Picker>
-									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>To: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Max change"
@@ -645,9 +646,9 @@ class StockFinderControls extends BaseScreen {
 									</Picker>
 								</View>
 								{/* 10 days vs 90  */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>10 Days vs 90 Days Avg. volume</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>10 Days vs 90 Days Avg. volume</MyText></View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
-									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>From: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Min change"
@@ -665,7 +666,7 @@ class StockFinderControls extends BaseScreen {
 									<PickerItem label="85%" value="85" />
 									<PickerItem label="95%" value="95" />
 									</Picker>
-									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>To: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Max change"
@@ -688,7 +689,7 @@ class StockFinderControls extends BaseScreen {
 									</Picker>
 								</View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
-									<View style={common_styles.justifyCenter}><Text style={common_styles.bold}>Dividend Payer</Text></View>
+									<View style={common_styles.justifyCenter}><MyText style={common_styles.bold}>Dividend Payer</MyText></View>
 									<CheckBox
 										boxType={'square'}
 										value={this.state.options['div']}
@@ -698,9 +699,9 @@ class StockFinderControls extends BaseScreen {
 									/>
 								</View>
 								{/* Short Interest as Percent  */}
-								<View style={common_styles.margin_5}><Text style={common_styles.bold}>Short Interest as Percent of Shares Outstanding</Text></View>
+								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Short Interest as Percent of Shares Outstanding</MyText></View>
 								<View style={[common_styles.fetch_row, common_styles.margin_5, common_styles.margin_r_20]}>
-									<View style={common_styles.justifyCenter}><Text>From: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>From: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Min"
@@ -716,7 +717,7 @@ class StockFinderControls extends BaseScreen {
 									<PickerItem label="40%" value="40" />
 									<PickerItem label="50%" value="50" />
 									</Picker>
-									<View style={common_styles.justifyCenter}><Text>To: </Text></View>
+									<View style={common_styles.justifyCenter}><MyText>To: </MyText></View>
 									<Picker
 										mode="dropdown"
 										iosHeader="Max"
@@ -734,7 +735,7 @@ class StockFinderControls extends BaseScreen {
 								</View>
 								<View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
 									<TouchableOpacity style={[common_styles.default_button]} onPress={() => this._apply_options()}>
-										<Text style={common_styles.whiteColor}>Apply</Text>
+										<MyText style={common_styles.whiteColor}>Apply</MyText>
 									</TouchableOpacity>
 								</View>
 								<View style={common_styles.margin_b_20} />

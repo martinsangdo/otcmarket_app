@@ -12,6 +12,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 class ComplianceStatistic extends BaseScreen {
 		constructor(props) {
@@ -148,13 +149,13 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text>{item.latestPromoDate}</Text></View>
-          <View style={[common_styles.width_10p]}><Text style={common_styles.float_right}>{item.promoDuration}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.startDatePrice}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.currentClosingPrice}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.latestPromoDate}</MyText></View>
+          <View style={[common_styles.width_10p]}><MyText style={common_styles.float_right}>{item.promoDuration}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.startDatePrice}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.currentClosingPrice}</MyText></View>
 				</View>
 		);
     //
@@ -164,14 +165,14 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_25p]}><Text>{item.shellChangeDate}</Text></View>
-          <View style={[common_styles.width_10p]}><Text style={common_styles.float_right}>{item.oldValue}</Text></View>
-          <View style={[common_styles.width_10p]}><Text style={common_styles.float_right}>{item.newValue}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.currentClosingPrice}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.marketCap}</Text></View>
+          <View style={[common_styles.width_25p]}><MyText>{item.shellChangeDate}</MyText></View>
+          <View style={[common_styles.width_10p]}><MyText style={common_styles.float_right}>{item.oldValue}</MyText></View>
+          <View style={[common_styles.width_10p]}><MyText style={common_styles.float_right}>{item.newValue}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.currentClosingPrice}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.marketCap}</MyText></View>
 				</View>
 		);
     //
@@ -181,13 +182,13 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_25p]}><Text>{item.splitEffectiveDate}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.oldSymbol}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.splitRatio}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.closePricePreSplit}</Text></View>
+          <View style={[common_styles.width_25p]}><MyText>{item.splitEffectiveDate}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.oldSymbol}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.splitRatio}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.closePricePreSplit}</MyText></View>
 				</View>
 		);
     //
@@ -197,13 +198,13 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_25p]}><Text>{item.effectiveDate}</Text></View>
-          <View style={[common_styles.width_15p]}><Text>{item.oldSymbol}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.font_12}>{item.oldCompanyName}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.font_12}>{item.newCompanyName}</Text></View>
+          <View style={[common_styles.width_25p]}><MyText>{item.effectiveDate}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText>{item.oldSymbol}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.font_12}>{item.oldCompanyName}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.font_12}>{item.newCompanyName}</MyText></View>
 				</View>
 		);
     //Caveat emptor
@@ -213,13 +214,13 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_25p]}><Text>{item.changeDate}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.change}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.closingPrice}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.marketCap}</Text></View>
+          <View style={[common_styles.width_25p]}><MyText>{item.changeDate}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.change}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.closingPrice}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.marketCap}</MyText></View>
 				</View>
 		);
     //Suspensions
@@ -229,13 +230,13 @@ class ComplianceStatistic extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-          <View style={[common_styles.width_25p]}><Text>{item.effectiveDate}</Text></View>
-          <View style={[common_styles.width_20p]}><Text>{item.currentStatus}</Text></View>
-          <View style={[common_styles.width_15p]}><Text style={common_styles.float_right}>{item.closingPrice}</Text></View>
-          <View style={[common_styles.width_20p]}><Text style={common_styles.float_right}>{item.marketCap}</Text></View>
+          <View style={[common_styles.width_25p]}><MyText>{item.effectiveDate}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText>{item.currentStatus}</MyText></View>
+          <View style={[common_styles.width_15p]}><MyText style={common_styles.float_right}>{item.closingPrice}</MyText></View>
+          <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.marketCap}</MyText></View>
 				</View>
 		);
 	 //==========
@@ -251,7 +252,7 @@ class ComplianceStatistic extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>COMPLIANCE & STATISTICS</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>COMPLIANCE & STATISTICS</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -261,14 +262,14 @@ class ComplianceStatistic extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 {/* Stock Promotions */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>STOCK PROMOTIONS</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>STOCK PROMOTIONS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_10p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>DUR</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>STRPRC</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOPRC</Text></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_10p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>DUR</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>STRPRC</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOPRC</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -282,15 +283,15 @@ class ComplianceStatistic extends BaseScreen {
 								</View>
                 {/* Shell status change */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SHELL STATUS CHANGES</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>SHELL STATUS CHANGES</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_10p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>OLD VAL</Text></View>
-                  <View style={[common_styles.width_10p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>NEW VAL</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOSE PRICE</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_10p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>OLD VAL</MyText></View>
+                  <View style={[common_styles.width_10p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>NEW VAL</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOSE PRICE</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -304,14 +305,14 @@ class ComplianceStatistic extends BaseScreen {
 								</View>
                 {/* reverseSplits */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>REVERSE SPLITS</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>REVERSE SPLITS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>OLD SYM</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>RATIO</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOSE PS</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>OLD SYM</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>RATIO</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLOSE PS</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -325,14 +326,14 @@ class ComplianceStatistic extends BaseScreen {
 								</View>
                 {/* Company name changes */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>COMPANY NAME CHANGES</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>COMPANY NAME CHANGES</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_15p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>OLD SYM</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>OLD NAME</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>NEW NAME</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_15p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>OLD SYM</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>OLD NAME</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>NEW NAME</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -346,14 +347,14 @@ class ComplianceStatistic extends BaseScreen {
 								</View>
                 {/* Caveat Emptor */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>CAVEAT EMPTOR</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>CAVEAT EMPTOR</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>CHANGE</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLO PRC</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>CHANGE</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLO PRC</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</MyText></View>
                 </View>
                 <View>
 									<FlatList
@@ -367,14 +368,14 @@ class ComplianceStatistic extends BaseScreen {
 								</View>
                 {/* Suspensions */}
                 <View style={common_styles.margin_b_20} />
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SUSPENSIONS / REVOCATIONS</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>SUSPENSIONS / REVOCATIONS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
                 <View style={[common_styles.fetch_row, common_styles.padding_5]}>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-                  <View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-                  <View style={common_styles.width_20p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>CURSTAT</Text></View>
-                  <View style={[common_styles.width_15p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLO PRC</Text></View>
-                  <View style={[common_styles.width_20p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</Text></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+                  <View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+                  <View style={common_styles.width_20p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>CURSTAT</MyText></View>
+                  <View style={[common_styles.width_15p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CLO PRC</MyText></View>
+                  <View style={[common_styles.width_20p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>CAP</MyText></View>
                 </View>
                 <View>
 									<FlatList

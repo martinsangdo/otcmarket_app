@@ -13,6 +13,7 @@ import {C_Const} from '../../utils/constant';
 import RequestData from '../../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 
@@ -149,10 +150,10 @@ class StockDetailSecurity extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemDividend = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.changeDate + '-' + item.payDate}>
-					<View style={[styles.width_25p]}><Text>{item.changeDate}</Text></View>
-					<View style={[styles.width_25p]}><Text style={[common_styles.float_right]}>{item.cashAmount}</Text></View>
-          <View style={[styles.width_25p]}><Text>{item.recordDate}</Text></View>
-          <View style={[styles.width_25p]}><Text>{item.payDate}</Text></View>
+					<View style={[styles.width_25p]}><MyText>{item.changeDate}</MyText></View>
+					<View style={[styles.width_25p]}><MyText style={[common_styles.float_right]}>{item.cashAmount}</MyText></View>
+          <View style={[styles.width_25p]}><MyText>{item.recordDate}</MyText></View>
+          <View style={[styles.width_25p]}><MyText>{item.payDate}</MyText></View>
 				</View>
 		);
     //
@@ -160,10 +161,10 @@ class StockDetailSecurity extends BaseScreen {
 		//render the list. MUST use "item" as param
 		_renderItemSplit = ({item}) => (
       <View style={[styles.list_item, common_styles.fetch_row]} key={item.changeDate + '-' + item.payDate}>
-					<View style={[common_styles.width_25p]}><Text>{item.changeDate}</Text></View>
-					<View style={[common_styles.width_25p]}><Text>{item.splitRatio}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.recordDate}</Text></View>
-          <View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{item.payDate}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.changeDate}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.splitRatio}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.recordDate}</MyText></View>
+          <View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{item.payDate}</MyText></View>
 				</View>
 		);
     //turn on/off bookmark of this symbol
@@ -190,13 +191,13 @@ class StockDetailSecurity extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -228,20 +229,20 @@ class StockDetailSecurity extends BaseScreen {
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
                 <View style={common_styles.margin_b_10} />
                 {/* List */}
-                <View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>DIVIDENDS & SPLITS</Text></View>
+                <View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>DIVIDENDS & SPLITS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_dividend(true)}>
-				          	<View style={[common_styles.padding_5, this.state.is_dividend&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.is_dividend&&common_styles.bold]}>Dividends</Text></View>
+				          	<View style={[common_styles.padding_5, this.state.is_dividend&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.is_dividend&&common_styles.bold]}>Dividends</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_dividend(false)}>
-										<View style={[common_styles.padding_5, !this.state.is_dividend&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, !this.state.is_dividend&&common_styles.bold]}>Splits</Text></View>
+										<View style={[common_styles.padding_5, !this.state.is_dividend&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, !this.state.is_dividend&&common_styles.bold]}>Splits</MyText></View>
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</Text></View>
-									<View style={styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>{this.state.is_dividend?'$AMT':'SPTRAT'}</Text></View>
-									<View style={[styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>RECDATE</Text></View>
-                  <View style={[styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PAYDATE</Text></View>
+									<View style={styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>DATE</MyText></View>
+									<View style={styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>{this.state.is_dividend?'$AMT':'SPTRAT'}</MyText></View>
+									<View style={[styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>RECDATE</MyText></View>
+                  <View style={[styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PAYDATE</MyText></View>
 								</View>
 								<View>
 									<FlatList

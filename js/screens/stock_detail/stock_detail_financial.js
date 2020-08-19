@@ -18,6 +18,7 @@ import {setting} from '../../utils/config.js';
 import FinancialIncome from "./stock_detail_financial_income";
 import FinancialBalance from "./stock_detail_financial_balance";
 import FinancialCashFlow from "./stock_detail_financial_cash_flow";
+import MyText from '../../component/MyText';
 
 const Item = Picker.Item;
 
@@ -182,13 +183,13 @@ class StockDetailFinancial extends BaseScreen {
       var index = 0;
       var display_time = this.state.data[this.state.current_type][this.state.current_duration].map(function(item){
         return <TouchableOpacity key={Math.random()} onPress={()=>me._on_change_time(me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate']))}>
-            <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, me.state.current_time_index==index++&&{color:'#3f481a', fontWeight:'bold'}]}>{me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate'])}</Text>
+            <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, me.state.current_time_index==index++&&{color:'#3f481a', fontWeight:'bold'}]}>{me.state.current_duration=='annual'?Utils.formatYear(item['periodEndDate']):Utils.formatMonthYear(item['periodEndDate'])}</MyText>
           </TouchableOpacity>;
       });
       if (display_time.length > 0){
         return display_time;
       } else {
-        return <Text style={common_styles.grayColor}>...</Text>;
+        return <MyText style={common_styles.grayColor}>...</MyText>;
       }
     }
     //turn on/off bookmark of this symbol
@@ -215,13 +216,13 @@ class StockDetailFinancial extends BaseScreen {
 												<Icon name="ios-arrow-back" style={common_styles.default_font_color}/>
 											</View>
 											<View style={[common_styles.margin_l_10, common_styles.float_center]}>
-												<Text uppercase={false} style={[common_styles.default_font_color]}>Back</Text>
+												<MyText uppercase={false} style={[common_styles.default_font_color]}>Back</MyText>
 											</View>
 										</View>
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.5}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -254,24 +255,24 @@ class StockDetailFinancial extends BaseScreen {
                 <View style={common_styles.margin_b_10} />
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_type('income-statement')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='income-statement'&&{color:'#3f481a', fontWeight:'bold'}]}>Income Statement</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='income-statement'&&{color:'#3f481a', fontWeight:'bold'}]}>Income Statement</MyText>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_type('balance-sheet')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='balance-sheet'&&{color:'#3f481a', fontWeight:'bold'}]}>Balance Sheet</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='balance-sheet'&&{color:'#3f481a', fontWeight:'bold'}]}>Balance Sheet</MyText>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_type('cash-flow')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='cash-flow'&&{color:'#3f481a', fontWeight:'bold'}]}>Cash Flow</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='cash-flow'&&{color:'#3f481a', fontWeight:'bold'}]}>Cash Flow</MyText>
                   </TouchableOpacity>
 				        </View>
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_duration('annual')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Annual</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Annual</MyText>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_duration('semi-annual')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='semi-annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Semi-Annual</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='semi-annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Semi-Annual</MyText>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_duration('quarterly')}>
-                    <Text style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='quarterly'&&{color:'#3f481a', fontWeight:'bold'}]}>Quarterly</Text>
+                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='quarterly'&&{color:'#3f481a', fontWeight:'bold'}]}>Quarterly</MyText>
                   </TouchableOpacity>
 				        </View>
                 <View style={styles.financial_options}>
@@ -290,7 +291,7 @@ class StockDetailFinancial extends BaseScreen {
                     <FinancialCashFlow data={this.state.data[this.state.current_type][this.state.current_duration][this.state.current_time_index]}/>
                 }
                 <View style={[common_styles.margin_t_20, common_styles.margin_10]}>
-									<Text style={[common_styles.darkGrayColor, common_styles.font_15]}>For information not originally reported in U.S. Dollars, conversion is based on applicable exchange rate on the last day of the period reported</Text>
+									<MyText style={[common_styles.darkGrayColor, common_styles.font_15]}>For information not originally reported in U.S. Dollars, conversion is based on applicable exchange rate on the last day of the period reported</MyText>
 								</View>
                 <View style={common_styles.margin_b_20} />
               </Content>

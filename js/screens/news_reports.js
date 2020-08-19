@@ -15,6 +15,7 @@ import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Toast from 'react-native-simple-toast';
 import {setting} from '../utils/config.js';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 
@@ -154,15 +155,15 @@ class NewsReports extends BaseScreen {
             <TouchableOpacity
               onPress={() => this._navigateCanBackTo('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text>{item.releaseDate}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText>{item.releaseDate}</MyText></View>
           <View style={[common_styles.width_50p]}>
             <TouchableOpacity
               onPress={() => this._open_news_detail(item.id, item.guid)}
             >
-              <Text style={common_styles.underline}>{item.title}</Text>
+              <MyText style={common_styles.underline}>{item.title}</MyText>
             </TouchableOpacity>
           </View>
 				</View>
@@ -223,7 +224,7 @@ class NewsReports extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>NEWS & FINANCIAL REPORTS</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>NEWS & FINANCIAL REPORTS</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -234,13 +235,13 @@ class NewsReports extends BaseScreen {
                 <View style={common_styles.margin_b_20} />
                 <View style={[common_styles.fetch_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_category('news')}>
-				          	<View style={[common_styles.padding_5, this.state.current_category=='news'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.current_category=='news'&&common_styles.bold]}>NEWS</Text></View>
+				          	<View style={[common_styles.padding_5, this.state.current_category=='news'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.current_category=='news'&&common_styles.bold]}>NEWS</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_category('reports')}>
-										<View style={[common_styles.padding_5, this.state.current_category=='reports'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.current_category=='reports'&&common_styles.bold]}>FINANCIAL REPORTS</Text></View>
+										<View style={[common_styles.padding_5, this.state.current_category=='reports'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.current_category=='reports'&&common_styles.bold]}>FINANCIAL REPORTS</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_category('secs')}>
-										<View style={[common_styles.padding_5, this.state.current_category=='secs'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.current_category=='secs'&&common_styles.bold]}>SEC FILLINGS</Text></View>
+										<View style={[common_styles.padding_5, this.state.current_category=='secs'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.current_category=='secs'&&common_styles.bold]}>SEC FILLINGS</MyText></View>
 									</TouchableOpacity>
 				        </View>
                 <View>
@@ -271,13 +272,13 @@ class NewsReports extends BaseScreen {
 								</View>
   							{this.state.data[this.state.current_category]['can_load_more'] && <View style={[common_styles.view_align_center, common_styles.margin_t_10]}>
   									<TouchableOpacity onPress={() => this._open_more_data()}>
-  										<Text style={common_styles.darkGrayColor}>LOAD MORE >></Text>
+  										<MyText style={common_styles.darkGrayColor}>LOAD MORE >></MyText>
   									</TouchableOpacity>
   								</View>
                 }
                 <View style={common_styles.margin_b_10} />
                 <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Displaying {this.state.data[this.state.current_category]['list'].length} of {this.state.data[this.state.current_category].totalRecords} items</Text>
+									<MyText style={common_styles.darkGrayColor}>Displaying {this.state.data[this.state.current_category]['list'].length} of {this.state.data[this.state.current_category].totalRecords} items</MyText>
 								</View>
 								<View style={common_styles.margin_b_30} />
 							</Content>

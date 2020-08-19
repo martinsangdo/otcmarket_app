@@ -12,6 +12,7 @@ import {
   Badge, View
 } from "native-base";
 import styles from "./style";
+import MyText from '../../component/MyText';
 
 const drawerCover = require("../../../img/menu_bg.jpg");
 const drawerImage = require("../../../img/logo_splash.jpg");
@@ -109,9 +110,9 @@ class SideBar extends Component {
                     name={data.icon}
                     style={{ color: "#777", fontSize: 26, width: 30 }}
                   />
-                  <Text style={styles.text}>
+                  <MyText style={styles.text}>
                     {data.name}
-                  </Text>
+                  </MyText>
                 </Left>
               </ListItem>}
           />

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
+import MyText from '../component/MyText';
+
 //display label of Tabs
 class TabLabel extends React.Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class TabLabel extends React.Component {
       this.setState({value:val});
   }
   render() {
-      return <Text {...this.props}>{this.state.value}</Text>
+      return <MyText {...this.props}>{this.state.value}</MyText>
   }
 }
 

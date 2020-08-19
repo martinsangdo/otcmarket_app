@@ -6,6 +6,7 @@ import {Text, Icon} from "native-base";
 import common_styles from "../../css/common";
 import styles from "../screens/style";    //CSS defined here
 import Utils from "../utils/functions";
+import MyText from '../component/MyText';
 
 const oo_icon = require("../../img/OO_icon.jpg");
 const pc_icon = require("../../img/PC_icon.jpg");
@@ -90,12 +91,12 @@ class BaseScreen extends Component {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('StockDetailQuote', {symbol: item.symbol})}
             >
-  						<Text style={common_styles.default_font_color}>{item.symbol}</Text>
+  						<MyText style={common_styles.default_font_color}>{item.symbol}</MyText>
             </TouchableOpacity>
           </View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.number_to_float_2(item.price)}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</Text></View>
-					<View style={[common_styles.width_25p]}><Text style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</Text></View>
+					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{Utils.number_to_float_2(item.price)}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</MyText></View>
 				</View>
 		);
 }

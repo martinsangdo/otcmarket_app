@@ -13,6 +13,7 @@ import {C_Const} from '../utils/constant';
 import RequestData from '../utils/https/RequestData';
 import store from 'react-native-simple-store';
 import Spinner from 'react-native-loading-spinner-overlay';
+import MyText from '../component/MyText';
 
 const Item = Picker.Item;
 
@@ -238,10 +239,10 @@ class Home extends BaseScreen {
     //used to show list of stocks (Home, current_market)
 		_renderItemIndexSnapshot = ({item}) => (
 				<View style={[styles.list_item, common_styles.fetch_row, common_styles.border_b_gray, common_styles.padding_b_5]} key={item.description}>
-					<View style={common_styles.width_40p}><Text>{item.description}</Text></View>
-					<View style={common_styles.width_20p}><Text style={common_styles.float_right}>{item.lastSale}</Text></View>
-					<View style={common_styles.width_20p}><Text style={[common_styles.float_right, styles.positivePriceColor, item.change < 0 && common_styles.redColor]}>{item.change}</Text></View>
-					<View style={common_styles.width_20p}><Text style={[common_styles.float_right, styles.positivePriceColor, item.percentChange < 0 && common_styles.redColor]}>{item.percentChange}%</Text></View>
+					<View style={common_styles.width_40p}><MyText>{item.description}</MyText></View>
+					<View style={common_styles.width_20p}><MyText style={common_styles.float_right}>{item.lastSale}</MyText></View>
+					<View style={common_styles.width_20p}><MyText style={[common_styles.float_right, styles.positivePriceColor, item.change < 0 && common_styles.redColor]}>{item.change}</MyText></View>
+					<View style={common_styles.width_20p}><MyText style={[common_styles.float_right, styles.positivePriceColor, item.percentChange < 0 && common_styles.redColor]}>{item.percentChange}%</MyText></View>
 				</View>
 		);
 	 //==========
@@ -257,7 +258,7 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body>
-									<Text style={[common_styles.bold, common_styles.default_font_color]}>Market Update</Text>
+									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Market Update</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._navigateCanBackTo('SymbolList')}>
@@ -269,11 +270,11 @@ class Home extends BaseScreen {
 							<Content>
                 <Spinner visible={this.state.is_loading_most_active || this.state.is_loading_advancers || this.state.is_loading_decliners} color={C_Const.SPINNER_COLOR} />
                 <View style={[common_styles.view_align_center, common_styles.margin_t_5]}>
-									<Text style={common_styles.darkGrayColor}>All data in this app are delayed in 15 minutes</Text>
+									<MyText style={common_styles.darkGrayColor}>All data in this app are delayed in 15 minutes</MyText>
 								</View>
                 {/* Index snapshot */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>MARKET INDEX</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>MARKET INDEX</MyText></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
 								<View>
 									<FlatList
@@ -287,7 +288,7 @@ class Home extends BaseScreen {
 								</View>
 								{/* Snap shot */}
                 <View style={common_styles.margin_b_20} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>SNAPSHOT</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>SNAPSHOT</MyText></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
 								<View>
   								<Picker
@@ -311,28 +312,28 @@ class Home extends BaseScreen {
 				              <Body>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>$ VOLUME</Text>
-                            <Text>{this.state.snapshot_data['dollarVolume']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>$ VOLUME</MyText>
+                            <MyText>{this.state.snapshot_data['dollarVolume']}</MyText>
                           </View>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>SHARE VOLUME</Text>
-                            <Text>{this.state.snapshot_data['shareVolume']}</Text>
-                          </View>
-                        </View>
-                        <View style={[common_styles.flex_row]}>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>TRADES</Text>
-                            <Text>{this.state.snapshot_data['trades']}</Text>
-                          </View>
-                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>ADVANCERS</Text>
-                            <Text>{this.state.snapshot_data['advancers']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>SHARE VOLUME</MyText>
+                            <MyText>{this.state.snapshot_data['shareVolume']}</MyText>
                           </View>
                         </View>
                         <View style={[common_styles.flex_row]}>
                           <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
-                            <Text style={[common_styles.darkGrayColor]}>DECLINERS</Text>
-                            <Text>{this.state.snapshot_data['decliners']}</Text>
+                            <MyText style={[common_styles.darkGrayColor]}>TRADES</MyText>
+                            <MyText>{this.state.snapshot_data['trades']}</MyText>
+                          </View>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>ADVANCERS</MyText>
+                            <MyText>{this.state.snapshot_data['advancers']}</MyText>
+                          </View>
+                        </View>
+                        <View style={[common_styles.flex_row]}>
+                          <View style={[common_styles.flex_column, common_styles.padding_5, common_styles.width_50p]}>
+                            <MyText style={[common_styles.darkGrayColor]}>DECLINERS</MyText>
+                            <MyText>{this.state.snapshot_data['decliners']}</MyText>
                           </View>
                         </View>
 				              </Body>
@@ -340,27 +341,27 @@ class Home extends BaseScreen {
 				          </Card>
 								</View>
                 <View style={common_styles.view_align_center}>
-									<Text style={common_styles.darkGrayColor}>Tap stock symbol to view detail</Text>
+									<MyText style={common_styles.darkGrayColor}>Tap stock symbol to view detail</MyText>
 								</View>
 								{/* Most active */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>MOST ACTIVE</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>MOST ACTIVE</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_sortOn('dollarVolume')}>
-				          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>$ Volume</Text></View>
+				          	<View style={[common_styles.padding_5, this.state.sortOn=='dollarVolume'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.sortOn==1&&common_styles.bold]}>$ Volume</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_sortOn('volume')}>
-										<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>Share Volume</Text></View>
+										<View style={[common_styles.padding_5, this.state.sortOn=='volume'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.sortOn==0.05&&common_styles.bold]}>Share Volume</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_sortOn('tradeCount')}>
-										<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.sortOn==0&&common_styles.bold]}>Trades</Text></View>
+										<View style={[common_styles.padding_5, this.state.sortOn=='tradeCount'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.sortOn==0&&common_styles.bold]}>Trades</MyText></View>
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</MyText></View>
+									<View style={[common_styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -375,28 +376,28 @@ class Home extends BaseScreen {
                 <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('MOST ACTIVE')}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
 									</TouchableOpacity>
 								</View>
 								{/* Advancers */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>ADVANCERS</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>ADVANCERS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_advancers_priceMin(1)}>
-				          	<View style={[common_styles.padding_5, this.state.advancer_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+				          	<View style={[common_styles.padding_5, this.state.advancer_priceMin==1&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.advancer_priceMin==1&&common_styles.bold]}>Over $1</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0.05)}>
-										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0.05&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.advancer_priceMin==0.05&&common_styles.bold]}>Over $0.05</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_advancers_priceMin(0)}>
-										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.advancer_priceMin==0&&common_styles.bold]}>All</Text></View>
+										<View style={[common_styles.padding_5, this.state.advancer_priceMin==0&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.advancer_priceMin==0&&common_styles.bold]}>All</MyText></View>
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</MyText></View>
+									<View style={[common_styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -411,28 +412,28 @@ class Home extends BaseScreen {
                 <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('ADVANCERS')}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
 									</TouchableOpacity>
 								</View>
 								{/* Decliners */}
 								<View style={common_styles.margin_b_10} />
-								<View style={[common_styles.margin_5]}><Text style={[common_styles.heading_1]}>DECLINERS</Text></View>
+								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>DECLINERS</MyText></View>
 								<View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}>
 									<TouchableOpacity onPress={() => this._change_decliners_priceMin(1)}>
-				          	<View style={[common_styles.padding_5, this.state.decliner_priceMin==1&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==1&&common_styles.bold]}>Over $1</Text></View>
+				          	<View style={[common_styles.padding_5, this.state.decliner_priceMin==1&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.decliner_priceMin==1&&common_styles.bold]}>Over $1</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0.05)}>
-										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0.05&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0.05&&common_styles.bold]}>Over $0.05</Text></View>
+										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0.05&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.decliner_priceMin==0.05&&common_styles.bold]}>Over $0.05</MyText></View>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={() => this._change_decliners_priceMin(0)}>
-										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0&&common_styles.border_b_active]}><Text style={[common_styles.blackColor, this.state.decliner_priceMin==0&&common_styles.bold]}>All</Text></View>
+										<View style={[common_styles.padding_5, this.state.decliner_priceMin==0&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.decliner_priceMin==0&&common_styles.bold]}>All</MyText></View>
 									</TouchableOpacity>
 				        </View>
 								<View style={[common_styles.fetch_row, common_styles.padding_5]}>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</Text></View>
-									<View style={common_styles.width_25p}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</Text></View>
-									<View style={[common_styles.width_25p]}><Text style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</Text></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.bold]}>SYMBOL</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>PRICE</MyText></View>
+									<View style={common_styles.width_25p}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>% CHANGE</MyText></View>
+									<View style={[common_styles.width_25p]}><MyText style={[common_styles.darkGrayColor, common_styles.float_right, common_styles.bold]}>$ VOL</MyText></View>
 								</View>
 								<View>
 									<FlatList
@@ -447,7 +448,7 @@ class Home extends BaseScreen {
                 <View style={common_styles.margin_b_10} />
 								<View style={common_styles.view_align_center}>
 									<TouchableOpacity onPress={() => this._open_more_page('DECLINERS')}>
-										<Text style={common_styles.darkGrayColor}>VIEW MORE >></Text>
+										<MyText style={common_styles.darkGrayColor}>VIEW MORE >></MyText>
 									</TouchableOpacity>
 								</View>
 								<View style={common_styles.margin_b_30} />
