@@ -394,11 +394,11 @@ class StockFinderControls extends BaseScreen {
 									<View>
 										{
 											!this.state.is_show_market &&
-											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-down-sharp" style={common_styles.default_font_color}/>
 										}
 										{
 											this.state.is_show_market &&
-											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-up-sharp" style={common_styles.default_font_color}/>
 										}
 									</View>
 								</TouchableOpacity>
@@ -417,11 +417,11 @@ class StockFinderControls extends BaseScreen {
 									<View>
 										{
 											!this.state.is_show_securityType &&
-											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-down-sharp" style={common_styles.default_font_color}/>
 										}
 										{
 											this.state.is_show_securityType &&
-											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-up-sharp" style={common_styles.default_font_color}/>
 										}
 									</View>
 								</TouchableOpacity>
@@ -440,11 +440,11 @@ class StockFinderControls extends BaseScreen {
 									<View>
 										{
 											!this.state.is_show_countries &&
-											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-down-sharp" style={common_styles.default_font_color}/>
 										}
 										{
 											this.state.is_show_countries &&
-											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-up-sharp" style={common_styles.default_font_color}/>
 										}
 									</View>
 								</TouchableOpacity>
@@ -463,11 +463,11 @@ class StockFinderControls extends BaseScreen {
 									<View>
 										{
 											!this.state.is_show_industries &&
-											<Icon name="md-arrow-dropdown" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-down-sharp" style={common_styles.default_font_color}/>
 										}
 										{
 											this.state.is_show_industries &&
-											<Icon name="md-arrow-dropup" style={common_styles.default_font_color}/>
+											<Icon name="md-caret-up-sharp" style={common_styles.default_font_color}/>
 										}
 									</View>
 								</TouchableOpacity>

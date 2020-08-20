@@ -35,12 +35,12 @@ const datas = [
   {
     name: "News & Reports",
     route: "NewsReports",
-    icon: "md-paper"
+    icon: "md-receipt"
   },
   {
     name: "Compliance Statistic",
     route: "ComplianceStatistic",
-    icon: "ios-stats"
+    icon: "md-stats-chart"
   },
   {
     name: "Short Interest Data",
@@ -60,7 +60,7 @@ const datas = [
   {
     name: "Corporate Actions",
     route: "CorporateActions",
-    icon: "md-brush"
+    icon: "md-pulse"
   },
   // {
   //   name: "Fees",

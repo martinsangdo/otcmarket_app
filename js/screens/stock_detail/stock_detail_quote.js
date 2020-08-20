@@ -239,10 +239,10 @@ class StockDetailQuote extends BaseScreen {
           <View style={[common_styles.width_20p]}><MyText style={common_styles.float_right}>{item.lastVolume}</MyText></View>
           <View style={[common_styles.width_10p]}>
             {item.tradeDirection == 'Down' &&
-              <Icon name="md-arrow-dropdown" style={common_styles.redColor}/>
+              <Icon name="md-caret-down-sharp" style={common_styles.redColor}/>
             }
             {item.tradeDirection == 'Up' &&
-              <Icon name="md-arrow-dropup"/>
+              <Icon name="md-caret-up-sharp"/>
             }
             {item.tradeDirection != 'Down' && item.tradeDirection != 'Up' &&
               <Icon name="md-remove"/>
