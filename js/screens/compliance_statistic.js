@@ -252,7 +252,7 @@ class ComplianceStatistic extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>COMPLIANCE & STATISTICS</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Compliance & Statistics</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>

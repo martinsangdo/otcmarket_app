@@ -134,7 +134,7 @@ class SymbolList extends BaseScreen {
                   </TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Stock Finder</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>

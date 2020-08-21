@@ -23,7 +23,8 @@ export default {
   text: {
     fontWeight: Platform.OS === "ios" ? "500" : "400",
     fontSize: 15,
-    marginLeft: 10
+    marginLeft: 10,
+    marginTop: 5
   },
   badgeText: {
     fontSize: Platform.OS === "ios" ? 13 : 11,

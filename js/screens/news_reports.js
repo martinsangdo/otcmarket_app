@@ -224,7 +224,7 @@ class NewsReports extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>NEWS & FINANCIAL REPORTS</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>News & Financial Reports</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -248,7 +248,7 @@ class NewsReports extends BaseScreen {
   								<Picker
   									mode="dropdown"
   									iosHeader="Select Market"
-  									iosIcon={<Icon name="ios-arrow-down" />}
+  									iosIcon={<Icon name="md-caret-down-sharp" />}
   									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}

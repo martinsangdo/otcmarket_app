@@ -169,7 +169,7 @@ class BrokerDealer extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Broker Dealer Data</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Broker Dealer Data</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -181,7 +181,7 @@ class BrokerDealer extends BaseScreen {
   								<Picker
   									mode="dropdown"
   									iosHeader="Select Market"
-  									iosIcon={<Icon name="ios-arrow-down" />}
+  									iosIcon={<Icon name="md-caret-down-sharp" />}
   									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}
@@ -224,7 +224,7 @@ class BrokerDealer extends BaseScreen {
   								<Picker
   									mode="dropdown"
   									iosHeader="Select Volume"
-  									iosIcon={<Icon name="ios-arrow-down" />}
+  									iosIcon={<Icon name="md-caret-down-sharp" />}
   									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.current_type}
   									onValueChange={this.onChangeType.bind(this)}

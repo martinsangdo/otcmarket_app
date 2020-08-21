@@ -157,11 +157,11 @@ class StockFinder extends BaseScreen {
             >
               {
                 !this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="ios-arrow-down" style={[common_styles.greenColor, common_styles.font_20]}/>
+                <Icon name="md-caret-down-sharp" style={[common_styles.greenColor, common_styles.font_20]}/>
               }
               {
                 this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="ios-arrow-up" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
+                <Icon name="md-caret-up-sharp" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
               }
             </TouchableOpacity>
           </View>
@@ -224,7 +224,7 @@ class StockFinder extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={common_styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Stock Finder</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Stock Finder</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
                   {

@@ -258,7 +258,7 @@ class Home extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Market Update</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Market Update</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._navigateCanBackTo('SymbolList')}>
@@ -294,7 +294,7 @@ class Home extends BaseScreen {
   								<Picker
   									mode="dropdown"
   									iosHeader="Select Market"
-  									iosIcon={<Icon name="ios-arrow-down" />}
+  									iosIcon={<Icon name="md-caret-down-sharp" />}
   									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}

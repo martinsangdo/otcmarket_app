@@ -98,7 +98,7 @@ class SideBar extends Component {
             keyExtractor={item => item.name}
             renderRow={data =>
               <ListItem
-                style={{height: 44, paddingTop: 5}}
+                style={{height: 44, paddingTop: 3}}
                 button
                 noBorder
                 onPress={() => this.props.navigation.navigate(data.route)}
@@ -108,7 +108,7 @@ class SideBar extends Component {
                   <Icon
                     active
                     name={data.icon}
-                    style={{ color: "#777", fontSize: 26, width: 30 }}
+                    style={{ color: "#777", fontSize: 22, width: 30 }}
                   />
                   <MyText style={styles.text}>
                     {data.name}

@@ -278,7 +278,7 @@ class StockDetailQuote extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.2}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -291,7 +291,7 @@ class StockDetailQuote extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.symbol}</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>{this.state.symbol}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.6}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
@@ -305,7 +305,7 @@ class StockDetailQuote extends BaseScreen {
                   <Picker
                     mode="dropdown"
                     iosHeader="Select Info"
-                    iosIcon={<Icon name="ios-arrow-down" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
+                    iosIcon={<Icon name="md-caret-down-sharp" style={{position: 'absolute', right: -15, color: '#008da9', marginRight:10 }}/>}
                     selectedValue={this.state.current_detail_part}
                     onValueChange={(newval)=>{this.onChangePart(newval)}}
                   >

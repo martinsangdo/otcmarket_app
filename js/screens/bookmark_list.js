@@ -127,7 +127,7 @@ class BookmarkList extends BaseScreen {
                   </TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>Bookmark</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Bookmark</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 									<TouchableOpacity style={common_styles.margin_r_20} onPress={() => this._load_bookmarked_list()}>

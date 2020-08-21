@@ -228,7 +228,7 @@ class CurrentMarket extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.2}]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -241,7 +241,7 @@ class CurrentMarket extends BaseScreen {
 									</TouchableOpacity>
 								</Left>
 								<Body style={styles.headerBody}>
-									<MyText style={[common_styles.bold, common_styles.default_font_color]}>{this.state.active_part}</MyText>
+									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>{this.state.active_part}</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
 								</Right>
@@ -254,7 +254,7 @@ class CurrentMarket extends BaseScreen {
 									<Picker
 										mode="dropdown"
 										iosHeader="Select Market"
-										iosIcon={<Icon name="ios-arrow-down" />}
+										iosIcon={<Icon name="md-caret-down-sharp" />}
 										style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
 										selectedValue={this.state.tierGroup}
 										onValueChange={this.onChangeMarket.bind(this)}
