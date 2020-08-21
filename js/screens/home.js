@@ -290,21 +290,19 @@ class Home extends BaseScreen {
                 <View style={common_styles.margin_b_20} />
 								<View style={[common_styles.margin_5]}><MyText style={[common_styles.heading_1]}>SNAPSHOT</MyText></View>
                 <View style={[common_styles.flex_row, common_styles.border_b_tab, common_styles.margin_5]}></View>
-								<View>
-  								<Picker
-  									mode="dropdown"
-  									iosHeader="Select Market"
-  									iosIcon={<Icon name="md-caret-down-sharp" />}
-  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
-  									selectedValue={this.state.tierGroup}
-  									onValueChange={this.onChangeMarket.bind(this)}
-  								>
-  									<Item label="All Markets" value="ALL" />
-  									<Item label="OTCQX" value="QX" />
-  									<Item label="OTCQB" value="DQ" />
-  									<Item label="Pink" value="PS" />
-  									<Item label="Grey" value="OO" />
-  								</Picker>
+								<View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_50p]}>
+                  <Picker
+                    mode="dropdown"
+                    iosIcon={<Icon name="md-caret-down-sharp" />}
+                    selectedValue={this.state.tierGroup}
+                    onValueChange={this.onChangeMarket.bind(this)}
+                  >
+                    <Item label="All Markets" value="ALL" />
+                    <Item label="OTCQX" value="QX" />
+                    <Item label="OTCQB" value="DQ" />
+                    <Item label="Pink" value="PS" />
+                    <Item label="Grey" value="OO" />
+                  </Picker>
 								</View>
 								<View style={common_styles.margin_10}>
 									<Card>

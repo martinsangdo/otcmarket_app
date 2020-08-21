@@ -199,7 +199,7 @@ class StockDetailSecurity extends BaseScreen {
 								<Body style={styles.headerBody}>
 									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>{this.state.symbol}</MyText>
 								</Body>
-								<Right style={[common_styles.headerRight, {flex:0.5}]}>
+								<Right style={[common_styles.headerRight, {flex:0.6}]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
                     {this.state.bookmarked_symbols[this.state.symbol] &&
                       <Icon name="star" style={[common_styles.header_icon, common_styles.margin_b_10, common_styles.greenColor]}/>
