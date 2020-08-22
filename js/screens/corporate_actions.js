@@ -194,11 +194,11 @@ class CorporateActions extends BaseScreen {
             >
               {
                 !this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="md-caret-down-sharp" style={[common_styles.greenColor, common_styles.font_20]}/>
+                <Icon name="ios-chevron-down" style={[common_styles.greenColor, common_styles.font_20]}/>
               }
               {
                 this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="md-caret-up-sharp" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
+                <Icon name="ios-chevron-up" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
               }
             </TouchableOpacity>
           </View>
@@ -331,12 +331,10 @@ class CorporateActions extends BaseScreen {
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
                     <MyText>Action</MyText>
                   </View>
-                  <View style={common_styles.width_75p}>
+                  <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_60p]}>
                     <Picker
                       mode="dropdown"
-                      iosHeader="Select Changes"
                       iosIcon={<Icon name="md-caret-down-sharp" />}
-                      style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
                       selectedValue={this.state.route}
                       onValueChange={this.onChangeRoute.bind(this)}
                     >
@@ -360,12 +358,10 @@ class CorporateActions extends BaseScreen {
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
                     <MyText>Security Type</MyText>
                   </View>
-                  <View style={common_styles.width_75p}>
+                  <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_60p]}>
                     <Picker
                       mode="dropdown"
-                      iosHeader="Select Security Type"
                       iosIcon={<Icon name="md-caret-down-sharp" />}
-                      style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
                       selectedValue={this.state.security_type}
                       onValueChange={this.onChangeType.bind(this)}
                     >
@@ -378,12 +374,10 @@ class CorporateActions extends BaseScreen {
                   <View style={[common_styles.width_25p, common_styles.justifyCenter]}>
                     <MyText>Market</MyText>
                   </View>
-                  <View style={common_styles.width_75p}>
+                  <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_60p]}>
                     <Picker
                       mode="dropdown"
-                      iosHeader="Select Market"
                       iosIcon={<Icon name="md-caret-down-sharp" />}
-                      style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
                       selectedValue={this.state.tierGroup}
                       onValueChange={this.onChangeMarket.bind(this)}
                     >

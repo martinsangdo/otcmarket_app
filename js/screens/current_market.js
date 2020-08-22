@@ -124,17 +124,15 @@ class CurrentMarket extends BaseScreen {
 			var me = this;
 			Utils.get_data_from_cache(cache_time_key, cache_duration, url, (has_cache_data, cache_data)=>{
 				if (has_cache_data){
-					//parse cached data
-					// Utils.xlog('cached data', cache_data);
 					//append to list
-					var current_data = me.state.data_list;
-					if (current_data['records'] == null){
-						me.setState({data_list: cache_data});	//first time load
-					} else {
-						current_data['records'].push(...cache_data['records']);
-						current_data['totalRecords'] = cache_data['totalRecords'];
-						me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length });		//append & save back
-					}
+          var current_data = me.state.data_list;
+          if (current_data['records'] == null){
+            me.setState({data_list: cache_data});	//first time load
+          } else {
+            current_data['records'].push(...cache_data['records']);
+            current_data['totalRecords'] = cache_data['totalRecords'];
+            me.setState({data_list:current_data, can_load_more:current_data['totalRecords'] > current_data['records'].length });		//append & save back
+          }
 				} else {
 					//get from server
 					// Utils.xlog('get data from server', url);
@@ -228,7 +226,7 @@ class CurrentMarket extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.2}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -250,12 +248,10 @@ class CurrentMarket extends BaseScreen {
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
 								{/* Snap shot */}
-								<View>
+								<View style={[common_styles.grayBg, common_styles.margin_10, common_styles.width_50p]}>
 									<Picker
 										mode="dropdown"
-										iosHeader="Select Market"
 										iosIcon={<Icon name="md-caret-down-sharp" />}
-										style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
 										selectedValue={this.state.tierGroup}
 										onValueChange={this.onChangeMarket.bind(this)}
 									>

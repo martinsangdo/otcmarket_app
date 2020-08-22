@@ -177,12 +177,10 @@ class BrokerDealer extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
-								<View>
+                <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_50p]}>
   								<Picker
   									mode="dropdown"
-  									iosHeader="Select Market"
   									iosIcon={<Icon name="md-caret-down-sharp" />}
-  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}
   								>
@@ -220,12 +218,10 @@ class BrokerDealer extends BaseScreen {
 								<View style={common_styles.view_align_center}>
 									<MyText style={common_styles.darkGrayColor}>{this.state.snapshot_data['lastUpdated']}</MyText>
 								</View>
-                <View>
+                <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_50p]}>
   								<Picker
   									mode="dropdown"
-  									iosHeader="Select Volume"
   									iosIcon={<Icon name="md-caret-down-sharp" />}
-  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.current_type}
   									onValueChange={this.onChangeType.bind(this)}
   								>

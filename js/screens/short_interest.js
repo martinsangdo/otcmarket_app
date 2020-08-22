@@ -132,12 +132,10 @@ class ShortInterest extends BaseScreen {
 							{/* END header */}
 							<Content>
                 <Spinner visible={this.state.loading_indicator_state} color={C_Const.SPINNER_COLOR} />
-								<View>
+								<View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_50p]}>
   								<Picker
   									mode="dropdown"
-  									iosHeader="Select Date"
   									iosIcon={<Icon name="md-caret-down-sharp" />}
-  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.current_date}
   									onValueChange={(newval)=>{this.onChangeDate(newval)}}
   								>

@@ -244,12 +244,10 @@ class NewsReports extends BaseScreen {
 										<View style={[common_styles.padding_5, this.state.current_category=='secs'&&common_styles.border_b_active]}><MyText style={[common_styles.blackColor, this.state.current_category=='secs'&&common_styles.bold]}>SEC FILLINGS</MyText></View>
 									</TouchableOpacity>
 				        </View>
-                <View>
+                <View style={[common_styles.grayBg, common_styles.margin_5, common_styles.width_50p]}>
   								<Picker
   									mode="dropdown"
-  									iosHeader="Select Market"
   									iosIcon={<Icon name="md-caret-down-sharp" />}
-  									style={{ width: undefined, backgroundColor: '#ddd', margin:5 }}
   									selectedValue={this.state.tierGroup}
   									onValueChange={this.onChangeMarket.bind(this)}
   								>

@@ -206,7 +206,7 @@ class StockDetailProfile extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
+								<Left style={[common_styles.headerLeft]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -218,10 +218,10 @@ class StockDetailProfile extends BaseScreen {
 										</View>
 									</TouchableOpacity>
 								</Left>
-								<Body style={styles.headerBody}>
+								<Body style={[styles.headerBody, {flex:0.8}]}>
 									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>{this.state.symbol}</MyText>
 								</Body>
-								<Right style={[common_styles.headerRight, {flex:0.5}]}>
+								<Right style={[common_styles.headerRight]}>
                   <TouchableOpacity onPress={() => this._toggle_bookmark()}>
                     {this.state.bookmarked_symbols[this.state.symbol] &&
                       <Icon name="star" style={[common_styles.header_icon, common_styles.margin_b_10, common_styles.greenColor]}/>

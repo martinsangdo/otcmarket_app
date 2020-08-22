@@ -157,11 +157,11 @@ class StockFinder extends BaseScreen {
             >
               {
                 !this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="md-caret-down-sharp" style={[common_styles.greenColor, common_styles.font_20]}/>
+                <Icon name="ios-chevron-down" style={[common_styles.greenColor, common_styles.font_20]}/>
               }
               {
                 this.state.showing_detail_symbols[item.symbol] &&
-                <Icon name="md-caret-up-sharp" style={[common_styles.greenColor, common_styles.font_20, common_styles.margin_l_5]}/>
+                <Icon name="ios-chevron-up" style={[common_styles.greenColor, common_styles.font_20]}/>
               }
             </TouchableOpacity>
           </View>
@@ -216,14 +216,14 @@ class StockFinder extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
 									<TouchableOpacity
 										onPress={() => this.props.navigation.openDrawer()}
 									>
 										<Icon name="menu" style={common_styles.greenColor}/>
 									</TouchableOpacity>
 								</Left>
-								<Body style={common_styles.headerBody}>
+								<Body style={styles.headerBody}>
 									<MyText style={[common_styles.bold, common_styles.default_font_color, common_styles.font_15]}>Stock Finder</MyText>
 								</Body>
 								<Right style={[common_styles.headerRight, {flex:0.15}]}>
@@ -233,11 +233,6 @@ class StockFinder extends BaseScreen {
   										<Icon name="ios-search" style={[common_styles.header_icon, common_styles.greenColor]}/>
   									</TouchableOpacity>
                   }
-                  <TouchableOpacity onPress={() => this._check_login()}>
-                    <View style={[common_styles.float_center]}>
-                      <Icon name="md-download" style={common_styles.default_font_color}/>
-                    </View>
-									</TouchableOpacity>
 								</Right>
 							</Header>
 							{/* END header */}

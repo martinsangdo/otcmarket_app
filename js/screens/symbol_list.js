@@ -121,7 +121,7 @@ class SymbolList extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.15}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
                   <TouchableOpacity onPress={() => this._on_go_back()}>
                     <View style={styles.left_row}>
                       <View style={[common_styles.float_center]}>
