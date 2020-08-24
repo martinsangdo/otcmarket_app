@@ -18,6 +18,8 @@ import {C_Const} from '../utils/constant';
 import CheckBox from '@react-native-community/checkbox';
 import DeviceInfo from 'react-native-device-info';
 import MyText from '../component/MyText';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height - 50;
@@ -27,7 +29,7 @@ class Contact extends BaseScreen {
 		super(props);
 		this.state = {
 			options: {
-				'download_report': true,
+				'download_report': true,		//default
 				'download_sec_filling': false,
 				'newsletter': false,
 				'daily_report': false,
@@ -116,66 +118,37 @@ class Contact extends BaseScreen {
 								<View style={[common_styles.margin_10]}>
 									<MyText>What I want is (*):</MyText>
 								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['download_report']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('download_report', !this.state.options['download_report'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Download Reports</MyText></View>
-								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['download_sec_filling']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('download_sec_filling', !this.state.options['download_sec_filling'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Download SEC Fillings</MyText></View>
-								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['newsletter']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('newsletter', !this.state.options['newsletter'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Newsletter (1 mail per week)</MyText></View>
-								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['daily_report']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('daily_report', !this.state.options['daily_report'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Receive daily stock/market reports</MyText></View>
-								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['connect_api']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('connect_api', !this.state.options['connect_api'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Connect API endpoints</MyText></View>
-								</View>
-								<View style={[common_styles.flex_row, common_styles.margin_5]}>
-									<CheckBox
-										boxType={'square'}
-										value={this.state.options['other']}
-										style={styles.chkbox}
-										onAnimationType={'bounce'}
-										onValueChange={() => this._toogle_options_value('other', !this.state.options['other'])}
-									/>
-									<View style={common_styles.justifyCenter}><MyText>Others</MyText></View>
-								</View>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('download_report', !this.state.options['download_report'])}>
+									{this.state.options['download_report'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['download_report'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Download Reports</MyText></View>
+								</TouchableOpacity>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('download_sec_filling', !this.state.options['download_sec_filling'])}>
+									{this.state.options['download_sec_filling'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['download_sec_filling'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Download SEC Fillings</MyText></View>
+								</TouchableOpacity>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('newsletter', !this.state.options['newsletter'])}>
+									{this.state.options['newsletter'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['newsletter'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Newsletter (1 mail per week)</MyText></View>
+								</TouchableOpacity>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('daily_report', !this.state.options['daily_report'])}>
+									{this.state.options['daily_report'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['daily_report'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Receive daily stock/market reports</MyText></View>
+								</TouchableOpacity>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('connect_api', !this.state.options['connect_api'])}>
+									{this.state.options['connect_api'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['connect_api'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Connect API endpoints</MyText></View>
+								</TouchableOpacity>
+								<TouchableOpacity style={[common_styles.flex_row, common_styles.margin_10]} onPress={() => this._toogle_options_value('other', !this.state.options['other'])}>
+									{this.state.options['other'] && <MaterialCommunityIcons name="checkbox-marked" style={[common_styles.font_30, common_styles.default_font_color]}/>}
+									{!this.state.options['other'] && <MaterialCommunityIcons name="checkbox-blank-outline" style={common_styles.font_30}/>}
+										<View style={common_styles.justifyCenter}><MyText>Others</MyText></View>
+								</TouchableOpacity>
+
 								<View style={[common_styles.margin_10]}>
 									<MyText>Your Email (*):</MyText>
 									<Form style={common_styles.margin_t_5}>
