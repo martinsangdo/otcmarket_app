@@ -158,6 +158,7 @@ class StockDetailFinancial extends BaseScreen {
     _on_change_type(new_type){
       this.setState({current_type: new_type, current_time_index: 0, current_duration: 'annual'}, ()=>{
          this._load_data();
+         Utils.dlog(new_type);
       });
     }
     //
@@ -189,7 +190,7 @@ class StockDetailFinancial extends BaseScreen {
       if (display_time.length > 0){
         return display_time;
       } else {
-        return <MyText style={common_styles.grayColor}>...</MyText>;
+        return <MyText style={common_styles.grayColor}>Loading ...</MyText>;
       }
     }
     //turn on/off bookmark of this symbol
@@ -255,24 +256,24 @@ class StockDetailFinancial extends BaseScreen {
                 <View style={common_styles.margin_b_10} />
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_type('income-statement')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='income-statement'&&{color:'#3f481a', fontWeight:'bold'}]}>Income Statement</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_type=='income-statement'&&{color:'#3f481a', fontWeight:'bold'}]}>Income Statement</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_type('balance-sheet')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='balance-sheet'&&{color:'#3f481a', fontWeight:'bold'}]}>Balance Sheet</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_type=='balance-sheet'&&{color:'#3f481a', fontWeight:'bold'}]}>Balance Sheet</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_type('cash-flow')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_type=='cash-flow'&&{color:'#3f481a', fontWeight:'bold'}]}>Cash Flow</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_type=='cash-flow'&&{color:'#3f481a', fontWeight:'bold'}]}>Cash Flow</Text>
                   </TouchableOpacity>
 				        </View>
                 <View style={styles.financial_options}>
                   <TouchableOpacity onPress={()=>this._on_change_duration('annual')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Annual</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_duration=='annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Annual</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_duration('semi-annual')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='semi-annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Semi-Annual</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_duration=='semi-annual'&&{color:'#3f481a', fontWeight:'bold'}]}>Semi-Annual</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>this._on_change_duration('quarterly')}>
-                    <MyText style={[common_styles.margin_b_5, common_styles.darkGrayColor, this.state.current_duration=='quarterly'&&{color:'#3f481a', fontWeight:'bold'}]}>Quarterly</MyText>
+                    <Text style={[common_styles.margin_b_5, common_styles.font_13, common_styles.darkGrayColor, this.state.current_duration=='quarterly'&&{color:'#3f481a', fontWeight:'bold'}]}>Quarterly</Text>
                   </TouchableOpacity>
 				        </View>
                 <View style={styles.financial_options}>
