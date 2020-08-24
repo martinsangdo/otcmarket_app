@@ -235,6 +235,10 @@ PODS:
   - React-jsinspector (0.62.2)
   - react-native-pdf (6.2.0):
     - React
+  - react-native-progress-bar-android (1.0.3):
+    - React
+  - react-native-progress-view (1.1.1):
+    - React
   - react-native-safe-area-context (3.1.6):
     - React
   - react-native-simple-toast (1.1.2):
@@ -363,6 +367,8 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
+  - "react-native-progress-bar-android (from `../node_modules/@react-native-community/progress-bar-android`)"
+  - "react-native-progress-view (from `../node_modules/@react-native-community/progress-view`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -436,6 +442,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
+  react-native-progress-bar-android:
+    :path: "../node_modules/@react-native-community/progress-bar-android"
+  react-native-progress-view:
+    :path: "../node_modules/@react-native-community/progress-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-simple-toast:
@@ -512,6 +522,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-pdf: 909cd849e6a806731b2135263189fea39494b55e
+  react-native-progress-bar-android: d1b109b86c699d36f6a7099dab1a117dc1d66d3c
+  react-native-progress-view: 7dada4b26e6996935a9dde876eb4ba49c0cb49bc
   react-native-safe-area-context: 1a1fdfdc6f9f5beb55b2f0d10d8cf029efd996f4
   react-native-simple-toast: a3a8e9033a549c11741debe875e54698cc4c0dd7
   react-native-webview: 67b9024de02e7c0af9400283b0e3ca6eec55dc26
@@ -539,6 +551,6 @@ SPEC CHECKSUMS:
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 891f5b135ae1eb49599641ef847fb76e814a9129
+PODFILE CHECKSUM: 9db2c556f569068e5b64ff432198d23b35aa91f5
 
 COCOAPODS: 1.6.1
