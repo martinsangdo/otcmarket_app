@@ -13,6 +13,7 @@ import {API_URI} from '../utils/api_uri';
 import Utils from "../utils/functions";
 import CheckBox from '@react-native-community/checkbox';
 import MyText from '../component/MyText';
+import Dialog from "./dialog/Dialog";
 
 const market_prefix = 'market_';
 const PickerItem = Picker.Item;
@@ -49,7 +50,7 @@ class StockFinderControls extends BaseScreen {
 			is_show_market: false,
 			is_show_securityType: false,
 			is_show_countries: false,
-			is_show_industries: false,
+			is_show_industries: false
 		};
 	}
 
@@ -205,10 +206,10 @@ class StockFinderControls extends BaseScreen {
 		}});
 	}
 	//
-	_show_hide_market(){
-		this.setState({is_show_market: !this.state.is_show_market});
+	_show_hide_market(is_show){
+		this.setState({is_show_market: is_show});
 	}
-	//
+	//show children
 	_render_markets(){
 		var markets = [];
 		if (Utils.isEmpty(this.state.controls['markets'])){
@@ -353,7 +354,7 @@ class StockFinderControls extends BaseScreen {
 				return (
 						<Container>
 							<Header style={[common_styles.header, common_styles.whiteBg]}>
-								<Left style={[common_styles.headerLeft, {flex:0.3}]}>
+								<Left style={[common_styles.headerLeft, {flex:0.4}]}>
 									<TouchableOpacity onPress={() => this._on_go_back()}>
 										<View style={styles.left_row}>
 											<View style={[common_styles.float_center]}>
@@ -389,7 +390,7 @@ class StockFinderControls extends BaseScreen {
 								<View style={[common_styles.border_b_tab, common_styles.margin_5]}></View>
 								{/* Markets */}
 								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Markets</MyText></View>
-								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market()}>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_market(true)}>
 									<View style={common_styles.justifyCenter}><MyText>{this.state.options['markets'].length==0?'All':this.state.options['markets'].length+' selected'}</MyText></View>
 									<View>
 										{
@@ -402,14 +403,6 @@ class StockFinderControls extends BaseScreen {
 										}
 									</View>
 								</TouchableOpacity>
-								{
-									this.state.is_show_market &&
-									<View style={styles.finder_options_sub_container} >
-					          <ScrollView>
-											{this.state.is_loaded_controls && this._render_markets()}
-					          </ScrollView>
-					        </View>
-								}
 								{/* Security Type */}
 								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Security Types</MyText></View>
 								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type()}>
@@ -740,6 +733,20 @@ class StockFinderControls extends BaseScreen {
 								</View>
 								<View style={common_styles.margin_b_20} />
 							</Content>
+							{/***** dialog to choose Markets *****/}
+								<Dialog
+							    visible={this.state.is_show_market}
+									dialogStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fff'}}>
+							    <View>
+											<ScrollView style={{height:170}}>
+												{this.state.is_loaded_controls && this._render_markets()}
+											</ScrollView>
+										<MyText style={[common_styles.darkGrayColor, common_styles.font_12]}>Scroll to choose</MyText>
+										<TouchableOpacity style={[common_styles.default_button]} onPress={() => this._show_hide_market(false)}>
+											<MyText style={common_styles.whiteColor}>Close</MyText>
+										</TouchableOpacity>
+							    </View>
+							</Dialog>
 						</Container>
 				);
 		}
