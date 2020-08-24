@@ -206,8 +206,8 @@ class StockFinderControls extends BaseScreen {
 		}});
 	}
 	//
-	_show_hide_market(is_show){
-		this.setState({is_show_market: is_show});
+	_show_hide_market(is_shown){
+		this.setState({is_show_market: is_shown});
 	}
 	//show children
 	_render_markets(){
@@ -248,8 +248,8 @@ class StockFinderControls extends BaseScreen {
 		}
 	}
 	//
-	_show_hide_security_type(){
-		this.setState({is_show_securityType: !this.state.is_show_securityType});
+	_show_hide_security_type(is_shown){
+		this.setState({is_show_securityType: is_shown});
 	}
 	//
 	_render_security_types(){
@@ -282,8 +282,8 @@ class StockFinderControls extends BaseScreen {
 		}
 	}
 	//
-	_show_hide_countries(){
-		this.setState({is_show_countries: !this.state.is_show_countries});
+	_show_hide_countries(is_shown){
+		this.setState({is_show_countries: is_shown});
 	}
 	//
 	_render_countries(){
@@ -316,8 +316,8 @@ class StockFinderControls extends BaseScreen {
 		}
 	}
 	//
-	_show_hide_industries(){
-		this.setState({is_show_industries: !this.state.is_show_industries});
+	_show_hide_industries(is_shown){
+		this.setState({is_show_industries: is_shown});
 	}
 	//
 	_render_industries(){
@@ -405,7 +405,7 @@ class StockFinderControls extends BaseScreen {
 								</TouchableOpacity>
 								{/* Security Type */}
 								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Security Types</MyText></View>
-								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type()}>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_security_type(true)}>
 									<View style={common_styles.justifyCenter}><MyText>{this.state.options['securityTypes'].length==0?'All':this.state.options['securityTypes'].length+' selected'}</MyText></View>
 									<View>
 										{
@@ -418,17 +418,9 @@ class StockFinderControls extends BaseScreen {
 										}
 									</View>
 								</TouchableOpacity>
-								{
-									this.state.is_show_securityType &&
-									<View style={styles.finder_options_sub_container} >
-					          <ScrollView>
-											{this.state.is_loaded_controls && this._render_security_types()}
-					          </ScrollView>
-					        </View>
-								}
 								{/* Country */}
 								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Countries</MyText></View>
-								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_countries()}>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_countries(true)}>
 									<View style={common_styles.justifyCenter}><MyText>{this.state.options['countryTotals'].length==0?'All':this.state.options['countryTotals'].length+' selected'}</MyText></View>
 									<View>
 										{
@@ -441,17 +433,9 @@ class StockFinderControls extends BaseScreen {
 										}
 									</View>
 								</TouchableOpacity>
-								{
-									this.state.is_show_countries &&
-									<View style={styles.finder_options_sub_container} >
-					          <ScrollView>
-											{this.state.is_loaded_controls && this._render_countries()}
-					          </ScrollView>
-					        </View>
-								}
 								{/* Industry */}
 								<View style={common_styles.margin_5}><MyText style={common_styles.bold}>Industries</MyText></View>
-								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_industries()}>
+								<TouchableOpacity style={[common_styles.margin_5, common_styles.padding_5, common_styles.fetch_row, common_styles.lightGrayBg]} onPress={()=>this._show_hide_industries(true)}>
 									<View style={common_styles.justifyCenter}><MyText>{this.state.options['industryTotals'].length==0?'All':this.state.options['industryTotals'].length+' selected'}</MyText></View>
 									<View>
 										{
@@ -464,14 +448,6 @@ class StockFinderControls extends BaseScreen {
 										}
 									</View>
 								</TouchableOpacity>
-								{
-									this.state.is_show_industries &&
-									<View style={styles.finder_options_sub_container} >
-					          <ScrollView>
-											{this.state.is_loaded_controls && this._render_industries()}
-					          </ScrollView>
-					        </View>
-								}
 								<View style={[common_styles.fetch_row, common_styles.margin_5]}>
 									<View style={common_styles.justifyCenter}><MyText style={common_styles.bold}>Caveat Emptor</MyText></View>
 									<CheckBox
@@ -742,11 +718,54 @@ class StockFinderControls extends BaseScreen {
 												{this.state.is_loaded_controls && this._render_markets()}
 											</ScrollView>
 										<MyText style={[common_styles.darkGrayColor, common_styles.font_12]}>Scroll to choose</MyText>
-										<TouchableOpacity style={[common_styles.default_button]} onPress={() => this._show_hide_market(false)}>
+										<TouchableOpacity style={[common_styles.default_button, common_styles.float_right]} onPress={() => this._show_hide_market(false)}>
 											<MyText style={common_styles.whiteColor}>Close</MyText>
 										</TouchableOpacity>
 							    </View>
 							</Dialog>
+							{/***** dialog to choose Security types *****/}
+								<Dialog
+									visible={this.state.is_show_securityType}
+									dialogStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fff'}}>
+									<View>
+											<ScrollView style={{height:170}}>
+												{this.state.is_loaded_controls && this._render_security_types()}
+											</ScrollView>
+										<MyText style={[common_styles.darkGrayColor, common_styles.font_12]}>Scroll to choose</MyText>
+										<TouchableOpacity style={[common_styles.default_button, common_styles.float_right]} onPress={() => this._show_hide_security_type(false)}>
+											<MyText style={common_styles.whiteColor}>Close</MyText>
+										</TouchableOpacity>
+									</View>
+							</Dialog>
+							{/***** dialog to choose Markets *****/}
+								<Dialog
+							    visible={this.state.is_show_countries}
+									dialogStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fff'}}>
+							    <View>
+											<ScrollView style={{height:170}}>
+												{this.state.is_loaded_controls && this._render_countries()}
+											</ScrollView>
+										<MyText style={[common_styles.darkGrayColor, common_styles.font_12]}>Scroll to choose</MyText>
+										<TouchableOpacity style={[common_styles.default_button, common_styles.float_right]} onPress={() => this._show_hide_countries(false)}>
+											<MyText style={common_styles.whiteColor}>Close</MyText>
+										</TouchableOpacity>
+							    </View>
+							</Dialog>
+							{/***** dialog to choose Markets *****/}
+								<Dialog
+							    visible={this.state.is_show_industries}
+									dialogStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: '#fff'}}>
+							    <View>
+											<ScrollView style={{height:170}}>
+												{this.state.is_loaded_controls && this._render_industries()}
+											</ScrollView>
+										<MyText style={[common_styles.darkGrayColor, common_styles.font_12]}>Scroll to choose</MyText>
+										<TouchableOpacity style={[common_styles.default_button, common_styles.float_right]} onPress={() => this._show_hide_industries(false)}>
+											<MyText style={common_styles.whiteColor}>Close</MyText>
+										</TouchableOpacity>
+							    </View>
+							</Dialog>
+
 						</Container>
 				);
 		}
