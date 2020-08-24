@@ -95,7 +95,7 @@ class BaseScreen extends Component {
             </TouchableOpacity>
           </View>
 					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{Utils.number_to_float_2(item.price)}</MyText></View>
-					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{item.pctChange}</MyText></View>
+					<View style={[common_styles.width_25p]}><MyText style={[common_styles.float_right, common_styles.blackColor, item.pctChange < 0 && common_styles.redColor]}>{Utils.number_to_float_2(item.pctChange)}</MyText></View>
 					<View style={[common_styles.width_25p]}><MyText style={common_styles.float_right}>{Utils.shorten_big_num(item.dollarVolume)}</MyText></View>
 				</View>
 		);
