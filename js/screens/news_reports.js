@@ -119,7 +119,7 @@ class NewsReports extends BaseScreen {
         } else if (arr_guid.length > 3){
           //more than 3 segments
           var first_index = guid.indexOf('-');
-          var last_index = guid.lasIndexOf('-');
+          var last_index = guid.lastIndexOf('-');
           str_core_guid = guid.substring(first_index, last_index);
         }
         //
